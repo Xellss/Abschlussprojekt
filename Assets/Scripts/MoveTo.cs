@@ -13,9 +13,15 @@ public class MoveTo : MonoBehaviour {
 
     [SerializeField]
     private Transform goal;
+    NavMeshAgent agent;
 
 	void Start () {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        agent.destination = goal.position;
+        agent = GetComponent<NavMeshAgent>();
+        //agent.destination = goal.position;
+    }
+
+    void Update()
+    {
+        agent.SetDestination(goal.position);
     }
 }
