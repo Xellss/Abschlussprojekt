@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class BaseTerrainManager : MonoBehaviour {
-
+public class BaseTerrainManager : MonoBehaviour
+{
     [SerializeField]
-    private bool unlockNewTerrain = false;
+    private bool unlockTerrain;
+
+    public bool UnlockTerrain
+    {
+        get { return unlockTerrain; }
+        set { unlockTerrain = value; }
+    }
 
     private Renderer myRenderer;
     private GameObject buyButton;
 
-    void Awake()
+    private void Awake()
     {
         myRenderer = GetComponent<Renderer>();
         buyButton = transform.FindChild("BuyButton").gameObject;
     }
 
-    void Update()
+    private void Update()
     {
-        if (unlockNewTerrain)
-        {
-            unlockTerrain();
-            unlockNewTerrain = false;
-        }
+        if (unlockTerrain)
+            unlock();
     }
-    private void unlockTerrain()
+
+    private void unlock()
     {
         this.gameObject.name = "UnlockedTerrain";
         this.gameObject.tag = "UnlockedTerrain";
