@@ -24,7 +24,7 @@ public class TowerSlot : MonoBehaviour
 
     void OnMouseExit()
     {
-        myRenderer.material.color = Color.white;
+        myRenderer.material.color = Color.green;
     }
 
     void OnMouseUp()
