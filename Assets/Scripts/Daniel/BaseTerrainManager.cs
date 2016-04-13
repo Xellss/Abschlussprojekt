@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BuyLockedTerrain : MonoBehaviour {
-
+public class BaseTerrainManager : MonoBehaviour {
 
     [SerializeField]
     private bool unlockNewTerrain = false;
 
     private Renderer myRenderer;
-    GameObject buyButton;
+    private GameObject buyButton;
+
     void Awake()
     {
-
         myRenderer = GetComponent<Renderer>();
         buyButton = transform.FindChild("BuyButton").gameObject;
     }
