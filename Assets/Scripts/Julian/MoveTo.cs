@@ -9,15 +9,15 @@
 
 using UnityEngine;
 
-public class MoveTo : MonoBehaviour {
-
-    [SerializeField]
+public class MoveTo : MonoBehaviour
+{
     private Transform goal;
-    NavMeshAgent agent;
+    private NavMeshAgent agent;
 
-	void Start () {
+    void Start()
+    {
+        goal = GameObject.Find("Goal").transform;
         agent = GetComponent<NavMeshAgent>();
-        //agent.destination = goal.position;
     }
 
     void Update()
