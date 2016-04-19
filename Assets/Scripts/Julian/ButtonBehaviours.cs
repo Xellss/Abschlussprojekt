@@ -8,7 +8,7 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class ButtonBehaviours : MonoBehaviour
 {
@@ -57,7 +57,7 @@ public class ButtonBehaviours : MonoBehaviour
     {
         Application.Quit();
     }
-
+    /*
     // Tutorial
     public void OnClick_Tutorial()
     {
@@ -69,4 +69,6 @@ public class ButtonBehaviours : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    */
 }
