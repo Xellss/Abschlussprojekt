@@ -29,11 +29,23 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    //public void OnCollisionEnter(Collision other)
+    //{
+    //    if (other. == "Enemy")
+    //    {
+    //        other.GetComponent<EnemyHP>().Decrease(DamagePoints);
+    //        print("do dmg");
+    //        gameObject.SetActive(false);
+    //    }
+    //}
+
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        //if (other.CompareTag("Enemy"))
+        if (other.tag == "Enemy")
         {
-            other.GetComponent<Health>().Decrease(DamagePoints);
+            other.GetComponent<EnemyHP>().Decrease(DamagePoints);
+            print("do dmg");
             gameObject.SetActive(false);
         }
     }

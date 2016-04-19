@@ -38,6 +38,8 @@ public class TowerController : MonoBehaviour
                     newBulletController.Target = collider.transform;
                     ResetBullet(newBulletController);
 
+                    print("hit");
+
                     if (!Multitargeting)
                         return;
                 }
@@ -51,10 +53,4 @@ public class TowerController : MonoBehaviour
         bullet.SetColor(myRenderer.material.color);
         bullet.gameObject.SetActive(true);
     }
-
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawSphere(myTransform.position, Range);
-    //}
 }
