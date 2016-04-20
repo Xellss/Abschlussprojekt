@@ -8,6 +8,7 @@
 /////////////////////////////////////////////////
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BuildingTypes
 {
@@ -39,6 +40,15 @@ public class BuildingInformation : ScriptableObject
     }
 
     [SerializeField]
+    private Sprite buildingImage;
+
+    public Sprite BuildingImage
+    {
+        get { return buildingImage; }
+        set { buildingImage = value; }
+    }
+
+    [SerializeField]
     private string buildingName;
 
     public string BuildingName
@@ -48,12 +58,12 @@ public class BuildingInformation : ScriptableObject
     }
 
     [SerializeField]
-    private int buildingGoldAmount;
+    private int buildingGoldCost;
 
-    public int BuildingGoldAmount
+    public int BuildingGoldCost
     {
-        get { return buildingGoldAmount; }
-        set { buildingGoldAmount = value; }
+        get { return buildingGoldCost; }
+        set { buildingGoldCost = value; }
     }
 
     [SerializeField]
@@ -64,5 +74,4 @@ public class BuildingInformation : ScriptableObject
         get { return buildingAmount; }
         set { buildingAmount = value; }
     }
-
 }
