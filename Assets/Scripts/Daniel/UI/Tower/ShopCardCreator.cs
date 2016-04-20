@@ -7,36 +7,36 @@
 ///                                           ///
 /////////////////////////////////////////////////
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class ShopCardCreator : MonoBehaviour
 {
-
     [SerializeField]
     private GameObject content;
+
     [SerializeField]
     private BuildingInformation[] buildingInfos;
 
     private GameObject newBuilding;
-
     private Button buildingButton;
     private Image buildingImage;
     private Text buildingName;
     private Text buildingGoldCost;
     private string shopCardMark = "ShopCard_";
 
-    void Awake()
-    {
+    private BuildingSpawn buildingSpawn;
 
+    private void Awake()
+    {
+        buildingSpawn = gameObject.GetComponent<BuildingSpawn>();
     }
 
-    void Start()
+    private void Start()
     {
         createShopCards();
     }
 
-    void createShopCards()
+    private void createShopCards()
     {
         foreach (var buildingInfo in buildingInfos)
         {
@@ -45,11 +45,9 @@ public class ShopCardCreator : MonoBehaviour
             shopCard.name = shopCardMark + buildingInfo.BuildingName;
             editShopCard(shopCard, buildingInfo);
         }
-        
-
     }
 
-    void editShopCard(GameObject currentShopCard, BuildingInformation cardInformation)
+    private void editShopCard(GameObject currentShopCard, BuildingInformation cardInformation)
     {
         buildingButton = currentShopCard.GetComponent<Button>();
         buildingImage = currentShopCard.transform.FindChild("BuildingImage").GetComponent<Image>();
@@ -62,11 +60,13 @@ public class ShopCardCreator : MonoBehaviour
         buildingGoldCost.text = cardInformation.BuildingGoldCost.ToString();
     }
 
-    void OnClickShopCard(BuildingInformation cardInformation)
+    private void OnClickShopCard(BuildingInformation cardInformation)
     {
         transform.GetChild(0).gameObject.SetActive(false);
-        newBuilding = (GameObject)Instantiate(cardInformation.BuildingPrefab,Vector3.zero,Quaternion.identity);
+        newBuilding = (GameObject)Instantiate(cardInformation.BuildingPrefab, Vector3.zero, Quaternion.identity);
+        newBuilding.layer = LayerMask.NameToLayer("NewBuilding");
+        newBuilding.name = cardInformation.BuildingName;
+        buildingSpawn.BuildingPrefab = newBuilding;
+        buildingSpawn.BuildingInformation = cardInformation;
     }
-
-
 }
