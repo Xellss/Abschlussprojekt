@@ -1,12 +1,12 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
-public class BuildingSpawn : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IDragHandler
+public class BuildingSpawn : MonoBehaviour
 {
     private RaycastHit hit;
+    public GameObject grabObject;
 
     private bool buildingPlaced = false;
+    private bool grab = false;
 
     public bool BuildingPlaced
     {
@@ -23,10 +23,6 @@ public class BuildingSpawn : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
     }
 
 
-
-
-
-
     private BuildingInformation buildingInformation;
 
     public BuildingInformation BuildingInformation
@@ -35,30 +31,28 @@ public class BuildingSpawn : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
         set { buildingInformation = value; }
     }
 
-    public void OnDrag(PointerEventData eventData)
+    private void Start()
+    { }
+
+    private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-        Physics.Raycast(ray, out hit);
-        buildingPrefab.transform.position = hit.point;
-
-        Debug.Log(hit.point);
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-        Physics.Raycast(ray, out hit);
-
-        if (hit.transform.gameObject.layer ==  buildingPrefab.layer && !buildingPlaced)
+        if (Input.GetMouseButton(0))
         {
-            print("treffer");
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(ray, out hit);
+            if (buildingPrefab != null)
+            {
+                if (hit.transform.gameObject.layer == buildingPrefab.layer && !grab)
+                {
+                    grabObject = hit.transform.gameObject;
+                    grab = true;
+                }
+                if (grab)
+                    grabObject.transform.position = new Vector3(hit.point.x, 0f, hit.point.z);
+            }
         }
-
-        Debug.Log(hit.point);
+        else
+            grab = false;
     }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        throw new NotImplementedException();
-    }
+  
 }
