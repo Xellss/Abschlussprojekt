@@ -15,6 +15,9 @@ public class ShopCardCreator : MonoBehaviour
     private GameObject content;
 
     [SerializeField]
+    private GameObject buildButton;
+
+    [SerializeField]
     private BuildingInformation[] buildingInfos;
 
     private GameObject newBuilding;
@@ -25,10 +28,12 @@ public class ShopCardCreator : MonoBehaviour
     private string shopCardMark = "ShopCard_";
 
     private BuildingSpawn buildingSpawn;
+    private ShopButtonBehaviour buttonBehaviour;
 
     private void Awake()
     {
         buildingSpawn = gameObject.GetComponent<BuildingSpawn>();
+        buttonBehaviour = gameObject.GetComponent<ShopButtonBehaviour>();
     }
 
     private void Start()
@@ -54,19 +59,10 @@ public class ShopCardCreator : MonoBehaviour
         buildingName = currentShopCard.transform.FindChild("BuildingName").GetComponent<Text>();
         buildingGoldCost = currentShopCard.transform.FindChild("BuildingGoldCost").GetComponent<Text>();
 
-        buildingButton.onClick.AddListener(delegate () { OnClickShopCard(cardInformation); });
+        buildingButton.onClick.AddListener(delegate () {buttonBehaviour.OnClickShopCard(buildingSpawn, cardInformation,buildButton); });
         buildingImage.sprite = cardInformation.BuildingImage;
         buildingName.text = cardInformation.BuildingName;
         buildingGoldCost.text = cardInformation.BuildingGoldCost.ToString();
     }
 
-    private void OnClickShopCard(BuildingInformation cardInformation)
-    {
-        transform.GetChild(0).gameObject.SetActive(false);
-        newBuilding = (GameObject)Instantiate(cardInformation.BuildingPrefab, Vector3.zero, Quaternion.identity);
-        newBuilding.layer = LayerMask.NameToLayer("NewBuilding");
-        newBuilding.name = cardInformation.BuildingName;
-        buildingSpawn.BuildingPrefab = newBuilding;
-        buildingSpawn.BuildingInformation = cardInformation;
-    }
 }
