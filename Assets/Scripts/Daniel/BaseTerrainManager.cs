@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 
 public class BaseTerrainManager : MonoBehaviour
 {
