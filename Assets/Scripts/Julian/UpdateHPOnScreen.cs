@@ -1,36 +1,36 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Julian Hopp             ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UpdateHPOnScreen : MonoBehaviour
 {
+    [SerializeField]
+    private int baseHP = 15;
 
-    void OnCollisionEnter(Collision other)
+    [SerializeField]
+    private Text hPText;
+
+    void Awake()
     {
-        print("collision goal");
-        if (other.gameObject.name == "Goal")
-        {
-            print("goal");
-            gameObject.SetActive(false);
-
-        }
+        hPText.text = baseHP.ToString();
     }
 
     public void OnTriggerEnter(Collider other)
     {
-
-        print("trigger goal");
-
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (other.tag == "Enemy")
+        {
+            baseHP -= other.gameObject.GetComponent<EnemyHP>().CurrentHealth;
+            hPText.text = baseHP.ToString();
+            other.gameObject.SetActive(false);
+        }
     }
 }

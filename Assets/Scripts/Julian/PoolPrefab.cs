@@ -25,8 +25,6 @@ public class PoolPrefab : MonoBehaviour
         set { prefab = value; }
     }
 
-    //public PoolPrefab Prefab { get; set; }
-
     private void OnDisable()
     {
         ObjectPool.Instance.ReturnObjectToPool(this);

@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Julian Hopp             ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 
 public class TowerController : MonoBehaviour
@@ -37,8 +46,6 @@ public class TowerController : MonoBehaviour
                     BulletController newBulletController = newBullet.GetComponent<BulletController>();
                     newBulletController.Target = collider.transform;
                     ResetBullet(newBulletController);
-
-                    print("hit");
 
                     if (!Multitargeting)
                         return;

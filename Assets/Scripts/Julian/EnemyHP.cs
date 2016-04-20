@@ -13,29 +13,36 @@ using System.Collections;
 public class EnemyHP : MonoBehaviour
 {
     [SerializeField]
-    private int maxHealthPoints = 100;
+    private int maxHealth = 100;
     [SerializeField]
-    private int healthPoints = 100;
+    private int currentHealth = 100;
     [SerializeField]
 
-    public int MaxHealthPoints
+    public int MaxHealth
     {
-        get { return maxHealthPoints; }
-        set { maxHealthPoints = value; }
+        get { return maxHealth; }
+        set { maxHealth = value; }
     }
 
-    public int HealthPoints
+    public int CurrentHealth
     {
-        get { return healthPoints; }
-        set { healthPoints = value; }
+        get { return currentHealth; }
+        set { currentHealth = value; }
+    }
+
+    void Awake()
+    {
+        CurrentHealth = MaxHealth;
     }
 
     public void Decrease(int damage)
     {
-        healthPoints = healthPoints - damage;
-        if (healthPoints < 0)
+        currentHealth = currentHealth - damage;
+        transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+
+        if (currentHealth <= 0)
         {
-            print("destroy");
+
             gameObject.SetActive(false);
         }
     }
