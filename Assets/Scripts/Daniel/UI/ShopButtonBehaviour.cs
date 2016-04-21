@@ -7,6 +7,7 @@ public class ShopButtonBehaviour : MonoBehaviour
     private BuildingInformation buildingInformation;
     private GameObject shopButton;
     private GameObject shop;
+    private BuildingCheckSpawnPosition checkPosition;
 
     private void Awake()
     {
@@ -21,6 +22,9 @@ public class ShopButtonBehaviour : MonoBehaviour
         this.buildButton = buildButton;
         transform.GetChild(0).gameObject.SetActive(false);
         newBuilding = (GameObject)Instantiate(cardInformation.BuildingPrefab, Vector3.zero, Quaternion.identity);
+        Rigidbody rigid= newBuilding.AddComponent<Rigidbody>();
+        rigid.isKinematic = true;
+        newBuilding.AddComponent<BuildingCheckSpawnPosition>();
         newBuilding.layer = LayerMask.NameToLayer("NewBuilding");
         newBuilding.name = cardInformation.BuildingName;
         buildingSpawn.BuildingPrefab = newBuilding;
@@ -31,9 +35,17 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnClickBuild()
     {
+        checkPosition = newBuilding.GetComponent<BuildingCheckSpawnPosition>();
+        if (checkPosition.CanBuild)
+        {
+
         newBuilding.layer = LayerMask.NameToLayer(buildingInformation.BuildingTypes.ToString());
+        Component.Destroy(newBuilding.GetComponent<Rigidbody>());
+        Component.Destroy(newBuilding.GetComponent<BuildingCheckSpawnPosition>());
+        newBuilding.GetComponent<BoxCollider>().isTrigger = true;
         buildButton.SetActive(false);
         shopButton.SetActive(true);
+        }
     }
 
     public void OnShopClick()

@@ -34,7 +34,6 @@ public class BuildingSpawn : MonoBehaviour
             Physics.Raycast(ray, out hit);
             if (hit.transform != null)
             {
-
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("NewBuilding") && !grab)
                 {
                     grabObject = hit.transform.gameObject;
