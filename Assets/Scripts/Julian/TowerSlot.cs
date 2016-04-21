@@ -1,4 +1,14 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Julian Hopp             ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+
+
+using UnityEngine;
 using System.Collections;
 
 public class TowerSlot : MonoBehaviour

@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Julian Hopp             ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 
 public class TowerController : MonoBehaviour
@@ -51,10 +60,4 @@ public class TowerController : MonoBehaviour
         bullet.SetColor(myRenderer.material.color);
         bullet.gameObject.SetActive(true);
     }
-
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawSphere(myTransform.position, Range);
-    //}
 }
