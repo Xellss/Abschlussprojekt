@@ -17,10 +17,14 @@ public class UpdateHPOnScreen : MonoBehaviour
     private int baseHP = 15;
 
     [SerializeField]
+    private Image lose_image;
+
+    [SerializeField]
     private Text hPText;
 
     void Awake()
     {
+        lose_image.gameObject.SetActive(false);
         hPText.text = baseHP.ToString();
     }
 
@@ -31,6 +35,10 @@ public class UpdateHPOnScreen : MonoBehaviour
             baseHP -= other.gameObject.GetComponent<EnemyHP>().CurrentHealth;
             hPText.text = baseHP.ToString();
             other.gameObject.SetActive(false);
+            if (baseHP <= 0)
+            {
+                lose_image.gameObject.SetActive(true);
+            }
         }
     }
 }

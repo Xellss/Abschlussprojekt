@@ -18,6 +18,8 @@ public class EnemyHP : MonoBehaviour
     private int currentHealth = 100;
     [SerializeField]
 
+    //ItemDrop dropItemChance = new ItemDrop();
+
     public int MaxHealth
     {
         get { return maxHealth; }
@@ -42,7 +44,7 @@ public class EnemyHP : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-
+            
             gameObject.SetActive(false);
         }
     }

@@ -8,11 +8,14 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
-public static class LevelManager
+public class RestartButton : MonoBehaviour
 {
-    public static int TowerPrice = 100;
-    public static int Money = 400;
-    public static int Health = 3;
-    public static TowerController SelectedTowerPrefab;
+
+   public void OnClick_RestartButton()
+    {
+        SceneManager.LoadScene(1);
+    }
 }

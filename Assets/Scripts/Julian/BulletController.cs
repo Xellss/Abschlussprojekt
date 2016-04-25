@@ -43,11 +43,9 @@ public class BulletController : MonoBehaviour
         if (other.tag == "Enemy")
         {
             other.GetComponent<EnemyHP>().Decrease(DamagePoints);
-            print("do dmg");
             gameObject.SetActive(false);
         }
     }
-
     public void SetColor(Color color)
     {
         myRenderer.material.color = color;
