@@ -46,7 +46,6 @@ public class BulletController : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
     public void SetColor(Color color)
     {
         myRenderer.material.color = color;
