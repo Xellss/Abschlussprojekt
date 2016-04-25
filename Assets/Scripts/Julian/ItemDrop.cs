@@ -8,11 +8,22 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
+using System.Collections;
 
-public static class LevelManager
-{
-    public static int TowerPrice = 100;
-    public static int Money = 400;
-    public static int Health = 3;
-    public static TowerController SelectedTowerPrefab;
+public class ItemDrop : MonoBehaviour {
+
+	public void DropItemChance()
+    {
+
+    }
+    
+    // Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
 }

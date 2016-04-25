@@ -8,11 +8,18 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
+using System.Collections;
 
-public static class LevelManager
-{
-    public static int TowerPrice = 100;
-    public static int Money = 400;
-    public static int Health = 3;
-    public static TowerController SelectedTowerPrefab;
+public class SpawnButton : MonoBehaviour {
+
+    [SerializeField]
+    PoolPrefab enemyPrefab;
+
+	public void SpawnEnemy()
+    {
+        GameObject enemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
+        enemy.transform.position = new Vector3(0, 0, 0);
+      
+    }
+	
 }
