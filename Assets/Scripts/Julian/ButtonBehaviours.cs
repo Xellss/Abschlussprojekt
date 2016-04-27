@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonBehaviours : MonoBehaviour
 {
-    //private Transform credits;
+    private Transform credits;
     //private Transform options;
     private Transform startScreen;
 
@@ -26,8 +26,8 @@ public class ButtonBehaviours : MonoBehaviour
     private void Awake()
     {
         startScreen = transform.FindChild("StartScreen");
-        //credits = startScreen.FindChild("Credit_Image");
-        //credits.gameObject.SetActive(false);
+        credits = startScreen.FindChild("Credit_Image");
+        credits.gameObject.SetActive(false);
         Time.timeScale = timeScale;
     }
 
@@ -39,15 +39,15 @@ public class ButtonBehaviours : MonoBehaviour
     }
 
     // Credits
-    //public void OnClick_Credits()
-    //{
-    //    credits.gameObject.SetActive(true);
-    //}
+    public void OnClick_Credits()
+    {
+        credits.gameObject.SetActive(true);
+    }
 
-    //public void OnClick_Credits_Back()
-    //{
-    //    credits.gameObject.SetActive(false);
-    //}
+    public void OnClick_Credits_Back()
+    {
+        credits.gameObject.SetActive(false);
+    }
 
     //// Options
     //public void OnClick_Options()
