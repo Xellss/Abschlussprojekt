@@ -10,15 +10,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class SpawnButton : MonoBehaviour {
+public class ItemRangeUp : MonoBehaviour
+{
+    private TowerController towerController;
 
-    [SerializeField]
-    PoolPrefab enemyPrefab;
-
-	public void SpawnEnemy()
+    void Awake()
     {
-        GameObject enemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
-        enemy.transform.position = new Vector3(0, 0, 0);
+        towerController = GetComponent<TowerController>();
     }
-	
+
+    public void OnEnable()
+    {
+        towerController.Range += 5;
+    }
+
+    public void OnDisable()
+    {
+        towerController.Range -= 5;
+    }
 }
