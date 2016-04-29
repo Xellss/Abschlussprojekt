@@ -10,15 +10,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class SpawnButton : MonoBehaviour {
+public class KeyInput : MonoBehaviour {
 
-    [SerializeField]
-    PoolPrefab enemyPrefab;
-
-	public void SpawnEnemy()
-    {
-        GameObject enemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
-        enemy.transform.position = new Vector3(0, 0, 0);
-    }
+	// Use this for initialization
+	void Start () {
 	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
 }

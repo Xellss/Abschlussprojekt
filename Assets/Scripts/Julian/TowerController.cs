@@ -18,6 +18,8 @@ public class TowerController : MonoBehaviour
     public float ShootDelay = 1;
 
     public bool Multitargeting = false;
+    public bool MultitargetingItem = false;
+    public int MulitShotCount = 0;
 
     private Transform myTransform;
     private Renderer myRenderer;
@@ -46,11 +48,15 @@ public class TowerController : MonoBehaviour
                     BulletController newBulletController = newBullet.GetComponent<BulletController>();
                     newBulletController.Target = collider.transform;
                     ResetBullet(newBulletController);
+                    MulitShotCount++;
 
-                    if (!Multitargeting)
+                    if (!(MulitShotCount >= 5 && MultitargetingItem))
+                    {
                         return;
+                    }
                 }
             }
+            MulitShotCount = 0;
         }
     }
 
