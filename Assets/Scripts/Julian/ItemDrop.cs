@@ -10,20 +10,20 @@
 using UnityEngine;
 using System.Collections;
 
-public class ItemDrop : MonoBehaviour {
+public class ItemDrop : MonoBehaviour
+{
+    [SerializeField]
+    private int DropChance = 5;
 
-	public void DropItemChance()
+    [SerializeField]
+    private GameObject ItemPrefab;
+
+    public void DropItemCheck()
     {
-
+        int RandomChance = Random.Range(1, 100);
+        if (RandomChance < DropChance)
+        {
+            Instantiate(ItemPrefab, transform.position, Quaternion.identity);
+        }
     }
-    
-    // Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

@@ -16,9 +16,8 @@ public class EnemyHP : MonoBehaviour
     private int maxHealth = 100;
     [SerializeField]
     private int currentHealth = 100;
-    [SerializeField]
 
-    //ItemDrop dropItemChance = new ItemDrop();
+    ItemDrop itemdrop;
 
     public int MaxHealth
     {
@@ -35,6 +34,7 @@ public class EnemyHP : MonoBehaviour
     void Awake()
     {
         CurrentHealth = MaxHealth;
+        itemdrop = GetComponent<ItemDrop>();
     }
 
     public void Decrease(int damage)
@@ -44,7 +44,7 @@ public class EnemyHP : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            
+            itemdrop.DropItemCheck();
             gameObject.SetActive(false);
         }
     }
