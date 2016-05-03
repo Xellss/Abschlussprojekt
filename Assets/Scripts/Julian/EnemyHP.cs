@@ -46,6 +46,8 @@ public class EnemyHP : MonoBehaviour
         {
             itemdrop.DropItemCheck();
             gameObject.SetActive(false);
+            transform.position = new Vector3(0, 2, 0);
+            transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
     }
 }
