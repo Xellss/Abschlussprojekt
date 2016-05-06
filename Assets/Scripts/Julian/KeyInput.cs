@@ -12,11 +12,7 @@ using System.Collections;
 
 public class KeyInput : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
+    [SerializeField]
 	// Update is called once per frame
 	void Update () {
 	
