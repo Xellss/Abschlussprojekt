@@ -42,10 +42,12 @@ public class TowerSlot : MonoBehaviour
         if (hasTower)
             return;
 
-        if (LevelManager.Money < LevelManager.TowerPrice) // && Time.timeScale != 0)
+        if (LevelManager.Money < LevelManager.TowerPrice)
             return;
 
+        LevelManager.Money -= LevelManager.TowerPrice;
         TowerController newTower = (TowerController)Instantiate(towerPrefab, myTransform.position, Quaternion.identity);
+        newTower.transform.Translate(0, 2, 0);
         newTower.transform.SetParent(myTransform);
         hasTower = true;
     }
