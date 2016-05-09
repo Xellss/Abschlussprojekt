@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class EnemyHP : MonoBehaviour
@@ -19,7 +18,7 @@ public class EnemyHP : MonoBehaviour
     private int currentHealth = 100;
     [SerializeField]
     private int GoldDropAmount = 5;
-    [SerializeField]
+
     private Text gold;
 
     ItemDrop itemdrop;
@@ -40,6 +39,8 @@ public class EnemyHP : MonoBehaviour
     {
         CurrentHealth = MaxHealth;
         itemdrop = GetComponent<ItemDrop>();
+        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
+        gold.text = LevelManager.Money.ToString();
     }
     public void Reset()
     {
@@ -56,6 +57,7 @@ public class EnemyHP : MonoBehaviour
         if (currentHealth <= 0)
         {
             LevelManager.Money += GoldDropAmount;
+            gold.text = LevelManager.Money.ToString();
             itemdrop.DropItemCheck();
             Reset();
         }
