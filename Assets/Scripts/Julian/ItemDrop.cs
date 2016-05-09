@@ -13,17 +13,37 @@ using System.Collections;
 public class ItemDrop : MonoBehaviour
 {
     [SerializeField]
-    private int DropChance = 5;
+    private int LowItemDropChance = 5;
+    [SerializeField]
+    private GameObject LowItem;
 
     [SerializeField]
-    private GameObject ItemPrefab;
+    private int MidItemDropChance = 3;
+    [SerializeField]
+    private GameObject MidItem;
+
+    [SerializeField]
+    private int HighItemDropChance = 2;
+    [SerializeField]
+    private GameObject HighItem;
 
     public void DropItemCheck()
     {
         int RandomChance = Random.Range(1, 100);
-        if (RandomChance < DropChance)
+        if (RandomChance < HighItemDropChance)
         {
-            Instantiate(ItemPrefab, transform.position, Quaternion.identity);
+            Instantiate(HighItem, transform.position, Quaternion.identity);
+            return;
+        }
+        if (RandomChance < MidItemDropChance)
+        {
+            Instantiate(MidItem, transform.position, Quaternion.identity);
+            return;
+        }
+        if (RandomChance < LowItemDropChance)
+        {
+            Instantiate(LowItem, transform.position, Quaternion.identity);
+            return;
         }
     }
 }

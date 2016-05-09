@@ -14,7 +14,6 @@ public class SelfDestruction : MonoBehaviour
     {
         Invoke("SelfDestruct", Delay);
     }
-
     private void SelfDestruct()
     {
         switch (DestroyMode)

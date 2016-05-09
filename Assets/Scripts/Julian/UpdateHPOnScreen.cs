@@ -35,6 +35,7 @@ public class UpdateHPOnScreen : MonoBehaviour
             baseHP -= other.gameObject.GetComponent<EnemyHP>().CurrentHealth;
             hPText.text = baseHP.ToString();
             other.gameObject.SetActive(false);
+            other.gameObject.GetComponent<EnemyHP>().Reset();
             if (baseHP <= 0)
             {
                 lose_image.gameObject.SetActive(true);

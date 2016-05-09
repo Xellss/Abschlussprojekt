@@ -41,7 +41,13 @@ public class EnemyHP : MonoBehaviour
         CurrentHealth = MaxHealth;
         itemdrop = GetComponent<ItemDrop>();
     }
-
+    public void Reset()
+    {
+        gameObject.SetActive(false);
+        transform.position = new Vector3(0, 2, 0);
+        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        CurrentHealth = MaxHealth;
+    }
     public void Decrease(int damage)
     {
         currentHealth = currentHealth - damage;
@@ -50,11 +56,8 @@ public class EnemyHP : MonoBehaviour
         if (currentHealth <= 0)
         {
             LevelManager.Money += GoldDropAmount;
-            //gold.text = LevelManager.Money.ToString();
             itemdrop.DropItemCheck();
-            gameObject.SetActive(false);
-            transform.position = new Vector3(0, 2, 0);
-            transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            Reset();
         }
     }
 }
