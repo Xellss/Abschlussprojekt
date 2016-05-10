@@ -15,7 +15,7 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private int enemyCounter;
     [SerializeField]
-    private GameObject enemyPrefab;
+    private PoolPrefab enemyPrefab;
     private GameObject newEnemy;
     [SerializeField]
     private bool spawn;
@@ -24,7 +24,10 @@ public class WaveSpawn : MonoBehaviour
     {
         for (int i = 0; i < enemyCounter; i++)
         {
-            newEnemy = (GameObject)Instantiate(enemyPrefab, spawnPosition(), Quaternion.identity);
+            newEnemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
+            Vector3 position = spawnPosition();
+            newEnemy.transform.position = new Vector3(position.x, 0.7f, position.z);
+           
         }
     }
 

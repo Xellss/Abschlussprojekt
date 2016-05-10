@@ -6,23 +6,32 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[SerializeField]
-public class PlayerInformation : ScriptableObject
+[Serializable]
+public class GameState : MonoBehaviour
 {
     [SerializeField]
-    private int outpostGoldAmount;
+    private List<BuildingModel> buildings;
+    [SerializeField]
+    private int goldAmount;
     [SerializeField]
     private string playerName;
-
     [SerializeField]
-    private int totalGoldAmount;
+    private List<TerrainModel> terrains;
 
-    public int OutpostGoldAmount
+    public List<BuildingModel> Buildings
     {
-        get { return outpostGoldAmount; }
-        set { outpostGoldAmount = value; }
+        get { return buildings; }
+        set { buildings = value; }
+    }
+
+    public int GoldAmount
+    {
+        get { return goldAmount; }
+        set { goldAmount = value; }
     }
 
     public string PlayerName
@@ -31,9 +40,14 @@ public class PlayerInformation : ScriptableObject
         set { playerName = value; }
     }
 
-    public int TotalGoldAmount
+    public List<TerrainModel> Terrains
     {
-        get { return totalGoldAmount; }
-        set { totalGoldAmount = value; }
+        get { return terrains; }
+        set { terrains = value; }
+    }
+
+    private void Awake()
+    {
+        buildings = new List<BuildingModel>();
     }
 }

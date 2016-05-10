@@ -8,15 +8,14 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 
-public class ItemMultishot : MonoBehaviour {
-
+public class ItemMultishot : MonoBehaviour
+{
     private TowerController towerController;
 
-    void Awake()
+    public void OnDisable()
     {
-        towerController = GetComponent<TowerController>();
+        towerController.MultitargetingItem = false;
     }
 
     public void OnEnable()
@@ -24,8 +23,8 @@ public class ItemMultishot : MonoBehaviour {
         towerController.MultitargetingItem = true;
     }
 
-    public void OnDisable()
+    private void Awake()
     {
-        towerController.MultitargetingItem = false;
+        towerController = GetComponent<TowerController>();
     }
 }

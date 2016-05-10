@@ -1,23 +1,20 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 
 public class BuildingSpawn : MonoBehaviour
 {
-    private RaycastHit hit;
-    private GameObject grabObject;
-
-    private bool grab = false;
-
-
-    private GameObject buildingPrefab;
-
-    public GameObject BuildingPrefab
-    {
-        get { return buildingPrefab; }
-        set { buildingPrefab = value; }
-    }
-
-
     private BuildingInformation buildingInformation;
+    private GameObject buildingPrefab;
+    private bool grab = false;
+    private GameObject grabObject;
+    private RaycastHit hit;
 
     public BuildingInformation BuildingInformation
     {
@@ -25,9 +22,14 @@ public class BuildingSpawn : MonoBehaviour
         set { buildingInformation = value; }
     }
 
+    public GameObject BuildingPrefab
+    {
+        get { return buildingPrefab; }
+        set { buildingPrefab = value; }
+    }
+
     private void Update()
     {
-
         if (Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -40,12 +42,10 @@ public class BuildingSpawn : MonoBehaviour
                     grab = true;
                 }
                 if (grab)
-                    grabObject.transform.position = new Vector3(Mathf.Round( hit.point.x), 0f,Mathf.Round( hit.point.z));
+                    grabObject.transform.position = new Vector3(Mathf.Round(hit.point.x), 0f, Mathf.Round(hit.point.z));
             }
-            }
+        }
         else
             grab = false;
-        
     }
-  
 }

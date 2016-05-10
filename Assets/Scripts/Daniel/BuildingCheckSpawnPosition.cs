@@ -7,14 +7,12 @@
 ///                                           ///
 /////////////////////////////////////////////////
 using UnityEngine;
-using System.Collections;
 
 public class BuildingCheckSpawnPosition : MonoBehaviour
 {
-    Renderer renderer;
-    Color myColor;
-
     private bool canBuild = true;
+    private Color myColor;
+    private Renderer renderer;
 
     public bool CanBuild
     {
@@ -22,19 +20,7 @@ public class BuildingCheckSpawnPosition : MonoBehaviour
         set { canBuild = value; }
     }
 
-    void Awake()
-    {
-        renderer = GetComponent<Renderer>();
-        myColor = renderer.material.color;
-    }
     public void OnTriggerEnter(Collider other)
-    {
-        renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 100f);
-        renderer.material.color = Color.red;
-        canBuild = false;
-    }
-
-    public void OnTriggerStay(Collider other)
     {
         renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 100f);
         renderer.material.color = Color.red;
@@ -45,5 +31,18 @@ public class BuildingCheckSpawnPosition : MonoBehaviour
     {
         renderer.material.color = myColor;
         canBuild = true;
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, 100f);
+        renderer.material.color = Color.red;
+        canBuild = false;
+    }
+
+    private void Awake()
+    {
+        renderer = GetComponent<Renderer>();
+        myColor = renderer.material.color;
     }
 }

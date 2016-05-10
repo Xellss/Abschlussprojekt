@@ -8,24 +8,40 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 
 public class BulletController : MonoBehaviour
 {
-    public Transform Target { get; set; }
-    public float Speed;
     public int DamagePoints;
 
-    private Transform myTransform;
+    public float Speed;
+
     private Renderer myRenderer;
 
-    void Awake()
+    private Transform myTransform;
+
+    public Transform Target { get; set; }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+            other.GetComponent<EnemyHP>().Decrease(DamagePoints);
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void SetColor(Color color)
+    {
+        myRenderer.material.color = color;
+    }
+
+    private void Awake()
     {
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponentInChildren<Renderer>();
     }
 
-    void Update()
+    private void Update()
     {
         if (Target && Target.gameObject.activeInHierarchy)
         {
@@ -37,19 +53,4 @@ public class BulletController : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Enemy")
-        {
-            other.GetComponent<EnemyHP>().Decrease(DamagePoints);
-            gameObject.SetActive(false);
-        }
-    }
-    public void SetColor(Color color)
-    {
-        myRenderer.material.color = color;
-    }
-    
 }
-

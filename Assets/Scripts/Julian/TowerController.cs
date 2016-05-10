@@ -8,31 +8,23 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 
 public class TowerController : MonoBehaviour
 {
     public PoolPrefab BulletPrefab;
     public Transform BulletSpawnpoint;
-    public float Range = 10;
-    public float ShootDelay = 1;
-
+    public int MulitShotCount = 0;
     public bool Multitargeting = false;
     public bool MultitargetingItem = false;
-    public int MulitShotCount = 0;
-
-    private Transform myTransform;
+    public float Range = 10;
+    public float ShootDelay = 1;
     private Renderer myRenderer;
+    private Transform myTransform;
 
-    void Awake()
+    private void Awake()
     {
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponentInChildren<Renderer>();
-    }
-
-    void Start()
-    {
-        InvokeRepeating("CheckRangeForEnemies", 0, ShootDelay);
     }
 
     private void CheckRangeForEnemies()
@@ -65,5 +57,10 @@ public class TowerController : MonoBehaviour
         bullet.transform.position = BulletSpawnpoint.position;
         bullet.SetColor(myRenderer.material.color);
         bullet.gameObject.SetActive(true);
+    }
+
+    private void Start()
+    {
+        InvokeRepeating("CheckRangeForEnemies", 0, ShootDelay);
     }
 }

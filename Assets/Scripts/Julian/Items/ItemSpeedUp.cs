@@ -8,15 +8,14 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 
-public class ItemSpeedUp : MonoBehaviour {
-
+public class ItemSpeedUp : MonoBehaviour
+{
     private TowerController towerController;
 
-    void Awake()
+    public void OnDisable()
     {
-        towerController = GetComponent<TowerController>();
+        towerController.Range -= 5;
     }
 
     public void OnEnable()
@@ -24,8 +23,8 @@ public class ItemSpeedUp : MonoBehaviour {
         towerController.ShootDelay += 5;
     }
 
-    public void OnDisable()
+    private void Awake()
     {
-        towerController.Range -= 5;
+        towerController = GetComponent<TowerController>();
     }
 }

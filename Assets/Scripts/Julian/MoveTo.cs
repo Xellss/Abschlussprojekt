@@ -11,16 +11,16 @@ using UnityEngine;
 
 public class MoveTo : MonoBehaviour
 {
-    private Transform goal;
     private NavMeshAgent agent;
+    private Transform goal;
 
-    void Start()
+    private void Start()
     {
         goal = GameObject.Find("Goal").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
-    void Update()
+    private void Update()
     {
         agent.SetDestination(goal.position);
     }

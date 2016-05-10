@@ -6,17 +6,22 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class AttackButtonBehaviour : MonoBehaviour
+public class StartMainGame : MonoBehaviour
 {
-    // Use this for initialization
-    private void Start()
+    private void Awake()
     {
+        DontDestroyOnLoad(this);
     }
 
-    // Update is called once per frame
-    private void Update()
+    private IEnumerator Start()
     {
+        yield return SceneManager.LoadSceneAsync("MainBase", LoadSceneMode.Additive);
+        Scene mainBase = SceneManager.GetSceneByName("MainBase");
+        SceneManager.SetActiveScene(mainBase);
+        Component.Destroy(this);
     }
 }

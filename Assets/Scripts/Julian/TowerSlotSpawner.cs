@@ -8,18 +8,16 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 
 public class TowerSlotSpawner : MonoBehaviour
 {
-    [SerializeField]
-    private Transform TowerSlot;
-
     public float Hight = 30;
     public float Length = 30;
     public float Width = 30;
+    [SerializeField]
+    private Transform TowerSlot;
 
-    void Start()
+    private void Start()
     {
         for (int x = 0; x < Width; x++)
         {
@@ -28,6 +26,5 @@ public class TowerSlotSpawner : MonoBehaviour
                 Instantiate(TowerSlot, new Vector3(x, Hight, z), Quaternion.identity);
             }
         }
-
     }
 }

@@ -1,8 +1,15 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 
-public class OutpostButtonBehavior : MonoBehaviour {
+public class OutpostButtonBehavior : MonoBehaviour
+{
     [SerializeField]
     private GameObject terrainContainer;
 

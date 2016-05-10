@@ -8,24 +8,21 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 
 public class ItemDrop : MonoBehaviour
 {
     [SerializeField]
-    private int LowItemDropChance = 5;
-    [SerializeField]
-    private GameObject LowItem;
-
-    [SerializeField]
-    private int MidItemDropChance = 3;
-    [SerializeField]
-    private GameObject MidItem;
-
+    private GameObject HighItem;
     [SerializeField]
     private int HighItemDropChance = 2;
     [SerializeField]
-    private GameObject HighItem;
+    private GameObject LowItem;
+    [SerializeField]
+    private int LowItemDropChance = 5;
+    [SerializeField]
+    private GameObject MidItem;
+    [SerializeField]
+    private int MidItemDropChance = 3;
 
     public void DropItemCheck()
     {
