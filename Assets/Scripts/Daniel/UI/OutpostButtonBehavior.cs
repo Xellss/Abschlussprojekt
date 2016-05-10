@@ -8,17 +8,6 @@ public class OutpostButtonBehavior : MonoBehaviour {
 
     public void OnClickOutpostMission()
     {
-        StartCoroutine(loadOutpostMission());
-
+        new GameObject("", typeof(SwitchToOutpostScene));
     }
-
-    private IEnumerator loadOutpostMission()
-    {
-        yield return SceneManager.LoadSceneAsync("Prototyp", LoadSceneMode.Additive);
-        terrainContainer.SetActive(false);
-        this.gameObject.SetActive(false);
-
-        yield return null;
-    }
-
 }

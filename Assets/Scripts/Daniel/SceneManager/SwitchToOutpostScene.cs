@@ -2,20 +2,24 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///           Author: Julian Hopp             ///
+///           Author: Daniel Lause            ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
-
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BackToMainBase : MonoBehaviour
+public class SwitchToOutpostScene : MonoBehaviour
 {
-
-    public void OnClick_BackToMainBase()
+    private void Awake()
     {
-        new GameObject("", typeof(SwitchToMainScene));
+        DontDestroyOnLoad(this);
+    }
+
+    private IEnumerator Start()
+    {
+        yield return SceneManager.LoadSceneAsync("Prototyp");
+        Destroy(gameObject);
     }
 }
