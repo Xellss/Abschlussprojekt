@@ -7,17 +7,18 @@
 ///                                           ///
 /////////////////////////////////////////////////
 using UnityEngine;
-using System.Collections;
 
-public class BuyButton : MonoBehaviour {
+public class BuyButton : MonoBehaviour
+{
+    private BaseTerrainManager terrainManager;
 
-    BaseTerrainManager terrainManager;
-    void Awake()
-    {
-        terrainManager= transform.parent.GetComponent<BaseTerrainManager>();
-    }
     public void OnBuyButtonClicked()
     {
         terrainManager.UnlockTerrain = true;
+    }
+
+    private void Awake()
+    {
+        terrainManager = transform.parent.GetComponent<BaseTerrainManager>();
     }
 }

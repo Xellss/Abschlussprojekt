@@ -10,6 +10,10 @@ using UnityEngine;
 
 public class BaseTerrainManager : MonoBehaviour
 {
+    private GameObject buyButton;
+    private Component[] myComponents;
+    private Renderer renderer;
+    private GameObject towerSlot;
     [SerializeField]
     private bool unlockTerrain;
 
@@ -19,34 +23,20 @@ public class BaseTerrainManager : MonoBehaviour
         set { unlockTerrain = value; }
     }
 
-    private GameObject buyButton;
-    private GameObject towerSlot;
-    private Renderer renderer;
-    Component[] myComponents;
     private void Awake()
     {
-
         buyButton = transform.FindChild("BuyButton").gameObject;
         myComponents = transform.GetComponents(typeof(Component));
         renderer = gameObject.GetComponent<Renderer>();
     }
 
-    private void Update()
+    private void clearComponents()
     {
-        if (unlockTerrain)
-            unlock();
-    }
-
-    private void unlock()
-    {
-        //towerSlot = (GameObject)Resources.Load("Prefabs/TowerSlot");
-        //spawnSlots();
-        gameObject.name = "UnlockedTerrain";
-        gameObject.tag = "UnlockedTerrain";
-        //clearComponents();
-        Component.Destroy(this);
-        renderer.material.color = Color.green;
-        GameObject.Destroy(buyButton);
+        foreach (var component in myComponents)
+        {
+            if ((component.GetType() != typeof(Transform)) && (component.GetType() != typeof(BoxCollider)))
+                Component.Destroy(component);
+        }
     }
 
     private void spawnSlots()
@@ -65,12 +55,22 @@ public class BaseTerrainManager : MonoBehaviour
         //    }
         //}
     }
-    private void clearComponents()
+
+    private void unlock()
     {
-        foreach (var component in myComponents)
-        {
-            if ((component.GetType() != typeof(Transform)) && (component.GetType() != typeof(BoxCollider)))
-                Component.Destroy(component);
-        }
+        //towerSlot = (GameObject)Resources.Load("Prefabs/TowerSlot");
+        //spawnSlots();
+        gameObject.name = "UnlockedTerrain";
+        gameObject.tag = "UnlockedTerrain";
+        //clearComponents();
+        Component.Destroy(this);
+        renderer.material.color = Color.green;
+        GameObject.Destroy(buyButton);
+    }
+
+    private void Update()
+    {
+        if (unlockTerrain)
+            unlock();
     }
 }

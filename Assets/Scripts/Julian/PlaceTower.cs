@@ -7,15 +7,21 @@
 ///                                           ///
 /////////////////////////////////////////////////
 
+using System;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.EventSystems;
 
-public class PlaceTower : MonoBehaviour {
+public class PlaceTower : MonoBehaviour, IPointerClickHandler
+{
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        throw new NotImplementedException();
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
     // ipointer drag handler
     // ipointer up handler
@@ -24,7 +30,7 @@ public class PlaceTower : MonoBehaviour {
     // ipointer
 
     // Update is called once per frame
-    void Update () {
-	
-	}
+    private void Update()
+    {
+    }
 }

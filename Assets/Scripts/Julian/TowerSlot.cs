@@ -12,33 +12,31 @@ using UnityEngine.UI;
 
 public class TowerSlot : MonoBehaviour
 {
+    private Text gold;
+    private bool hasTower = false;
+    private Renderer myRenderer;
+    private Transform myTransform;
     [SerializeField]
     private TowerController towerPrefab;
 
-    private Transform myTransform;
-    private Renderer myRenderer;
-
-    private Text gold;
-    private bool hasTower = false;
-
-    void Awake()
+    private void Awake()
     {
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponent<Renderer>();
         gold = GameObject.Find("GoldAmount").GetComponent<Text>();
     }
 
-    void OnMouseEnter()
+    private void OnMouseEnter()
     {
         myRenderer.material.color = Color.red;
     }
 
-    void OnMouseExit()
+    private void OnMouseExit()
     {
         myRenderer.material.color = Color.green;
     }
 
-    void OnMouseUp()
+    private void OnMouseUp()
     {
         if (hasTower)
             return;

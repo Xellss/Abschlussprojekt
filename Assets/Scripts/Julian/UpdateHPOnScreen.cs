@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class UpdateHPOnScreen : MonoBehaviour
@@ -17,16 +16,9 @@ public class UpdateHPOnScreen : MonoBehaviour
     private int baseHP = 15;
 
     [SerializeField]
-    private Image lose_image;
-
-    [SerializeField]
     private Text hPText;
-
-    void Awake()
-    {
-        lose_image.gameObject.SetActive(false);
-        hPText.text = baseHP.ToString();
-    }
+    [SerializeField]
+    private Image lose_image;
 
     public void OnTriggerEnter(Collider other)
     {
@@ -41,5 +33,11 @@ public class UpdateHPOnScreen : MonoBehaviour
                 lose_image.gameObject.SetActive(true);
             }
         }
+    }
+
+    private void Awake()
+    {
+        lose_image.gameObject.SetActive(false);
+        hPText.text = baseHP.ToString();
     }
 }

@@ -29,7 +29,7 @@ public class ShopCardCreator : MonoBehaviour
     private GameObject newBuilding;
     [SerializeField]
     private Button shopCardBuildButton;
-    private Button shopCardButton; 
+    private Button shopCardButton;
 
     private string shopCardMark = "ShopCard_";
 

@@ -13,21 +13,13 @@ using UnityEngine.UI;
 public class EnemyHP : MonoBehaviour
 {
     [SerializeField]
-    private int maxHealth = 100;
-    [SerializeField]
     private int currentHealth = 100;
+    private Text gold;
     [SerializeField]
     private int GoldDropAmount = 5;
-
-    private Text gold;
-
-    ItemDrop itemdrop;
-
-    public int MaxHealth
-    {
-        get { return maxHealth; }
-        set { maxHealth = value; }
-    }
+    private ItemDrop itemdrop;
+    [SerializeField]
+    private int maxHealth = 100;
 
     public int CurrentHealth
     {
@@ -35,20 +27,12 @@ public class EnemyHP : MonoBehaviour
         set { currentHealth = value; }
     }
 
-    void Awake()
+    public int MaxHealth
     {
-        CurrentHealth = MaxHealth;
-        itemdrop = GetComponent<ItemDrop>();
-        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
-        gold.text = LevelManager.Money.ToString();
+        get { return maxHealth; }
+        set { maxHealth = value; }
     }
-    public void Reset()
-    {
-        gameObject.SetActive(false);
-        transform.position = new Vector3(0, 2, 0);
-        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-        CurrentHealth = MaxHealth;
-    }
+
     public void Decrease(int damage)
     {
         currentHealth = currentHealth - damage;
@@ -61,5 +45,21 @@ public class EnemyHP : MonoBehaviour
             itemdrop.DropItemCheck();
             Reset();
         }
+    }
+
+    public void Reset()
+    {
+        gameObject.SetActive(false);
+        transform.position = new Vector3(0, 2, 0);
+        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        CurrentHealth = MaxHealth;
+    }
+
+    private void Awake()
+    {
+        CurrentHealth = MaxHealth;
+        itemdrop = GetComponent<ItemDrop>();
+        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
+        gold.text = LevelManager.Money.ToString();
     }
 }

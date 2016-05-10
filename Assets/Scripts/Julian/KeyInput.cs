@@ -8,13 +8,13 @@
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using System.Collections;
 
-public class KeyInput : MonoBehaviour {
-
+public class KeyInput : MonoBehaviour
+{
     [SerializeField]
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private
+    // Update is called once per frame
+    void Update()
+    {
+    }
 }
