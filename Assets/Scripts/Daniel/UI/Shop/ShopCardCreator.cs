@@ -6,39 +6,61 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopCardCreator : MonoBehaviour
 {
     [SerializeField]
-    private GameObject content;
-
-    [SerializeField]
     private GameObject buildButton;
-
+    private Text buildingGoldCost;
+    private Image buildingImage;
+    [SerializeField]
+    private Text buildingInformation;
     [SerializeField]
     private BuildingInformation[] buildingInfos;
-
-    private GameObject newBuilding;
-    private Button buildingButton;
-    private Image buildingImage;
     private Text buildingName;
-    private Text buildingGoldCost;
-    private string shopCardMark = "ShopCard_";
-
     private BuildingSpawn buildingSpawn;
     private ShopButtonBehaviour buttonBehaviour;
+    [SerializeField]
+    private GameObject content;
+    private BuildingInformation currentBuildingInformation;
+    private GameObject newBuilding;
+    [SerializeField]
+    private Button shopCardBuildButton;
+    private Button shopCardButton; 
+
+    private string shopCardMark = "ShopCard_";
+
+    private Dictionary<GameObject, BuildingInformation> shopCards;
+
+    public Text BuildingInformation
+    {
+        get { return buildingInformation; }
+        set { buildingInformation = value; }
+    }
+
+    public void CanBuyBuilding(PlayerInformation playerInformation)
+    {
+        foreach (var shopCard in shopCards)
+        {
+            if (shopCard.Value.BuildingGoldCost > playerInformation.TotalGoldAmount)
+            {
+                shopCard.Key.GetComponent<Image>().color = Color.red;
+            }
+            else
+            {
+                shopCard.Key.GetComponent<Image>().color = Color.white;
+            }
+        }
+    }
 
     private void Awake()
     {
         buildingSpawn = gameObject.GetComponent<BuildingSpawn>();
         buttonBehaviour = gameObject.GetComponent<ShopButtonBehaviour>();
-    }
-
-    private void Start()
-    {
-        createShopCards();
+        shopCards = new Dictionary<GameObject, BuildingInformation>();
     }
 
     private void createShopCards()
@@ -49,20 +71,25 @@ public class ShopCardCreator : MonoBehaviour
             shopCard.transform.SetParent(content.transform);
             shopCard.name = shopCardMark + buildingInfo.BuildingName;
             editShopCard(shopCard, buildingInfo);
+            shopCards.Add(shopCard, buildingInfo);
         }
     }
 
     private void editShopCard(GameObject currentShopCard, BuildingInformation cardInformation)
     {
-        buildingButton = currentShopCard.GetComponent<Button>();
+        shopCardButton = currentShopCard.GetComponent<Button>();
         buildingImage = currentShopCard.transform.FindChild("BuildingImage").GetComponent<Image>();
         buildingName = currentShopCard.transform.FindChild("BuildingName").GetComponent<Text>();
         buildingGoldCost = currentShopCard.transform.FindChild("BuildingGoldCost").GetComponent<Text>();
 
-        buildingButton.onClick.AddListener(delegate () {buttonBehaviour.OnClickShopCard(buildingSpawn, cardInformation,buildButton); });
+        shopCardButton.onClick.AddListener(delegate () { buttonBehaviour.OnClickShopCard(buildingSpawn, cardInformation, buildButton, buildingInformation, shopCardBuildButton); });
         buildingImage.sprite = cardInformation.BuildingImage;
         buildingName.text = cardInformation.BuildingName;
         buildingGoldCost.text = cardInformation.BuildingGoldCost.ToString();
     }
 
+    private void Start()
+    {
+        createShopCards();
+    }
 }

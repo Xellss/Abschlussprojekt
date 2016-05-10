@@ -74,4 +74,14 @@ public class BuildingInformation : ScriptableObject
         get { return buildingAmount; }
         set { buildingAmount = value; }
     }
+
+    [SerializeField,TextArea]
+    private string buildingInformationText;
+
+    public string BuildingInformationText
+    {
+        get { return buildingInformationText; }
+        set { buildingInformationText = value; }
+    }
+
 }
