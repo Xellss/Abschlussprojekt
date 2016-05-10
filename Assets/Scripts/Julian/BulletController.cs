@@ -50,5 +50,6 @@ public class BulletController : MonoBehaviour
     {
         myRenderer.material.color = color;
     }
+    
 }
 

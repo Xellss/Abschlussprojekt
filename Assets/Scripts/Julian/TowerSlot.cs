@@ -7,9 +7,8 @@
 ///                                           ///
 /////////////////////////////////////////////////
 
-
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
 public class TowerSlot : MonoBehaviour
 {
@@ -19,12 +18,14 @@ public class TowerSlot : MonoBehaviour
     private Transform myTransform;
     private Renderer myRenderer;
 
+    private Text gold;
     private bool hasTower = false;
 
     void Awake()
     {
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponent<Renderer>();
+        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
     }
 
     void OnMouseEnter()
@@ -42,10 +43,13 @@ public class TowerSlot : MonoBehaviour
         if (hasTower)
             return;
 
-        if (LevelManager.Money < LevelManager.TowerPrice) // && Time.timeScale != 0)
+        if (LevelManager.Money < LevelManager.TowerPrice)
             return;
 
+        LevelManager.Money -= LevelManager.TowerPrice;
+        gold.text = LevelManager.Money.ToString();
         TowerController newTower = (TowerController)Instantiate(towerPrefab, myTransform.position, Quaternion.identity);
+        newTower.transform.Translate(0, 2, 0);
         newTower.transform.SetParent(myTransform);
         hasTower = true;
     }

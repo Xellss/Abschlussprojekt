@@ -9,16 +9,13 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class GameMode : MonoBehaviour {
+public class BackToMainBase : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public void OnClick_BackToMainBase()
+    {
+        new GameObject("", typeof(SwitchToMainScene));
+    }
 }
