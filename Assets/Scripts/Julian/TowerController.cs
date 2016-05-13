@@ -14,7 +14,6 @@ public class TowerController : MonoBehaviour
     public PoolPrefab BulletPrefab;
     public Transform BulletSpawnpoint;
     public int MulitShotCount = 0;
-    public bool Multitargeting = false;
     public bool MultitargetingItem = false;
     public float Range = 10;
     public float ShootDelay = 1;

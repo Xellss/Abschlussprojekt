@@ -6,6 +6,7 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,6 @@ public class ObjectPool : MonoBehaviour
 
     private Transform myTransform;
 
-    // Dict<Asset, Queue<Instance>>
     private Dictionary<PoolPrefab, Queue<PoolPrefab>> poolDict = new Dictionary<PoolPrefab, Queue<PoolPrefab>>();
 
     [SerializeField]
@@ -32,19 +32,13 @@ public class ObjectPool : MonoBehaviour
             {
                 instance = FindObjectOfType<ObjectPool>();
                 if (instance == null)
-                    Debug.LogError("You need to have at least one ObjectPool component in your hierarchy");
+                    Debug.LogError("No ObjectPool component in your hierarchy found.");
             }
 
             return instance;
         }
     }
 
-    /// <summary>
-    /// <para>Returns an active Instance of the original Prefab-Asset from the Pool.</para>
-    /// <para>Don't forget to reset the returned Object.</para>
-    /// <para>PoolPrefabs return to the pool on SetActive(false).</para>
-    /// </summary>
-    /// <param name="prefab">The original Prefab-Asset.</param>
     public GameObject GetPooledObject(PoolPrefab prefab)
     {
         EnsureNewObject(prefab);
@@ -70,19 +64,10 @@ public class ObjectPool : MonoBehaviour
         myTransform = GetComponent<Transform>();
     }
 
-    /// <summary>
-    /// <para>Creates a new instance of a prefab and sets it inactive.</para>
-    /// </summary>
-    /// <param name="prefab">The original Prefab-Asset.</param>
-    /// <param name="force">if true: force the pool to instanciate a new object.</param>
     private void EnsureNewObject(PoolPrefab prefab, bool force = false)
     {
         Queue<PoolPrefab> pool = this.poolDict[prefab];
 
-        // if (force == true)...........................................................then instanciate a new object
-        // if (force == false AND there are no objects in the pool AND it can grow).....then instanciate a new object
-        // if (      "        AND                "                 AND it can't grow)...then no object is instanciated
-        // if (      "        AND there is at least one object in the pool).............then no object is instanciated
         if (!force && (pool.Count > 0 || !canGrowDict[prefab]))
             return;
 

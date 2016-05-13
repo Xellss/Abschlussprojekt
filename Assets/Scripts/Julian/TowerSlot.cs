@@ -9,6 +9,8 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System;
 
 public class TowerSlot : MonoBehaviour
 {
@@ -28,12 +30,19 @@ public class TowerSlot : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        myRenderer.material.color = Color.red;
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            myRenderer.material.color = Color.red;
+
+        }
     }
 
     private void OnMouseExit()
     {
-        myRenderer.material.color = Color.green;
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            myRenderer.material.color = Color.green;
+        }
     }
 
     private void OnMouseUp()
@@ -44,11 +53,14 @@ public class TowerSlot : MonoBehaviour
         if (LevelManager.Money < LevelManager.TowerPrice)
             return;
 
-        LevelManager.Money -= LevelManager.TowerPrice;
-        gold.text = LevelManager.Money.ToString();
-        TowerController newTower = (TowerController)Instantiate(towerPrefab, myTransform.position, Quaternion.identity);
-        newTower.transform.Translate(0, 2, 0);
-        newTower.transform.SetParent(myTransform);
-        hasTower = true;
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            LevelManager.Money -= LevelManager.TowerPrice;
+            gold.text = LevelManager.Money.ToString();
+            TowerController newTower = (TowerController)Instantiate(towerPrefab, myTransform.position, Quaternion.identity);
+            newTower.transform.Translate(0, 2, 0);
+            newTower.transform.SetParent(myTransform);
+            hasTower = true;
+        }
     }
 }

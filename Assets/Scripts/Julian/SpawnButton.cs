@@ -29,6 +29,6 @@ public class SpawnButton : MonoBehaviour
             GameObject enemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
             enemy.transform.position = new Vector3(0, 0, 0);
         }
-        WaveCounter += 5;
+        WaveCounter += 4;
     }
 }

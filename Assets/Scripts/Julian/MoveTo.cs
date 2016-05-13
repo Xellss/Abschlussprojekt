@@ -23,5 +23,10 @@ public class MoveTo : MonoBehaviour
     private void Update()
     {
         agent.SetDestination(goal.position);
+
+        if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+
+        }
     }
 }
