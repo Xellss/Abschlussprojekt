@@ -15,13 +15,10 @@ public class ButtonBehaviours : MonoBehaviour
     private Transform credits;
     [SerializeField]
     private float normalSpeed = 1;
-    //private Transform options;
     private Transform startScreen;
 
     [SerializeField]
     private float timeScale = 0;
-    //[SerializeField]
-    //private float doubleSpeed = 1;
 
     // Credits
     public void OnClick_Credits()
