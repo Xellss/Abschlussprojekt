@@ -27,6 +27,10 @@ public class ShopButtonBehaviour : MonoBehaviour
     [SerializeField]
     private Text shopGoldAmount;
 
+    [SerializeField]
+    GameObject MainCamera;
+    [SerializeField]
+    GameObject RTSCamera;
     public void OnClickBuild()
     {
         checkPosition = newBuilding.GetComponent<BuildingCheckSpawnPosition>();
@@ -40,7 +44,10 @@ public class ShopButtonBehaviour : MonoBehaviour
             buildButton.SetActive(false);
             shopButton.SetActive(true);
             missionButton.SetActive(true);
-            gameState.Buildings.Add(new BuildingModel(newBuilding, newBuilding.transform));
+            //gameState.Buildings.Add(new BuildingModel(newBuilding, newBuilding.transform));
+            RTSCamera.SetActive(true);
+            MainCamera.SetActive(false);
+
         }
     }
 
@@ -62,7 +69,7 @@ public class ShopButtonBehaviour : MonoBehaviour
         shopButton.SetActive(false);
         missionButton.SetActive(false);
         shop.SetActive(false);
-        newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, Vector3.zero, Quaternion.identity);
+        newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, new Vector3(0,2,0), Quaternion.identity);
         Rigidbody rigid = newBuilding.AddComponent<Rigidbody>();
         rigid.isKinematic = true;
         newBuilding.AddComponent<BuildingCheckSpawnPosition>();
@@ -71,6 +78,8 @@ public class ShopButtonBehaviour : MonoBehaviour
         buildingSpawn.BuildingPrefab = newBuilding;
         buildingSpawn.BuildingInformation = buildingCardInformation;
         buildButton.SetActive(true);
+        MainCamera.SetActive(true);
+        RTSCamera.SetActive(false);
     }
 
     public void OnShopClick()
@@ -93,6 +102,8 @@ public class ShopButtonBehaviour : MonoBehaviour
         buildButton.SetActive(false);
         shopButton.SetActive(true);
         missionButton.SetActive(true);
+        RTSCamera.SetActive(true);
+        MainCamera.SetActive(false);
     }
 
     private void Awake()

@@ -42,7 +42,7 @@ public class BuildingSpawn : MonoBehaviour
                     grab = true;
                 }
                 if (grab)
-                    grabObject.transform.position = new Vector3(Mathf.Round(hit.point.x), 0f, Mathf.Round(hit.point.z));
+                    grabObject.transform.position = new Vector3(Mathf.Round(hit.point.x), 2f, Mathf.Round(hit.point.z));
             }
         }
         else
