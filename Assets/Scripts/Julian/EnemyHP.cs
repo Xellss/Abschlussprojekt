@@ -14,6 +14,7 @@ public class EnemyHP : MonoBehaviour
 {
     [SerializeField]
     private int currentHealth = 100;
+    private GameState gameState;
     private Text gold;
     [SerializeField]
     private int GoldDropAmount = 5;
@@ -40,8 +41,13 @@ public class EnemyHP : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            LevelManager.Money += GoldDropAmount;
-            gold.text = LevelManager.Money.ToString();
+            gameState.OutPostGoldAmount += GoldDropAmount;
+            if (gold!=null)
+            {
+
+            gold.text = gameState.OutPostGoldAmount.ToString();
+            }
+            //gold.text = LevelManager.Money.ToString();
             itemdrop.DropItemCheck();
             Reset();
         }
@@ -57,9 +63,17 @@ public class EnemyHP : MonoBehaviour
 
     private void Awake()
     {
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
         CurrentHealth = MaxHealth;
         itemdrop = GetComponent<ItemDrop>();
-        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
-        gold.text = LevelManager.Money.ToString();
+        if (GameObject.Find("GoldAmountOutpost") != null)
+        {
+            gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
+            gold.text = gameState.OutPostGoldAmount.ToString();
+        }
+
+
+
+        //gold.text = LevelManager.Money.ToString();
     }
 }

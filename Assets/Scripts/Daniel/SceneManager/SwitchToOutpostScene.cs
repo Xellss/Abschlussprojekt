@@ -15,11 +15,15 @@ public class SwitchToOutpostScene : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        DontDestroyOnLoad(FindObjectOfType(typeof(GameState)));
     }
 
     private IEnumerator Start()
     {
-        yield return SceneManager.LoadSceneAsync("Prototyp");
+        SceneManager.UnloadScene("MainBase");
+        yield return SceneManager.LoadSceneAsync("Prototyp",LoadSceneMode.Additive);
+        Scene prototyp = SceneManager.GetSceneByName("Prototyp");
+        SceneManager.SetActiveScene(prototyp);
         Destroy(gameObject);
     }
 }

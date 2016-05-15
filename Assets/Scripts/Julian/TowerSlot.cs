@@ -21,11 +21,16 @@ public class TowerSlot : MonoBehaviour
     [SerializeField]
     private TowerController towerPrefab;
 
+    private GameState gameState;
+
     private void Awake()
     {
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponent<Renderer>();
-        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
+        if (GameObject.Find("GoldAmountOutpost") != null)
+        gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
+
     }
 
     private void OnMouseEnter()
@@ -50,13 +55,14 @@ public class TowerSlot : MonoBehaviour
         if (hasTower)
             return;
 
-        if (LevelManager.Money < LevelManager.TowerPrice)
+        if (gameState.OutPostGoldAmount < LevelManager.TowerPrice)
             return;
 
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            LevelManager.Money -= LevelManager.TowerPrice;
-            gold.text = LevelManager.Money.ToString();
+            gameState.OutPostGoldAmount -= LevelManager.TowerPrice;
+
+            gold.text = gameState.OutPostGoldAmount.ToString();
             TowerController newTower = (TowerController)Instantiate(towerPrefab, myTransform.position, Quaternion.identity);
             newTower.transform.Translate(0, 2, 0);
             newTower.transform.SetParent(myTransform);

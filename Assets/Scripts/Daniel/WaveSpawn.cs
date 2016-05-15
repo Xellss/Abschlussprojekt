@@ -1,11 +1,13 @@
 ﻿/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+using System.Collections;
+using System.Collections.Generic;
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
 ///           Author: Daniel Lause            ///
 ///                                           ///
 ///                                           ///
-/////////////////////////////////////////////////
 using UnityEngine;
 
 public class WaveSpawn : MonoBehaviour
@@ -13,22 +15,40 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private Edge[] edges;
     [SerializeField]
-    private int enemyCounter;
+    private int spawnPointCounter;
+    [SerializeField]
+    private int enemyCountPerSpawnPoint;
     [SerializeField]
     private PoolPrefab enemyPrefab;
-    private GameObject newEnemy;
     [SerializeField]
     private bool spawn;
+    [SerializeField]
+    private float spawnDelay;
+
+    [SerializeField]
+    private List<Vector3> spawnPoints;
+    private GameObject newEnemy;
+
+    void Awake()
+    {
+        spawnPoints = new List<Vector3>();
+    }
 
     public void SpawnEnemy()
     {
-        for (int i = 0; i < enemyCounter; i++)
+        for (int i = 0; i < spawnPointCounter; i++)
         {
-            newEnemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
-            Vector3 position = spawnPosition();
-            newEnemy.transform.position = new Vector3(position.x, 0.7f, position.z);
-           
+            spawnPoints.Add(spawnPosition());
         }
+
+        foreach (var spawnPoint in spawnPoints)
+        {
+            for (int k = 0; k < enemyCountPerSpawnPoint; k++)
+            {
+                StartCoroutine(spawnerDelay(spawnDelay, spawnPoint));
+            }
+        }
+        spawnPoints.Clear();
     }
 
     private Vector3 spawnPosition()
@@ -42,10 +62,18 @@ public class WaveSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (spawn)
-        {
-            spawn = false;
-            SpawnEnemy();
-        }
+        //if (spawn)
+        //{
+        //    spawn = false;
+        //    SpawnEnemy();
+        //}
+    }
+
+    IEnumerator spawnerDelay(float delayTime, Vector3 spawnPosition)
+    {
+        yield return new WaitForSeconds(delayTime);
+        newEnemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
+        newEnemy.transform.position = new Vector3(spawnPosition.x, 0.7f, spawnPosition.z);
+
     }
 }

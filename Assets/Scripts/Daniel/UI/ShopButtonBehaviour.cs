@@ -86,6 +86,15 @@ public class ShopButtonBehaviour : MonoBehaviour
         shop.SetActive(false);
     }
 
+    public void OnCancelBuildClick()
+    {
+        //playerInformation.TotalGoldAmount += buildingCardInformation.BuildingGoldCost;
+        GameObject.Destroy(newBuilding);
+        buildButton.SetActive(false);
+        shopButton.SetActive(true);
+        missionButton.SetActive(true);
+    }
+
     private void Awake()
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));

@@ -21,6 +21,15 @@ public class GameState : MonoBehaviour
     private string playerName;
     [SerializeField]
     private List<TerrainModel> terrains;
+    [SerializeField]
+    private int outPostGoldAmount;
+
+    public int OutPostGoldAmount
+    {
+        get { return outPostGoldAmount; }
+        set { outPostGoldAmount = value; }
+    }
+
 
     public List<BuildingModel> Buildings
     {
