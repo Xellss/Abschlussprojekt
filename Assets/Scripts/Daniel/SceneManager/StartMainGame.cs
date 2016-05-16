@@ -12,13 +12,13 @@ using UnityEngine.SceneManagement;
 
 public class StartMainGame : MonoBehaviour
 {
-
     [SerializeField]
     private GameObject loadingCanvis;
     private void Awake()
     {
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(loadingCanvis);
+
     }
 
     private IEnumerator Start()

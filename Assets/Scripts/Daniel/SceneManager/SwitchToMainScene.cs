@@ -21,8 +21,8 @@ public class SwitchToMainScene : MonoBehaviour
     {
         SceneManager.UnloadScene("Prototyp");
         yield return SceneManager.LoadSceneAsync("MainBase", LoadSceneMode.Additive);
-        Scene prototyp = SceneManager.GetSceneByName("MainBase");
-        SceneManager.SetActiveScene(prototyp);
+        Scene mainBase = SceneManager.GetSceneByName("MainBase");
+        SceneManager.SetActiveScene(mainBase);
         Destroy(gameObject);
     }
 }

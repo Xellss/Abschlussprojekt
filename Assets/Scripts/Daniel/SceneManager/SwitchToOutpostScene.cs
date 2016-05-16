@@ -12,10 +12,11 @@ using UnityEngine.SceneManagement;
 
 public class SwitchToOutpostScene : MonoBehaviour
 {
+
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(FindObjectOfType(typeof(GameState)));
+
     }
 
     private IEnumerator Start()

@@ -13,8 +13,9 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    public bool MainBaseScene;
     private static ObjectPool instance;
-
+    private EnemyDestination enemyDestination;
     private Dictionary<PoolPrefab, bool> canGrowDict = new Dictionary<PoolPrefab, bool>();
 
     private Transform myTransform;
@@ -49,6 +50,7 @@ public class ObjectPool : MonoBehaviour
             return null;
 
         GameObject instance = pool.Dequeue().gameObject;
+        ///*enemyDestination*/.SetDestination(instance);
         instance.SetActive(true);
 
         return instance;
@@ -62,6 +64,7 @@ public class ObjectPool : MonoBehaviour
     private void Awake()
     {
         myTransform = GetComponent<Transform>();
+        enemyDestination = GetComponent<EnemyDestination>();
     }
 
     private void EnsureNewObject(PoolPrefab prefab, bool force = false)

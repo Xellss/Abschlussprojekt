@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class ShopButtonBehaviour : MonoBehaviour
 {
-    private GameObject buildButton;
+    //private GameObject buildButton;
     private BuildingInformation buildingCardInformation;
     private Text buildingInformationText;
     private BuildingSpawn buildingSpawn;
@@ -21,30 +21,39 @@ public class ShopButtonBehaviour : MonoBehaviour
     private GameObject missionButton;
     private GameObject newBuilding;
     [SerializeField]
-    private PlayerInformation playerInformation;
+    Text goldAmount;
+    //[SerializeField]
+    //private PlayerInformation playerInformation;
     private GameObject shop;
     private GameObject shopButton;
     [SerializeField]
     private Text shopGoldAmount;
-
+    [SerializeField]
+    GameObject shopBuildButton;
     [SerializeField]
     GameObject MainCamera;
     [SerializeField]
     GameObject RTSCamera;
+    GameObject newBuildingCanvas;
+    GameObject[] terrainBuyButtons;
     public void OnClickBuild()
     {
         checkPosition = newBuilding.GetComponent<BuildingCheckSpawnPosition>();
         if (checkPosition.CanBuild)
         {
-            playerInformation.TotalGoldAmount -= buildingCardInformation.BuildingGoldCost;
+            gameState.GoldAmount-= buildingCardInformation.BuildingGoldCost;
+            goldAmount.text = gameState.GoldAmount.ToString();
             newBuilding.layer = LayerMask.NameToLayer(buildingCardInformation.BuildingTypes.ToString());
+            newBuilding.tag = "Building";
             Component.Destroy(newBuilding.GetComponent<Rigidbody>());
             Component.Destroy(newBuilding.GetComponent<BuildingCheckSpawnPosition>());
             newBuilding.GetComponent<BoxCollider>().isTrigger = true;
-            buildButton.SetActive(false);
+            //buildButton.SetActive(false);
             shopButton.SetActive(true);
             missionButton.SetActive(true);
             //gameState.Buildings.Add(new BuildingModel(newBuilding, newBuilding.transform));
+            newBuildingCanvas.SetActive(false);
+            terrainButtonEnable(true);
             RTSCamera.SetActive(true);
             MainCamera.SetActive(false);
 
@@ -53,7 +62,7 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnClickShopCard(BuildingSpawn buildingSpawn, BuildingInformation cardInformation, GameObject buildButton, Text buildingInformation, Button shopCardBuildButton)
     {
-        this.buildButton = buildButton;
+        //this.buildButton = buildButton;
         this.buildingSpawn = buildingSpawn;
         //buildingInformationText = buildingInformation;
 
@@ -61,6 +70,15 @@ public class ShopButtonBehaviour : MonoBehaviour
         {
             buildingInformation.text = cardInformation.BuildingInformationText.ToString();
             this.buildingCardInformation = cardInformation;
+            shopBuildButton.SetActive(true);
+            if (gameState.GoldAmount>= cardInformation.BuildingGoldCost)
+            {
+                shopBuildButton.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                shopBuildButton.GetComponent<Button>().interactable = false;
+            }
         }
     }
 
@@ -69,7 +87,7 @@ public class ShopButtonBehaviour : MonoBehaviour
         shopButton.SetActive(false);
         missionButton.SetActive(false);
         shop.SetActive(false);
-        newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, new Vector3(0,2,0), Quaternion.identity);
+        newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, new Vector3(0,0,0), Quaternion.identity);
         Rigidbody rigid = newBuilding.AddComponent<Rigidbody>();
         rigid.isKinematic = true;
         newBuilding.AddComponent<BuildingCheckSpawnPosition>();
@@ -77,21 +95,24 @@ public class ShopButtonBehaviour : MonoBehaviour
         newBuilding.name = buildingCardInformation.BuildingName;
         buildingSpawn.BuildingPrefab = newBuilding;
         buildingSpawn.BuildingInformation = buildingCardInformation;
-        buildButton.SetActive(true);
+        newBuildingCanvas = newBuilding.transform.FindChild("Canvas").gameObject;
+        newBuildingCanvas.SetActive(true);
+        terrainButtonEnable(false);
         MainCamera.SetActive(true);
         RTSCamera.SetActive(false);
     }
 
     public void OnShopClick()
     {
-        shopGoldAmount.text = playerInformation.TotalGoldAmount.ToString();
-        cardCreator.CanBuyBuilding(playerInformation);
+        shopGoldAmount.text = gameState.GoldAmount.ToString();
+        cardCreator.CanBuyBuilding();
+        shopBuildButton.SetActive(false);
+        buildingInformationText.text = "Wähle eine Shop Karte aus, um Informationen zu erhalten oder dieses Gebäude zu bauen.";
         shop.SetActive(true);
     }
 
     public void OnShopCloseClick()
     {
-        buildingInformationText.text = "";
         shop.SetActive(false);
     }
 
@@ -99,9 +120,10 @@ public class ShopButtonBehaviour : MonoBehaviour
     {
         //playerInformation.TotalGoldAmount += buildingCardInformation.BuildingGoldCost;
         GameObject.Destroy(newBuilding);
-        buildButton.SetActive(false);
+        //buildButton.SetActive(false);
         shopButton.SetActive(true);
         missionButton.SetActive(true);
+        terrainButtonEnable(true);
         RTSCamera.SetActive(true);
         MainCamera.SetActive(false);
     }
@@ -115,5 +137,16 @@ public class ShopButtonBehaviour : MonoBehaviour
         shop = transform.FindChild("Shop").gameObject;
         cardCreator = GetComponent<ShopCardCreator>();
         buildingInformationText = cardCreator.BuildingInformation;
+
+        terrainBuyButtons = GameObject.FindGameObjectsWithTag("BuyButton");
+        goldAmount.text = gameState.GoldAmount.ToString();
+    }
+
+    private void terrainButtonEnable(bool enable)
+    {
+        foreach (var buyButton in terrainBuyButtons)
+        {
+            buyButton.SetActive(enable);
+        }
     }
 }

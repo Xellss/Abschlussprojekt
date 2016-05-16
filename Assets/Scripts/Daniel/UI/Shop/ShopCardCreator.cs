@@ -31,6 +31,9 @@ public class ShopCardCreator : MonoBehaviour
     private Button shopCardBuildButton;
     private Button shopCardButton;
 
+    private GameState gameState;
+
+
     private string shopCardMark = "ShopCard_";
 
     private Dictionary<GameObject, BuildingInformation> shopCards;
@@ -41,11 +44,11 @@ public class ShopCardCreator : MonoBehaviour
         set { buildingInformation = value; }
     }
 
-    public void CanBuyBuilding(PlayerInformation playerInformation)
+    public void CanBuyBuilding()
     {
         foreach (var shopCard in shopCards)
         {
-            if (shopCard.Value.BuildingGoldCost > playerInformation.TotalGoldAmount)
+            if (shopCard.Value.BuildingGoldCost > gameState.GoldAmount)
             {
                 shopCard.Key.GetComponent<Image>().color = Color.red;
             }
@@ -58,6 +61,8 @@ public class ShopCardCreator : MonoBehaviour
 
     private void Awake()
     {
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+
         buildingSpawn = gameObject.GetComponent<BuildingSpawn>();
         buttonBehaviour = gameObject.GetComponent<ShopButtonBehaviour>();
         shopCards = new Dictionary<GameObject, BuildingInformation>();
