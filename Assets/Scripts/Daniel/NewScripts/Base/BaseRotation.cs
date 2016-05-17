@@ -3,28 +3,26 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
-public class BaseRotation : MonoBehaviour, IPointerClickHandler,IPointerUpHandler,IDragHandler {
+public class BaseRotation : MonoBehaviour, IDragHandler
+{
 
     [SerializeField]
-    private GameObject rotateObject;
-    [SerializeField]
-    private float RotationSpeed;
+    private float RotationSpeed = 1;
 
 
 
 
     public void OnDrag(PointerEventData eventData)
     {
-        throw new NotImplementedException();
-    }
+        Vector2 position = eventData.position;
+        Vector2 oldPosition = position - eventData.delta;
+        Vector2 center = Camera.main.WorldToScreenPoint(Vector3.zero);
+        Vector2 direction = position-center;
+        Vector2 oldDirection = oldPosition-center;
+        var v = Vector2.Angle(oldDirection, direction);
+        if (Vector3.Cross(direction,oldDirection).z <0)
+            v = -v;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        throw new NotImplementedException();
+        transform.Rotate(0, v * RotationSpeed, 0, Space.Self);
     }
 }
