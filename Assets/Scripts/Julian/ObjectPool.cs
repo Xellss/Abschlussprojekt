@@ -50,7 +50,6 @@ public class ObjectPool : MonoBehaviour
             return null;
 
         GameObject instance = pool.Dequeue().gameObject;
-        ///*enemyDestination*/.SetDestination(instance);
         instance.SetActive(true);
 
         return instance;

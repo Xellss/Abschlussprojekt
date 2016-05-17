@@ -15,7 +15,6 @@ public class BuildingSpawn : MonoBehaviour
     private bool grab = false;
     private GameObject grabObject;
     private RaycastHit hit;
-    private GameObject loseScreen;
 
     public BuildingInformation BuildingInformation
     {
@@ -29,11 +28,6 @@ public class BuildingSpawn : MonoBehaviour
         set { buildingPrefab = value; }
     }
 
-    void Awake()
-    {
-        loseScreen = GameObject.Find("Lose_Image");
-        loseScreen.SetActive(false);
-    }
     private void Update()
     {
         if (Input.GetMouseButton(0))

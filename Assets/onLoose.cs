@@ -3,13 +3,17 @@ using System.Collections;
 
 public class onLoose : MonoBehaviour
 {
-    GameObject looseScreen;
+    [SerializeField]
+    private GameObject loseScreen;
+
+    public GameObject LoseScreen
+    {
+        get { return loseScreen; }
+        set { loseScreen = value; }
+    }
+
     void Awake()
     {
-        looseScreen = GameObject.Find("Lose_Image");
-    }
-    public void OnDestroy()
-    {
-        looseScreen.SetActive(true);
+        loseScreen.SetActive(false);
     }
 }

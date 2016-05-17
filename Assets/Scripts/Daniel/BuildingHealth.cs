@@ -20,8 +20,12 @@ public class BuildingHealth : MonoBehaviour
     private RectTransform canvasRect;
     private RectTransform hpImage;
 
+    [SerializeField]
+    private onLoose globalScripts;
+
     private void Awake()
     {
+        globalScripts = GameObject.Find("GlobalScripts").GetComponent<onLoose>();
         hpCanvas = transform.FindChild("HP").gameObject;
         canvasRect = hpCanvas.GetComponent<RectTransform>();
         hpBackgroundImage = hpCanvas.transform.FindChild("HPBackgroundImage").GetComponent<RectTransform>();
@@ -66,7 +70,7 @@ public class BuildingHealth : MonoBehaviour
 
         if (currentHealth == 0)
         {
-            GameObject.Destroy(this.gameObject);
+            onDeath();
         }
     }
 
@@ -86,5 +90,16 @@ public class BuildingHealth : MonoBehaviour
     public void EditMaxHealth(float newMaxHealth)
     {
         maxHealth = newMaxHealth;
+    }
+
+
+    private void onDeath()
+    {
+        if (this.gameObject.layer == LayerMask.NameToLayer("MainBuilding"))
+        {
+        globalScripts.LoseScreen.SetActive(true);
+        globalScripts.gameObject.SetActive(false);
+        }
+        GameObject.Destroy(this.gameObject);
     }
 }

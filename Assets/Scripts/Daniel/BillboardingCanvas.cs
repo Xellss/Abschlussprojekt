@@ -27,12 +27,6 @@ public class BillboardingCanvas : MonoBehaviour {
         cameraTransform = GameObject.Find("Main Camera").transform;
     }
 
-    void FixedUpdate()
-    {
-        //myRect.LookAt(cameraTransform);
-        //myRect.rotation = Quaternion.LookRotation((transform.position),-cameraTransform.position);
-
-    }
 
 
 }
