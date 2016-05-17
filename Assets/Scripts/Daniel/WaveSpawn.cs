@@ -27,6 +27,8 @@ public class WaveSpawn : MonoBehaviour
 
     [SerializeField]
     private List<Vector3> spawnPoints;
+
+
     private GameObject newEnemy;
 
     void Awake()
@@ -73,7 +75,7 @@ public class WaveSpawn : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
         newEnemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
-        newEnemy.transform.position = new Vector3(spawnPosition.x, 0.7f, spawnPosition.z);
+        newEnemy.transform.position = spawnPosition;
 
     }
 }
