@@ -60,9 +60,10 @@ public class TowerSlot : MonoBehaviour
 
         if (!EventSystem.current.IsPointerOverGameObject())
         {
+
             gameState.OutPostGoldAmount -= LevelManager.TowerPrice;
 
-            gold.text = gameState.OutPostGoldAmount.ToString();
+            //gold.text = gameState.OutPostGoldAmount.ToString();
             TowerController newTower = (TowerController)Instantiate(towerPrefab, myTransform.position, Quaternion.identity);
             newTower.transform.Translate(0, 2, 0);
             newTower.transform.SetParent(myTransform);
