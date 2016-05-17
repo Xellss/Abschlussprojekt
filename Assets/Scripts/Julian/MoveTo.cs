@@ -20,11 +20,13 @@ public class MoveTo : MonoBehaviour
     private bool setLevel = false;
     public bool SearchNewBuilding = true;
     float distance = 99999999;
+    GameObject loseScreen;
     GameObject currentAttackBuilding;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         StartCoroutine(resetPath());
+        loseScreen = GameObject.Find("Lose_Image");
     }
 
     IEnumerator resetPath()
