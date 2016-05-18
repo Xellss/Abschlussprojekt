@@ -33,6 +33,8 @@ public class BuildingInformation : ScriptableObject
     [SerializeField]
     private GameObject buildingPrefab;
     [SerializeField]
+    private int buildingSellPrice;
+    [SerializeField]
     private BuildingTypes buildingTypes;
 
     public int BuildingAmount
@@ -69,6 +71,12 @@ public class BuildingInformation : ScriptableObject
     {
         get { return buildingPrefab; }
         set { buildingPrefab = value; }
+    }
+
+    public int BuildingSellPrice
+    {
+        get { return buildingSellPrice; }
+        set { buildingSellPrice = value; }
     }
 
     public BuildingTypes BuildingTypes

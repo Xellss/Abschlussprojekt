@@ -28,6 +28,7 @@ public class ShopButtonBehaviour : MonoBehaviour
     private Text shopGoldAmount;
     private TowerSlot towerSlotScript;
     private Transform towerSlotTransform;
+    private DestroyBuildedTower sellBuilding;
 
     public void OnClickGiveGold()
     {
@@ -57,6 +58,9 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnClickShopCardBuild()
     {
+        sellBuilding = towerSlotTransform.GetComponent<DestroyBuildedTower>();
+        sellBuilding.BuildingInformation = buildingCardInformation;
+        sellBuilding.enabled = true;
         gameState.GoldAmount -= buildingCardInformation.BuildingGoldCost;
         goldAmount.text = gameState.GoldAmount.ToString();
         shop.SetActive(false);
