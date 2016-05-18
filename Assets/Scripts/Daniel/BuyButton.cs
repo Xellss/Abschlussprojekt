@@ -14,7 +14,7 @@ public class BuyButton : MonoBehaviour
 
     public void OnBuyButtonClicked()
     {
-        terrainManager.UnlockTerrain = true;
+        terrainManager.UnlockTerrain();
     }
 
     private void Awake()

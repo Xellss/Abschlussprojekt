@@ -23,10 +23,10 @@ public class StartMainGame : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return SceneManager.LoadSceneAsync("MainBase", LoadSceneMode.Additive);
+        yield return SceneManager.LoadSceneAsync("MainBase");
         Scene mainBase = SceneManager.GetSceneByName("MainBase");
         loadingCanvis.SetActive(false);
         SceneManager.SetActiveScene(mainBase);
-        Component.Destroy(this);
+        GameObject.Destroy(this.gameObject);
     }
 }
