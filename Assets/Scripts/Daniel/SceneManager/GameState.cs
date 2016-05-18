@@ -59,4 +59,11 @@ public class GameState : MonoBehaviour
     {
         buildings = new List<BuildingModel>();
     }
+    private void Update()
+    {
+        if (goldAmount < 0)
+        {
+            goldAmount = 0;
+        }
+    }
 }

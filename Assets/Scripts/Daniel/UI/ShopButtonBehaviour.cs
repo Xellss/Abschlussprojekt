@@ -25,7 +25,6 @@ public class ShopButtonBehaviour : MonoBehaviour
     //[SerializeField]
     //private PlayerInformation playerInformation;
     private GameObject shop;
-    private GameObject shopButton;
     [SerializeField]
     private Text shopGoldAmount;
     [SerializeField]
@@ -36,6 +35,8 @@ public class ShopButtonBehaviour : MonoBehaviour
     GameObject RTSCamera;
     GameObject newBuildingCanvas;
     GameObject[] terrainBuyButtons;
+    private Transform towerSlotTransform;
+    private TowerSlot towerSlotScript;
     public void OnClickBuild()
     {
         checkPosition = newBuilding.GetComponent<BuildingCheckSpawnPosition>();
@@ -49,7 +50,6 @@ public class ShopButtonBehaviour : MonoBehaviour
             Component.Destroy(newBuilding.GetComponent<BuildingCheckSpawnPosition>());
             newBuilding.GetComponent<BoxCollider>().isTrigger = true;
             //buildButton.SetActive(false);
-            shopButton.SetActive(true);
             missionButton.SetActive(true);
             //gameState.Buildings.Add(new BuildingModel(newBuilding, newBuilding.transform));
             newBuildingCanvas.SetActive(false);
@@ -84,26 +84,26 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnClickShopCardBuild()
     {
-        shopButton.SetActive(false);
-        missionButton.SetActive(false);
+        gameState.GoldAmount -= buildingCardInformation.BuildingGoldCost;
+        goldAmount.text = gameState.GoldAmount.ToString();
         shop.SetActive(false);
-        newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, new Vector3(0,0,0), Quaternion.identity);
-        Rigidbody rigid = newBuilding.AddComponent<Rigidbody>();
-        rigid.isKinematic = true;
-        newBuilding.AddComponent<BuildingCheckSpawnPosition>();
-        newBuilding.layer = LayerMask.NameToLayer("NewBuilding");
+        newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, towerSlotTransform.position, Quaternion.identity);
+        //Rigidbody rigid = newBuilding.AddComponent<Rigidbody>();
+        //rigid.isKinematic = true;
+        //newBuilding.AddComponent<BuildingCheckSpawnPosition>();
+        newBuilding.layer = LayerMask.NameToLayer(buildingCardInformation.BuildingTypes.ToString());
         newBuilding.name = buildingCardInformation.BuildingName;
+        newBuilding.transform.SetParent(towerSlotTransform);
+        towerSlotScript.enabled = false;
+        newBuilding.tag = "Building";
         buildingSpawn.BuildingPrefab = newBuilding;
         buildingSpawn.BuildingInformation = buildingCardInformation;
-        newBuildingCanvas = newBuilding.transform.FindChild("Canvas").gameObject;
-        newBuildingCanvas.SetActive(true);
-        terrainButtonEnable(false);
-        MainCamera.SetActive(true);
-        RTSCamera.SetActive(false);
     }
 
-    public void OnShopClick()
+    public void OnTowerSlotClick(Transform slotPosition, TowerSlot towerSlotScript)
     {
+        this.towerSlotScript = towerSlotScript;
+        this.towerSlotTransform = slotPosition;
         shopGoldAmount.text = gameState.GoldAmount.ToString();
         cardCreator.CanBuyBuilding();
         shopBuildButton.SetActive(false);
@@ -118,10 +118,7 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnCancelBuildClick()
     {
-        //playerInformation.TotalGoldAmount += buildingCardInformation.BuildingGoldCost;
         GameObject.Destroy(newBuilding);
-        //buildButton.SetActive(false);
-        shopButton.SetActive(true);
         missionButton.SetActive(true);
         terrainButtonEnable(true);
         RTSCamera.SetActive(true);
@@ -132,7 +129,6 @@ public class ShopButtonBehaviour : MonoBehaviour
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         gameObject.GetComponent<BuildingSpawn>();
-        shopButton = transform.FindChild("ShopButton").gameObject;
         missionButton = transform.FindChild("MissionButton").gameObject;
         shop = transform.FindChild("Shop").gameObject;
         cardCreator = GetComponent<ShopCardCreator>();

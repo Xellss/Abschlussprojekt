@@ -12,7 +12,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class TowerSlot : MonoBehaviour
+public class TowerSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler
 {
     private Text gold;
     private bool hasTower = false;
@@ -20,11 +20,14 @@ public class TowerSlot : MonoBehaviour
     private Transform myTransform;
     [SerializeField]
     private TowerController towerPrefab;
+    ShopButtonBehaviour shopButtonBehavior;
 
     private GameState gameState;
 
     private void Awake()
     {
+
+        shopButtonBehavior = (ShopButtonBehaviour)FindObjectOfType(typeof(ShopButtonBehaviour));
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponent<Renderer>();
@@ -32,42 +35,30 @@ public class TowerSlot : MonoBehaviour
         gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
 
     }
-
-    private void OnMouseEnter()
+    void Start()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            myRenderer.material.color = Color.red;
 
-        }
     }
 
-    private void OnMouseExit()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
             myRenderer.material.color = Color.green;
-        }
     }
 
-    private void OnMouseUp()
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+            myRenderer.material.color = Color.cyan;
+    }
+
+   
+
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (hasTower)
             return;
 
-        if (gameState.OutPostGoldAmount < LevelManager.TowerPrice)
-            return;
+        gameState.OutPostGoldAmount -= LevelManager.TowerPrice;
+        shopButtonBehavior.OnTowerSlotClick(transform,this);
 
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-
-            gameState.OutPostGoldAmount -= LevelManager.TowerPrice;
-
-            //gold.text = gameState.OutPostGoldAmount.ToString();
-            TowerController newTower = (TowerController)Instantiate(towerPrefab, myTransform.position, Quaternion.identity);
-            newTower.transform.Translate(0, 2, 0);
-            newTower.transform.SetParent(myTransform);
-            hasTower = true;
-        }
     }
 }

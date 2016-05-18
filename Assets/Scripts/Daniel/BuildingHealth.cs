@@ -19,6 +19,7 @@ public class BuildingHealth : MonoBehaviour
     private GameObject hpCanvas;
     private RectTransform canvasRect;
     private RectTransform hpImage;
+    private TowerSlot towerSlotScript;
 
     [SerializeField]
     private onLoose globalScripts;
@@ -34,6 +35,7 @@ public class BuildingHealth : MonoBehaviour
 
     private void Start()
     {
+        towerSlotScript = transform.GetComponentInParent<TowerSlot>();
         setMaxSize(canvasRect);
         setMaxSize(hpImage);
         setMaxSize(hpBackgroundImage);
@@ -100,6 +102,7 @@ public class BuildingHealth : MonoBehaviour
         globalScripts.LoseScreen.SetActive(true);
         globalScripts.gameObject.SetActive(false);
         }
+        towerSlotScript.enabled = true;
         GameObject.Destroy(this.gameObject);
     }
 }
