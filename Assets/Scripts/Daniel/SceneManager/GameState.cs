@@ -18,16 +18,20 @@ public class GameState : MonoBehaviour
     [SerializeField]
     private int goldAmount;
     [SerializeField]
+    private int outPostGoldAmount;
+    [SerializeField]
     private string playerName;
     [SerializeField]
     private List<TerrainModel> terrains;
-    [SerializeField]
-    private int outPostGoldAmount;
 
-    public int OutPostGoldAmount
+    [SerializeField]
+    private GameObject loseScreen;
+
+
+    public GameObject LoseScreen
     {
-        get { return outPostGoldAmount; }
-        set { outPostGoldAmount = value; }
+        get { return loseScreen; }
+        set { loseScreen = value; }
     }
 
 
@@ -41,6 +45,12 @@ public class GameState : MonoBehaviour
     {
         get { return goldAmount; }
         set { goldAmount = value; }
+    }
+
+    public int OutPostGoldAmount
+    {
+        get { return outPostGoldAmount; }
+        set { outPostGoldAmount = value; }
     }
 
     public string PlayerName
@@ -58,7 +68,9 @@ public class GameState : MonoBehaviour
     private void Awake()
     {
         buildings = new List<BuildingModel>();
+        loseScreen.SetActive(false);
     }
+
     private void Update()
     {
         if (goldAmount < 0)

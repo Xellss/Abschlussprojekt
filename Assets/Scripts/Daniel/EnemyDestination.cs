@@ -1,18 +1,24 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 
-public class EnemyDestination : MonoBehaviour {
+public class EnemyDestination : MonoBehaviour
+{
+    private MoveTo moveTo;
+    private ObjectPool objectPool;
+    private GameObject objectPoolGO;
 
-
-    MoveTo moveTo;
-    ObjectPool objectPool;
-    GameObject objectPoolGO;
-    void Awake()
+    private void Awake()
     {
         if (GameObject.Find("ObjectPool") != null)
         {
-        objectPoolGO = GameObject.Find("ObjectPool");
+            objectPoolGO = GameObject.Find("ObjectPool");
         }
         else
         {
@@ -22,10 +28,10 @@ public class EnemyDestination : MonoBehaviour {
         moveTo = GetComponent<MoveTo>();
     }
 
-    void Start()
+    private void Start()
     {
         moveTo.MainBaseLevel = objectPool.MainBaseScene;
         moveTo.SearchNewBuilding = true;
     }
-    //private MoveTo[] enemyMoveTos;
+
 }

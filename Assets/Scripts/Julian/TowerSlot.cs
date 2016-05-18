@@ -2,27 +2,55 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
 ///           Author: Julian Hopp             ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
+using UnityEngine.UI;
 
-public class TowerSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler, IPointerUpHandler
+public class TowerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerUpHandler
 {
+    private GameState gameState;
     private Text gold;
+    private GameObject ground;
     private bool hasTower = false;
     private Renderer myRenderer;
     private Transform myTransform;
+    private ShopButtonBehaviour shopButtonBehavior;
     [SerializeField]
     private TowerController towerPrefab;
-    ShopButtonBehaviour shopButtonBehavior;
-    GameObject ground;
-    private GameState gameState;
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ground.layer = LayerMask.NameToLayer("Default");
+        shopButtonBehavior.OnTowerSlotClick(transform, this);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        myRenderer.material.color = Color.cyan;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        myRenderer.material.color = Color.green;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        ground.layer = LayerMask.NameToLayer("Ground");
+    }
 
     private void Awake()
     {
@@ -32,33 +60,10 @@ public class TowerSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponent<Renderer>();
         if (GameObject.Find("GoldAmountOutpost") != null)
-        gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
-
-    }
-    void Start()
-    {
-
+            gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    private void Start()
     {
-            myRenderer.material.color = Color.green;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-            myRenderer.material.color = Color.cyan;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        ground.layer = LayerMask.NameToLayer("Default");
-        shopButtonBehavior.OnTowerSlotClick(transform,this);
-
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        ground.layer = LayerMask.NameToLayer("Ground");
     }
 }

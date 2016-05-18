@@ -13,6 +13,6 @@ public class BackToMainBase : MonoBehaviour
 {
     public void OnClick_BackToMainBase()
     {
-        new GameObject("", typeof(SwitchToMainScene));
+        //new GameObject("", typeof(SwitchToMainScene));
     }
 }

@@ -26,14 +26,11 @@ public class ShopCardCreator : MonoBehaviour
     [SerializeField]
     private GameObject content;
     private BuildingInformation currentBuildingInformation;
+    private GameState gameState;
     private GameObject newBuilding;
     [SerializeField]
     private Button shopCardBuildButton;
     private Button shopCardButton;
-
-    private GameState gameState;
-
-
     private string shopCardMark = "ShopCard_";
 
     private Dictionary<GameObject, BuildingInformation> shopCards;

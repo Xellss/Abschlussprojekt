@@ -11,50 +11,42 @@ using UnityEngine;
 
 public class BuildingHealth : MonoBehaviour
 {
-    [SerializeField]
-    private float maxHealth;
+    private RectTransform canvasRect;
     [SerializeField]
     private float currentHealth;
+    private GameState globalScripts;
     private RectTransform hpBackgroundImage;
     private GameObject hpCanvas;
-    private RectTransform canvasRect;
     private RectTransform hpImage;
+    [SerializeField]
+    private float maxHealth;
     private TowerSlot towerSlotScript;
 
-    [SerializeField]
-    private onLoose globalScripts;
+    public void AddHealth(float hp)
+    {
+        currentHealth += hp;
+    }
+
+    public void EditMaxHealth(float newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+    }
+
+    public void RemoveHealth(float Damage)
+    {
+        currentHealth -= Damage;
+    }
 
     private void Awake()
     {
-        globalScripts = GameObject.Find("GlobalScripts").GetComponent<onLoose>();
+        globalScripts = GameObject.Find("GlobalScripts").GetComponent<GameState>();
         hpCanvas = transform.FindChild("HP").gameObject;
         canvasRect = hpCanvas.GetComponent<RectTransform>();
         hpBackgroundImage = hpCanvas.transform.FindChild("HPBackgroundImage").GetComponent<RectTransform>();
         hpImage = hpCanvas.transform.FindChild("HPImage").GetComponent<RectTransform>();
     }
 
-    private void Start()
-    {
-        towerSlotScript = transform.GetComponentInParent<TowerSlot>();
-        setMaxSize(canvasRect);
-        setMaxSize(hpImage);
-        setMaxSize(hpBackgroundImage);
-
-        currentHealth = maxHealth;
-
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy" && gameObject.tag == "Building")
-        {
-            currentHealth -= other.gameObject.GetComponent<EnemyHP>().CurrentHealth;
-            other.gameObject.SetActive(false);
-            other.gameObject.GetComponent<EnemyHP>().Reset();
-        }
-    }
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (currentHealth < 0)
             currentHealth = 0;
@@ -76,33 +68,39 @@ public class BuildingHealth : MonoBehaviour
         }
     }
 
+    private void onDeath()
+    {
+        if (this.gameObject.layer == LayerMask.NameToLayer("MainBuilding"))
+        {
+            globalScripts.LoseScreen.SetActive(true);
+            globalScripts.gameObject.SetActive(false);
+        }
+        towerSlotScript.enabled = true;
+        GameObject.Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy" && gameObject.tag == "Building")
+        {
+            currentHealth -= other.gameObject.GetComponent<EnemyHP>().CurrentHealth;
+            other.gameObject.SetActive(false);
+            other.gameObject.GetComponent<EnemyHP>().Reset();
+        }
+    }
+
     private void setMaxSize(RectTransform rectangle)
     {
         rectangle.sizeDelta = new Vector2(maxHealth / 100, rectangle.rect.height);
     }
 
-    public void RemoveHealth(float Damage)
+    private void Start()
     {
-        currentHealth -= Damage;
-    }
-    public void AddHealth(float hp)
-    {
-        currentHealth += hp;
-    }
-    public void EditMaxHealth(float newMaxHealth)
-    {
-        maxHealth = newMaxHealth;
-    }
+        towerSlotScript = transform.GetComponentInParent<TowerSlot>();
+        setMaxSize(canvasRect);
+        setMaxSize(hpImage);
+        setMaxSize(hpBackgroundImage);
 
-
-    private void onDeath()
-    {
-        if (this.gameObject.layer == LayerMask.NameToLayer("MainBuilding"))
-        {
-        globalScripts.LoseScreen.SetActive(true);
-        globalScripts.gameObject.SetActive(false);
-        }
-        towerSlotScript.enabled = true;
-        GameObject.Destroy(this.gameObject);
+        currentHealth = maxHealth;
     }
 }
