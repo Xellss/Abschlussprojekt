@@ -12,7 +12,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class TowerSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler
+public class TowerSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler, IPointerUpHandler
 {
     private Text gold;
     private bool hasTower = false;
@@ -21,12 +21,12 @@ public class TowerSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,
     [SerializeField]
     private TowerController towerPrefab;
     ShopButtonBehaviour shopButtonBehavior;
-
+    GameObject ground;
     private GameState gameState;
 
     private void Awake()
     {
-
+        ground = GameObject.Find("Ground");
         shopButtonBehavior = (ShopButtonBehaviour)FindObjectOfType(typeof(ShopButtonBehaviour));
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         myTransform = GetComponent<Transform>();
@@ -50,15 +50,15 @@ public class TowerSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,
             myRenderer.material.color = Color.cyan;
     }
 
-   
-
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (hasTower)
-            return;
-
-        gameState.OutPostGoldAmount -= LevelManager.TowerPrice;
+        ground.layer = LayerMask.NameToLayer("Default");
         shopButtonBehavior.OnTowerSlotClick(transform,this);
 
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        ground.layer = LayerMask.NameToLayer("Ground");
     }
 }
