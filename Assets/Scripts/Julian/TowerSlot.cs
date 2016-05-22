@@ -2,15 +2,7 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///           Author: Daniel Lause            ///
-///                                           ///
-///                                           ///
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-///                                           ///
-///      Source Code - Abschlussprojekt       ///
-///                                           ///
-///           Author: Julian Hopp             ///
+///     Author: Julian Hopp & Daniel Lause    ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
@@ -61,9 +53,5 @@ public class TowerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         myRenderer = GetComponent<Renderer>();
         if (GameObject.Find("GoldAmountOutpost") != null)
             gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
-    }
-
-    private void Start()
-    {
     }
 }

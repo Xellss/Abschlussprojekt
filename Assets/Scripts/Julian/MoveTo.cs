@@ -1,13 +1,12 @@
 ﻿/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-
-using System.Collections;
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
 ///           Author: Julian Hopp             ///
 ///                                           ///
 ///                                           ///
+/////////////////////////////////////////////////
+using System.Collections;
 using UnityEngine;
 
 public class MoveTo : MonoBehaviour
@@ -29,7 +28,7 @@ public class MoveTo : MonoBehaviour
 
     IEnumerator resetPath()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1);
         SearchNewBuilding = true;
         StartCoroutine(resetPath());
 

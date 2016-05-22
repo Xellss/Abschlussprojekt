@@ -75,7 +75,11 @@ public class BuildingHealth : MonoBehaviour
             globalScripts.LoseScreen.SetActive(true);
             globalScripts.gameObject.SetActive(false);
         }
-        towerSlotScript.enabled = true;
+        else
+        {
+            towerSlotScript.enabled = true;
+
+        }
         GameObject.Destroy(this.gameObject);
     }
 

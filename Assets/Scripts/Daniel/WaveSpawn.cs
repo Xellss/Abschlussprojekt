@@ -40,7 +40,10 @@ public class WaveSpawn : MonoBehaviour
         {
             for (int k = 0; k < enemyCountPerSpawnPoint; k++)
             {
-                StartCoroutine(spawnerDelay(spawnDelay, spawnPoint));
+                //StartCoroutine(spawnerDelay(spawnDelay, spawnPoint));
+                newEnemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
+                newEnemy.transform.position = spawnPoint;
+
             }
         }
         spawnPoints.Clear();
