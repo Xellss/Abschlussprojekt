@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// Copyright (c) 2016 Daniel Bortfeld
+using UnityEngine;
 using System.Collections;
 
 public class SelfDestruction : MonoBehaviour
@@ -14,6 +15,7 @@ public class SelfDestruction : MonoBehaviour
     {
         Invoke("SelfDestruct", Delay);
     }
+
     private void SelfDestruct()
     {
         switch (DestroyMode)

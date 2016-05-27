@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// Copyright (c) 2016 Daniel Bortfeld
+using UnityEngine;
 using System.Collections;
 
 public enum Weapontypes

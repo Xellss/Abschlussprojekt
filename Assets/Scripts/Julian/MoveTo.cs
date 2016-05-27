@@ -18,8 +18,9 @@ public class MoveTo : MonoBehaviour
     public bool MainBaseLevel;
     private bool setLevel = false;
     public bool SearchNewBuilding = true;
-    float distance = 99999999;
+    float distance = Mathf.Infinity;
     GameObject currentAttackBuilding;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -33,6 +34,7 @@ public class MoveTo : MonoBehaviour
         StartCoroutine(resetPath());
 
     }
+
     private void LateUpdate()
     {
         if (!MainBaseLevel)
@@ -58,25 +60,24 @@ public class MoveTo : MonoBehaviour
             if (SearchNewBuilding)
             {
 
-                if (GameObject.FindGameObjectsWithTag("Building")!=null)
+                if (GameObject.FindGameObjectsWithTag("Building") != null)
                 {
 
-                mainBaseBuildings = GameObject.FindGameObjectsWithTag("Building");
-                distance = 9999999f;
-                foreach (var building in mainBaseBuildings)
-                {
-                    if (distance > Vector3.Distance(transform.position, building.transform.position))
+                    mainBaseBuildings = GameObject.FindGameObjectsWithTag("Building");
+                    distance = Mathf.Infinity;
+                    foreach (var building in mainBaseBuildings)
                     {
-                        distance = Vector3.Distance(transform.position, building.transform.position);
-                        currentAttackBuilding = building;
+                        if (distance > Vector3.Distance(transform.position, building.transform.position))
+                        {
+                            distance = Vector3.Distance(transform.position, building.transform.position);
+                            currentAttackBuilding = building;
+                        }
                     }
-                }
 
-                agent.SetDestination(currentAttackBuilding.transform.position);
-                SearchNewBuilding = false;
+                    agent.SetDestination(currentAttackBuilding.transform.position);
+                    SearchNewBuilding = false;
                 }
             }
         }
-
     }
 }
