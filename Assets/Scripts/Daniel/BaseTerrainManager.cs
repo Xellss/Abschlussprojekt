@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class BaseTerrainManager : MonoBehaviour
 {
-    private GameObject buyButton;
+    private BuyButton buyButton;
     private GameState gameState;
     private Text goldAmount;
     private Renderer renderer;
@@ -34,8 +34,9 @@ public class BaseTerrainManager : MonoBehaviour
             gameObject.name = "UnlockedTerrain";
             gameObject.tag = "UnlockedTerrain";
             Component.Destroy(this);
-            renderer.material.color = Color.green;
+            //renderer.material.color = Color.green;
             GameObject.Destroy(buyButton);
+            buyButton.DestroyAsteroids();
         }
     }
 
@@ -43,8 +44,8 @@ public class BaseTerrainManager : MonoBehaviour
     {
         goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
         towerSlot = GetComponent<TowerSlot>();
-        buyButton = transform.FindChild("BuyButton").gameObject;
-        renderer = gameObject.GetComponent<Renderer>();
+        buyButton = transform.FindChild("BuyButton").GetComponent<BuyButton>();
+        //renderer = gameObject.GetComponent<Renderer>();
         gameState = (GameState)FindObjectOfType(typeof(GameState));
     }
 
@@ -52,7 +53,7 @@ public class BaseTerrainManager : MonoBehaviour
     {
         if (unlock)
             UnlockTerrain();
-        else
-            renderer.material.color = Color.red;
+        //else
+            //renderer.material.color = Color.red;
     }
 }
