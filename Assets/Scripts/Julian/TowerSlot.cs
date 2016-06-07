@@ -20,8 +20,8 @@ public class TowerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private Renderer myRenderer;
     private Transform myTransform;
     private ShopButtonBehaviour shopButtonBehavior;
-    [SerializeField]
-    private TowerController towerPrefab;
+    //[SerializeField]
+    //private TowerController towerPrefab;
 
     public void OnPointerClick(PointerEventData eventData)
     {

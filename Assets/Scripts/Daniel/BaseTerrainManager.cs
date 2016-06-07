@@ -33,10 +33,9 @@ public class BaseTerrainManager : MonoBehaviour
             towerSlot.enabled = true;
             gameObject.name = "UnlockedTerrain";
             gameObject.tag = "UnlockedTerrain";
-            Component.Destroy(this);
-            //renderer.material.color = Color.green;
-            GameObject.Destroy(buyButton);
             buyButton.DestroyAsteroids();
+            GameObject.Destroy(buyButton.gameObject);
+            Component.Destroy(this);
         }
     }
 
@@ -53,7 +52,5 @@ public class BaseTerrainManager : MonoBehaviour
     {
         if (unlock)
             UnlockTerrain();
-        //else
-            //renderer.material.color = Color.red;
     }
 }
