@@ -25,28 +25,31 @@ public class TowerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        ground.layer = LayerMask.NameToLayer("Default");
+        //ground.layer = LayerMask.NameToLayer("Default");
+        if (gameObject.GetComponent<BaseTerrainManager>() == null)
+        {
         shopButtonBehavior.OnTowerSlotClick(transform, this);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        myRenderer.material.color = Color.cyan;
+        //myRenderer.material.color = Color.cyan;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        myRenderer.material.color = Color.green;
+        //myRenderer.material.color = Color.green;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        ground.layer = LayerMask.NameToLayer("Ground");
+        //ground.layer = LayerMask.NameToLayer("Ground");
     }
 
     private void Awake()
     {
-        ground = GameObject.Find("Ground");
+        //ground = GameObject.Find("Ground");
         shopButtonBehavior = (ShopButtonBehaviour)FindObjectOfType(typeof(ShopButtonBehaviour));
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         myTransform = GetComponent<Transform>();
