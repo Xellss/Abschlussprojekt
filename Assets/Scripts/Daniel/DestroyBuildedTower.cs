@@ -45,7 +45,7 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
         sellTowerButton.onClick.RemoveAllListeners();
         sellTowerButton.onClick.AddListener(delegate { OnClickSellBuilding(); });
     }
-
+    
     private void Start()
     {
         gamestate = (GameState)FindObjectOfType(typeof(GameState));

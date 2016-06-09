@@ -20,6 +20,13 @@ public class PoolPrefab : MonoBehaviour
         get { return prefab; }
         set { prefab = value; }
     }
+    private void Start()
+    {
+        if (prefab == null)
+        {
+            prefab = this;
+        }
+    }
 
     private void OnDisable()
     {

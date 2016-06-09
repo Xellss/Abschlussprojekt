@@ -17,7 +17,7 @@ public class TerraformingPlanet : ScriptableObject
     [SerializeField]
     public int GasPlanetGoldBonus;
     [SerializeField]
-    public GameObject[] RegularPlanetPrefabs;
+    public PoolPrefab[] RegularPlanetPrefabs;
     [SerializeField]
-    public GameObject[] GasPlanetPrefabs;
+    public PoolPrefab[] GasPlanetPrefabs;
 }

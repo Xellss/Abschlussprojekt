@@ -6,6 +6,8 @@ public class PlanetTerraforming : MonoBehaviour {
 
     GameState gameState;
 
+    //PoolPrefab[] planetPrefabs;
+
     Text goldAmount;
     [SerializeField]
     private TerraformingPlanet terraformingPlanetScribtableObject;
@@ -23,11 +25,12 @@ public class PlanetTerraforming : MonoBehaviour {
     }
     public void Terraforming(Vector3 position,Transform parentObject)
     {
-       GameObject newPlanet= (GameObject)Instantiate(chosePlanetPrefab(), position, Quaternion.identity);
+       GameObject newPlanet= ObjectPool.Instance.GetPooledObject(chosePlanetPrefab());
+        newPlanet.transform.position = position;
         newPlanet.transform.SetParent(parentObject);
     }
 
-    private GameObject chosePlanetPrefab()
+    private PoolPrefab chosePlanetPrefab()
     {
         int percent = Random.Range(0, 101);
 
