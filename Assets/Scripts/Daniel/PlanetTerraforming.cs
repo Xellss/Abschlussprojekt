@@ -26,7 +26,7 @@ public class PlanetTerraforming : MonoBehaviour {
     public void Terraforming(Vector3 position,Transform parentObject)
     {
        GameObject newPlanet= ObjectPool.Instance.GetPooledObject(chosePlanetPrefab());
-        newPlanet.transform.position = position;
+        newPlanet.transform.position =position;
         newPlanet.transform.SetParent(parentObject);
     }
 

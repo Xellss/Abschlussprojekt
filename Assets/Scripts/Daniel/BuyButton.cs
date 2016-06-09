@@ -25,7 +25,7 @@ public class BuyButton : MonoBehaviour
 
     public void DestroyAsteroids()
     {
-        planetTerraforming.Terraforming(ButtonAsteroids.transform.position, ButtonAsteroids.transform.parent);
+        planetTerraforming.Terraforming(transform.parent.position, ButtonAsteroids.transform.parent);
         GameObject.Destroy(ButtonAsteroids);
     }
 
