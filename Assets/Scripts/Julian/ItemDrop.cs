@@ -29,17 +29,17 @@ public class ItemDrop : MonoBehaviour
         int RandomChance = Random.Range(1, 100);
         if (RandomChance < HighItemDropChance)
         {
-            Instantiate(HighItem, transform.position, Quaternion.identity);
+            //Instantiate(HighItem, transform.position, Quaternion.identity);
             return;
         }
         if (RandomChance < MidItemDropChance)
         {
-            Instantiate(MidItem, transform.position, Quaternion.identity);
+            //Instantiate(MidItem, transform.position, Quaternion.identity);
             return;
         }
         if (RandomChance < LowItemDropChance)
         {
-            Instantiate(LowItem, transform.position, Quaternion.identity);
+            //Instantiate(LowItem, transform.position, Quaternion.identity);
             return;
         }
     }

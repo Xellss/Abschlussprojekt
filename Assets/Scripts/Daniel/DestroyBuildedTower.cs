@@ -40,10 +40,14 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (buildingInformation != null)
+        {
+
         sellButtonText.text = string.Format("{0}{1}{2}{3}", buildingInformation.BuildingName, " für ", buildingInformation.BuildingSellPrice, " verkaufen.");
         sellTowerButtonGameObject.SetActive(true);
         sellTowerButton.onClick.RemoveAllListeners();
         sellTowerButton.onClick.AddListener(delegate { OnClickSellBuilding(); });
+        }
     }
     
     private void Start()

@@ -41,13 +41,8 @@ public class EnemyHP : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            gameState.OutPostGoldAmount += GoldDropAmount;
-            if (gold!=null)
-            {
-
-            gold.text = gameState.OutPostGoldAmount.ToString();
-            }
-            //gold.text = LevelManager.Money.ToString();
+            gameState.GoldAmount += GoldDropAmount;
+            gold.text = gameState.GoldAmount.ToString();
             itemdrop.DropItemCheck();
             Reset();
         }
@@ -66,14 +61,6 @@ public class EnemyHP : MonoBehaviour
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         CurrentHealth = MaxHealth;
         itemdrop = GetComponent<ItemDrop>();
-        if (GameObject.Find("GoldAmountOutpost") != null)
-        {
-            gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
-            gold.text = gameState.OutPostGoldAmount.ToString();
-        }
-
-
-
-        //gold.text = LevelManager.Money.ToString();
+            gold = GameObject.Find("GoldAmount").GetComponent<Text>();
     }
 }

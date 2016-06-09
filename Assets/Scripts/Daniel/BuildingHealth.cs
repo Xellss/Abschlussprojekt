@@ -87,9 +87,11 @@ public class BuildingHealth : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy" && gameObject.tag == "Building")
         {
-            currentHealth -= other.gameObject.GetComponent<EnemyHP>().CurrentHealth;
-            other.gameObject.SetActive(false);
-            other.gameObject.GetComponent<EnemyHP>().Reset();
+            EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
+            currentHealth -= enemyHP.CurrentHealth;
+            //other.gameObject.SetActive(false);
+            enemyHP.Decrease(enemyHP.CurrentHealth);
+            //other.gameObject.GetComponent<EnemyHP>().Reset();
         }
     }
 

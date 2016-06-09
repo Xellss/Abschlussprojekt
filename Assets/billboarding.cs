@@ -4,7 +4,6 @@ using System.Collections;
 public class billboarding : MonoBehaviour
 {
 
-    [SerializeField]
     GameObject MainCamera;
 
     public void Start()
@@ -12,9 +11,9 @@ public class billboarding : MonoBehaviour
         MainCamera = GameObject.Find("Main Camera");
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.LookAt(transform.position + MainCamera.transform.rotation * Vector3.forward,
-          MainCamera.transform.rotation * Vector3.up);
+        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
+          Camera.main.transform.rotation * Vector3.up);
     }
 }
