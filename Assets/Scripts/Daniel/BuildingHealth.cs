@@ -21,6 +21,12 @@ public class BuildingHealth : MonoBehaviour
     [SerializeField]
     private float maxHealth;
     private TowerSlot towerSlotScript;
+    [SerializeField]
+    private WaveSpawn waveSpawn;
+    [SerializeField]
+    private GameObject winLoseObject;
+    [SerializeField]
+    private WinLoseWindow winLoseScript;
 
     public void AddHealth(float hp)
     {
@@ -72,15 +78,23 @@ public class BuildingHealth : MonoBehaviour
     {
         if (this.gameObject.layer == LayerMask.NameToLayer("MainBuilding"))
         {
-            globalScripts.LoseScreen.SetActive(true);
-            globalScripts.gameObject.SetActive(false);
+            waveSpawn.WaveStart = false;
+            waveSpawn.Enemys = 0;
+            winLoseObject.SetActive(true);
+            winLoseScript.WinLoseWave(false, waveSpawn.EnemyInfo);
+            currentHealth = maxHealth;
+            GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (var enemy in enemys)
+            {
+                enemy.GetComponent<EnemyHP>().Reset();
+            }
         }
         else
         {
             towerSlotScript.enabled = true;
+        GameObject.Destroy(this.gameObject);
 
         }
-        GameObject.Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

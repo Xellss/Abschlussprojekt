@@ -34,7 +34,7 @@ public class PlanetTerraforming : MonoBehaviour {
     {
         int percent = Random.Range(0, 101);
 
-        Debug.Log(percent);
+        //Debug.Log(percent);
         if (percent <= terraformingPlanetScribtableObject.GasPlanetChanceInPercent)
         {
             print("Herzlichen Glückwunsch, du hast einen Gas-Planeten erschaffen. Du bekommst " + terraformingPlanetScribtableObject.GasPlanetGoldBonus + " Gold als Belohnung");

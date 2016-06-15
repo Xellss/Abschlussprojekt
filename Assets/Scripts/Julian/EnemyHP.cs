@@ -22,6 +22,8 @@ public class EnemyHP : MonoBehaviour
     [SerializeField]
     private int maxHealth = 100;
 
+    private WaveSpawn waveSpawner;
+
     public int CurrentHealth
     {
         get { return currentHealth; }
@@ -44,6 +46,7 @@ public class EnemyHP : MonoBehaviour
             gameState.GoldAmount += GoldDropAmount;
             gold.text = gameState.GoldAmount.ToString();
             itemdrop.DropItemCheck();
+            waveSpawner.Enemys--;
             Reset();
         }
     }
@@ -51,7 +54,7 @@ public class EnemyHP : MonoBehaviour
     public void Reset()
     {
         gameObject.SetActive(false);
-        transform.position = new Vector3(0, 2, 0);
+        transform.position = new Vector3(0, 0, 40);
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         CurrentHealth = MaxHealth;
     }
@@ -61,6 +64,7 @@ public class EnemyHP : MonoBehaviour
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         CurrentHealth = MaxHealth;
         itemdrop = GetComponent<ItemDrop>();
-            gold = GameObject.Find("GoldAmount").GetComponent<Text>();
+        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
+        waveSpawner = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
     }
 }
