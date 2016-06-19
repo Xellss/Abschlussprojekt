@@ -23,9 +23,7 @@ public class PoolPrefab : MonoBehaviour
     private void Start()
     {
         if (prefab == null)
-        {
             prefab = this;
-        }
     }
 
     private void OnDisable()

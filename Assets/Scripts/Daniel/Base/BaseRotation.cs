@@ -27,7 +27,7 @@ public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler
         if (Vector3.Cross(direction, oldDirection).z < 0)
             v = -v;
 
-        transform.Rotate(0, v * RotationSpeed, 0, Space.Self);
+        transform.Rotate(0, v * RotationSpeed * Time.deltaTime, 0, Space.Self);
     }
 
     public void OnDrop(PointerEventData eventData)
