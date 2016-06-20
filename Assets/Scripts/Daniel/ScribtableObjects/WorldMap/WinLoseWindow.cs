@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class WinLoseWindow : MonoBehaviour
 {
 
@@ -23,11 +23,11 @@ public class WinLoseWindow : MonoBehaviour
     private GameObject rewardItemObject;
 
 
-    public void WinLoseWave(bool winWave, EnemyWorldMapInfo enemyInfo)
+    public void WinLoseWave(bool winWave, EnemyWorldMapInfo enemyInfo, int stars)
     {
         if (winWave)
         {
-            windowHeader.text = "Victory";
+            windowHeader.text = "Gewonnen. Du bekommst für dieses Level "+ stars + " Sterne.";
             informationText.text = "Herzlichen Glückwunsch, du hast den Angriff der " + enemyInfo.EnemyGroupName + " erfolgreich abgewehrt.";
             rewardGoldObject.SetActive(true);
             rewardGoldText.text = enemyInfo.GoldReward.ToString();
@@ -36,7 +36,7 @@ public class WinLoseWindow : MonoBehaviour
         }
         else
         {
-            windowHeader.text = "You Lose";
+            windowHeader.text = "Verloren. Du bekommst keinen Stern.";
             informationText.text = "Du hast gegen die " + enemyInfo.EnemyGroupName + " verloren. Es gibt nur die Halbe beute für dich.";
             rewardGoldObject.SetActive(true);
             int goldReward = enemyInfo.GoldReward / 2;
@@ -48,6 +48,7 @@ public class WinLoseWindow : MonoBehaviour
 
     public void OnClickClose()
     {
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
+        SceneManager.LoadScene("WorldMap");
     }
 }
