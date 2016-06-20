@@ -12,10 +12,6 @@ using UnityEngine.SceneManagement;
 
 public class WorldSelectionButton : MonoBehaviour {
 
-    public void OnClick_StartGame()
-    {
-        SceneManager.LoadScene("StartScreen");
-    }
     public void OnClick_Level1()
     {
         SceneManager.LoadScene("Level1");
@@ -28,5 +24,8 @@ public class WorldSelectionButton : MonoBehaviour {
     {
     SceneManager.LoadScene("Level3");
     }
-
+    public void OnClick_StartGame()
+    {
+        SceneManager.LoadScene("WorldMap");
+    }
 }
