@@ -30,6 +30,15 @@ public class ShopButtonBehaviour : MonoBehaviour
     private Transform towerSlotTransform;
     private DestroyBuildedTower sellBuilding;
 
+    private GameObject towerShopCard;
+
+    public GameObject TowerShopCard
+    {
+        get { return towerShopCard; }
+        set { towerShopCard = value; }
+    }
+
+
     public void OnClickGiveGold()
     {
         gameState.GoldAmount += 5000;
@@ -73,10 +82,12 @@ public class ShopButtonBehaviour : MonoBehaviour
         buildingSpawn.BuildingPrefab = newBuilding;
         buildingSpawn.BuildingInformation = buildingCardInformation;
         Ground.layer = LayerMask.NameToLayer("Ground");
+        //towerShopCard.SetActive(true);
     }
 
     public void OnShopCloseClick()
     {
+        //towerShopCard.SetActive(true);
         shop.SetActive(false);
         Ground.layer = LayerMask.NameToLayer("Ground");
     }
@@ -101,5 +112,10 @@ public class ShopButtonBehaviour : MonoBehaviour
         buildingInformationText = cardCreator.BuildingInformation;
         goldAmount.text = gameState.GoldAmount.ToString();
         Ground = GameObject.Find("Ground");
+    }
+    private void Start()
+    {
+        towerShopCard = GameObject.Find("ShopCard_Tower");
+        shop.SetActive(false);
     }
 }

@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TowerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerUpHandler
+public class TowerSlot : MonoBehaviour, IPointerClickHandler
 {
     private GameState gameState;
     private Text gold;
@@ -20,33 +20,29 @@ public class TowerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private Renderer myRenderer;
     private Transform myTransform;
     private ShopButtonBehaviour shopButtonBehavior;
+    [SerializeField]
+    private bool wallSlot = false;
     //[SerializeField]
     //private TowerController towerPrefab;
+    ShopButtonBehaviour shopBehavoiur;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         //ground.layer = LayerMask.NameToLayer("Default");
         if (gameObject.GetComponent<BaseTerrainManager>() == null)
         {
-        shopButtonBehavior.OnTowerSlotClick(transform, this);
+            shopButtonBehavior.OnTowerSlotClick(transform, this);
+
+            if (wallSlot)
+            {
+                shopBehavoiur.TowerShopCard.SetActive(false);
+            }
+            else
+            {
+                shopBehavoiur.TowerShopCard.SetActive(true);
+            }
         }
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //myRenderer.material.color = Color.cyan;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        //myRenderer.material.color = Color.green;
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        //ground.layer = LayerMask.NameToLayer("Ground");
-    }
-
     private void Awake()
     {
         //ground = GameObject.Find("Ground");
@@ -56,5 +52,6 @@ public class TowerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         myRenderer = GetComponent<Renderer>();
         if (GameObject.Find("GoldAmountOutpost") != null)
             gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
+        shopBehavoiur = GameObject.Find("Canvas").GetComponent<ShopButtonBehaviour>();
     }
 }
