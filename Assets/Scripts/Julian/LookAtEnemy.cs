@@ -13,6 +13,11 @@ public class LookAtEnemy : MonoBehaviour {
     }
 
     void Update () {
+        if (lookAtVector !=null)
+        {
+
         transform.LookAt(lookAtVector);
+
+        }
 	}
 }

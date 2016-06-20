@@ -13,12 +13,21 @@ using UnityEngine;
 
 public class WaveSpawn : MonoBehaviour
 {
+    private bool clearWave = false;
     [SerializeField]
     private Edge[] edges;
     [SerializeField]
     private int enemyCountPerSpawnPoint;
+    private EnemyWorldMapInfo enemyInfo;
     [SerializeField]
     private PoolPrefab enemyPrefab;
+    private int enemys = 0;
+    [SerializeField]
+    private EnemyWorldMapInfo enemyScriptable;
+    [SerializeField]
+    private GameObject lookAtSpawnPrefab;
+    [SerializeField]
+    private MapButtonBehaviour mapBehaviour;
     private GameObject newEnemy;
     [SerializeField]
     private bool spawn;
@@ -29,25 +38,14 @@ public class WaveSpawn : MonoBehaviour
     private List<Vector3> spawnPoints;
     private int waveCounter = 0;
     private Wave[] waves;
-
- 
+    private bool waveStart = false;
+    private WinLoseWindow winLoseScript;
     [SerializeField]
     private GameObject winLoseWindow;
-    private WinLoseWindow winLoseScript;
-
-    private EnemyWorldMapInfo enemyInfo;
-
-    public EnemyWorldMapInfo EnemyInfo
-    {
-        get { return enemyInfo; }
-        set { enemyInfo = value; }
-    }
 
     [SerializeField]
-    private MapButtonBehaviour mapBehaviour;
-    private int enemys = 0;
-    private bool waveStart = false;
-    private bool clearWave = false;
+    BuildingHealth sunHealth;
+
     public int EnemyCountPerSpawnPoint
     {
         get
@@ -57,6 +55,12 @@ public class WaveSpawn : MonoBehaviour
         { enemyCountPerSpawnPoint = value; }
     }
 
+    public EnemyWorldMapInfo EnemyInfo
+    {
+        get { return enemyInfo; }
+        set { enemyInfo = value; }
+    }
+
     public PoolPrefab EnemyPrefab
     {
         get
@@ -64,6 +68,19 @@ public class WaveSpawn : MonoBehaviour
 
         set
         { enemyPrefab = value; }
+    }
+
+    public int Enemys
+    {
+        get
+        {
+            return enemys;
+        }
+
+        set
+        {
+            enemys = value;
+        }
     }
 
     public float SpawnDelay
@@ -85,19 +102,6 @@ public class WaveSpawn : MonoBehaviour
         set { waves = value; }
     }
 
-    public int Enemys
-    {
-        get
-        {
-            return enemys;
-        }
-
-        set
-        {
-            enemys = value;
-        }
-    }
-
     public bool WaveStart
     {
         get
@@ -114,9 +118,15 @@ public class WaveSpawn : MonoBehaviour
     public void SpawnEnemy()
     {
         clearWave = false;
-        for (int i = 0; i < spawnPointCounter; i++)
+        if (!waveStart)
         {
-            spawnPoints.Add(spawnPosition());
+            for (int i = 0; i < spawnPointCounter; i++)
+            {
+                Vector3 newPosition = spawnPosition();
+                spawnPoints.Add(newPosition);
+                GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+            }
         }
 
         foreach (var spawnPoint in spawnPoints)
@@ -126,17 +136,19 @@ public class WaveSpawn : MonoBehaviour
                 newEnemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
                 newEnemy.transform.position = spawnPoint;
                 enemys++;
-        waveStart = true;
+                waveStart = true;
             }
         }
         waveCounter++;
         if (waveCounter >= waves.Length)
+        {
             waveCounter = 0;
+            spawnPoints.Clear();
+        }
         else
         {
-        StartCoroutine(spawnerDelay(spawnDelay));
+            StartCoroutine(spawnerDelay(spawnDelay));
         }
-        spawnPoints.Clear();
     }
 
     private void Awake()
@@ -160,13 +172,24 @@ public class WaveSpawn : MonoBehaviour
         return Vector3.Lerp(edge.First.position, edge.Second.position, Random.value);
     }
 
+    private void Start()
+    {
+        if (enemyScriptable != null)
+        {
+            enemyInfo = enemyScriptable;
+            enemyPrefab = enemyInfo.EnemyPrefab;
+            waves = enemyInfo.Waves;
+            spawnDelay = enemyInfo.SpawnDelay;
+        }
+    }
+
     private void Update()
     {
         if (waveStart && enemys == 0)
         {
             waveStart = false;
             winLoseWindow.SetActive(true);
-            winLoseScript.WinLoseWave(true, enemyInfo);
+            winLoseScript.WinLoseWave(true, enemyInfo, sunHealth.LevelStars());
         }
     }
 }

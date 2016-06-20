@@ -68,7 +68,7 @@ public class GameState : MonoBehaviour
     private void Awake()
     {
         buildings = new List<BuildingModel>();
-        loseScreen.SetActive(false);
+        //loseScreen.SetActive(false);
     }
 
     private void Update()

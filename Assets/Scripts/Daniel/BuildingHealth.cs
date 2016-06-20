@@ -81,7 +81,7 @@ public class BuildingHealth : MonoBehaviour
             waveSpawn.WaveStart = false;
             waveSpawn.Enemys = 0;
             winLoseObject.SetActive(true);
-            winLoseScript.WinLoseWave(false, waveSpawn.EnemyInfo);
+            winLoseScript.WinLoseWave(false, waveSpawn.EnemyInfo,0);
             currentHealth = maxHealth;
             GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (var enemy in enemys)
@@ -122,5 +122,19 @@ public class BuildingHealth : MonoBehaviour
         setMaxSize(hpBackgroundImage);
 
         currentHealth = maxHealth;
+    }
+
+    public int LevelStars()
+    {
+        if (currentHealth == maxHealth)
+        {
+            return 3;
+        }
+        else if (currentHealth < maxHealth)
+        {
+            return 2;
+        }
+        else
+            return 0;
     }
 }
