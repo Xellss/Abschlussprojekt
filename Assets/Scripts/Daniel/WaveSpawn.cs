@@ -30,7 +30,10 @@ public class WaveSpawn : MonoBehaviour
     private int waveCounter = 0;
     private Wave[] waves;
 
- 
+    [SerializeField]
+    private EnemyWorldMapInfo enemyScriptable;
+
+
     [SerializeField]
     private GameObject winLoseWindow;
     private WinLoseWindow winLoseScript;
@@ -42,7 +45,8 @@ public class WaveSpawn : MonoBehaviour
         get { return enemyInfo; }
         set { enemyInfo = value; }
     }
-
+    [SerializeField]
+    private GameObject lookAtSpawnPrefab;
     [SerializeField]
     private MapButtonBehaviour mapBehaviour;
     private int enemys = 0;
@@ -111,12 +115,29 @@ public class WaveSpawn : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (enemyScriptable != null)
+        {
+            enemyInfo = enemyScriptable;
+           enemyPrefab = enemyInfo.EnemyPrefab;
+            waves = enemyInfo.Waves;
+            spawnDelay = enemyInfo.SpawnDelay;
+        }
+    }
     public void SpawnEnemy()
     {
         clearWave = false;
-        for (int i = 0; i < spawnPointCounter; i++)
+        if (!waveStart)
         {
-            spawnPoints.Add(spawnPosition());
+
+            for (int i = 0; i < spawnPointCounter; i++)
+            {
+                Vector3 newPosition = spawnPosition();
+                spawnPoints.Add(newPosition);
+                GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+            }
         }
 
         foreach (var spawnPoint in spawnPoints)
@@ -126,17 +147,19 @@ public class WaveSpawn : MonoBehaviour
                 newEnemy = ObjectPool.Instance.GetPooledObject(enemyPrefab);
                 newEnemy.transform.position = spawnPoint;
                 enemys++;
-        waveStart = true;
+                waveStart = true;
             }
         }
         waveCounter++;
         if (waveCounter >= waves.Length)
+        {
             waveCounter = 0;
+            spawnPoints.Clear();
+        }
         else
         {
-        StartCoroutine(spawnerDelay(spawnDelay));
+            StartCoroutine(spawnerDelay(spawnDelay));
         }
-        spawnPoints.Clear();
     }
 
     private void Awake()
