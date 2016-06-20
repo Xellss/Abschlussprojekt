@@ -25,8 +25,15 @@ public class BuyButton : MonoBehaviour
 
     public void DestroyAsteroids()
     {
+        if (ButtonAsteroids != null)
+        {
         planetTerraforming.Terraforming(transform.parent.position, ButtonAsteroids.transform.parent);
         GameObject.Destroy(ButtonAsteroids);
+        }
+        else
+        {
+
+        }
     }
 
     private void Awake()

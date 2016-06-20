@@ -21,6 +21,7 @@ public class BuildingHealth : MonoBehaviour
     [SerializeField]
     private float maxHealth;
     private TowerSlot towerSlotScript;
+    private DestroyBuildedTower destroyBuilding;
     [SerializeField]
     private WaveSpawn waveSpawn;
     [SerializeField]
@@ -92,6 +93,7 @@ public class BuildingHealth : MonoBehaviour
         else
         {
             towerSlotScript.enabled = true;
+            destroyBuilding.enabled = false;
         GameObject.Destroy(this.gameObject);
 
         }
@@ -117,6 +119,7 @@ public class BuildingHealth : MonoBehaviour
     private void Start()
     {
         towerSlotScript = transform.GetComponentInParent<TowerSlot>();
+        destroyBuilding = transform.GetComponentInParent<DestroyBuildedTower>();
         setMaxSize(canvasRect);
         setMaxSize(hpImage);
         setMaxSize(hpBackgroundImage);
@@ -133,6 +136,10 @@ public class BuildingHealth : MonoBehaviour
         else if (currentHealth < maxHealth)
         {
             return 2;
+        }
+        else if(maxHealth/2 > currentHealth)
+        {
+            return 1;
         }
         else
             return 0;

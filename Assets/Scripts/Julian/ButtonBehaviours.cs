@@ -57,7 +57,7 @@ public class ButtonBehaviours : MonoBehaviour
     private void Awake()
     {
         startScreen = transform.FindChild("StartScreen");
-        credits = startScreen.FindChild("Credit_Image");
+        //credits = startScreen.FindChild("Credit_Image");
         credits.gameObject.SetActive(false);
         Time.timeScale = timeScale;
     }
