@@ -44,7 +44,12 @@ public class Timer : MonoBehaviour
     }
     IEnumerator waitASecond()
     {
-        if (runTimer &&timerTime <= 0)
+        if (runTimer)
+        {
+            runTimer = false;
+        spawner.CreateSpawnpoints();
+        }
+        if (timerTime <= 0)
         {
             runTimer = false;
             timerText.text = ((int)timerTime).ToString();

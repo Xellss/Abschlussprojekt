@@ -114,10 +114,8 @@ public class WaveSpawn : MonoBehaviour
             waveStart = value;
         }
     }
-
-    public void SpawnEnemy()
+    public void CreateSpawnpoints()
     {
-        clearWave = false;
         if (!waveStart)
         {
             for (int i = 0; i < spawnPointCounter; i++)
@@ -128,6 +126,20 @@ public class WaveSpawn : MonoBehaviour
                 lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
             }
         }
+    }
+    public void SpawnEnemy()
+    {
+        clearWave = false;
+        //if (!waveStart)
+        //{
+        //    for (int i = 0; i < spawnPointCounter; i++)
+        //    {
+        //        Vector3 newPosition = spawnPosition();
+        //        spawnPoints.Add(newPosition);
+        //        GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+        //        lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+        //    }
+        //}
 
         foreach (var spawnPoint in spawnPoints)
         {
