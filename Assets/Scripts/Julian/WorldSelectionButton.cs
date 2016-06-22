@@ -33,6 +33,11 @@ public class WorldSelectionButton : MonoBehaviour {
         loadingText.SetActive(true);
         SceneManager.LoadScene("Level3");
     }
+    public void OnClick_Level4()
+    {
+        loadingText.SetActive(true);
+        SceneManager.LoadScene("Level4");
+    }
     public void OnClick_StartGame()
     {
         SceneManager.LoadScene("WorldMap");

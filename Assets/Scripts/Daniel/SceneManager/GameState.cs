@@ -69,6 +69,7 @@ public class GameState : MonoBehaviour
     {
         buildings = new List<BuildingModel>();
         //loseScreen.SetActive(false);
+        Time.timeScale = 1;
     }
 
     private void Update()
