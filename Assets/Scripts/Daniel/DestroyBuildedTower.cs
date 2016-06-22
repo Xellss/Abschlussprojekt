@@ -20,12 +20,31 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
     private Button sellTowerButton;
     [SerializeField]
     private GameObject sellTowerButtonGameObject;
+
     private TowerSlot towerSlot;
 
     public BuildingInformation BuildingInformation
     {
         get { return buildingInformation; }
         set { buildingInformation = value; }
+    }
+
+    public Text SellButtonText
+    {
+        get { return sellButtonText; }
+        set { sellButtonText = value; }
+    }
+
+    public Button SellTowerButton
+    {
+        get { return sellTowerButton; }
+        set { sellTowerButton = value; }
+    }
+
+    public GameObject SellTowerButtonGameObject
+    {
+        get { return sellTowerButtonGameObject; }
+        set { sellTowerButtonGameObject = value; }
     }
 
     public void OnClickSellBuilding()
@@ -42,14 +61,13 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
     {
         if (buildingInformation != null)
         {
-
-        sellButtonText.text = string.Format("{0}{1}{2}{3}", buildingInformation.BuildingName, " für ", buildingInformation.BuildingSellPrice, " verkaufen.");
-        sellTowerButtonGameObject.SetActive(true);
-        sellTowerButton.onClick.RemoveAllListeners();
-        sellTowerButton.onClick.AddListener(delegate { OnClickSellBuilding(); });
+            sellButtonText.text = string.Format("{0}{1}{2}{3}", buildingInformation.BuildingName, " für ", buildingInformation.BuildingSellPrice, " verkaufen.");
+            sellTowerButtonGameObject.SetActive(true);
+            sellTowerButton.onClick.RemoveAllListeners();
+            sellTowerButton.onClick.AddListener(delegate { OnClickSellBuilding(); });
         }
     }
-    
+
     private void Start()
     {
         gamestate = (GameState)FindObjectOfType(typeof(GameState));

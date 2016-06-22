@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
 
-public class UnitysItem : MonoBehaviour, IPointerClickHandler
+public class UnitysItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
     
     [SerializeField]
@@ -30,6 +30,13 @@ public class UnitysItem : MonoBehaviour, IPointerClickHandler
             timerTime -= Time.deltaTime;
     }
     public void OnPointerClick(PointerEventData eventData)
+    {
+        gameState.GoldAmount += unitysOnClick;
+        goldText.text = gameState.GoldAmount.ToString();
+        GameObject.Destroy(this.gameObject);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
     {
         gameState.GoldAmount += unitysOnClick;
         goldText.text = gameState.GoldAmount.ToString();

@@ -21,6 +21,15 @@ public class TowerController : MonoBehaviour
     private Renderer myRenderer;
     private Transform myTransform;
 
+    private bool canShoot = true;
+
+    public bool CanShoot
+    {
+        get { return canShoot; }
+        set { canShoot = value; }
+    }
+
+
     private void Awake()
     {
         myTransform = GetComponent<Transform>();
@@ -34,7 +43,7 @@ public class TowerController : MonoBehaviour
         {
             foreach (var collider in colliders)
             {
-                if (collider.CompareTag("Enemy"))
+                if (collider.CompareTag("Enemy") && canShoot)
                 {
                     GameObject newBullet = ObjectPool.Instance.GetPooledObject(BulletPrefab);
                     BulletController newBulletController = newBullet.GetComponent<BulletController>();

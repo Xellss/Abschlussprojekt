@@ -29,6 +29,7 @@ public class ShopButtonBehaviour : MonoBehaviour
     private TowerSlot towerSlotScript;
     private Transform towerSlotTransform;
     private DestroyBuildedTower sellBuilding;
+    private RepairBuilding repairBuilding;
 
     private GameObject towerShopCard;
 
@@ -82,6 +83,8 @@ public class ShopButtonBehaviour : MonoBehaviour
         buildingSpawn.BuildingPrefab = newBuilding;
         buildingSpawn.BuildingInformation = buildingCardInformation;
         Ground.layer = LayerMask.NameToLayer("Ground");
+        repairBuilding = newBuilding.GetComponent<RepairBuilding>();
+        repairBuilding.BuildingInfo = buildingCardInformation;
         //towerShopCard.SetActive(true);
     }
 

@@ -14,20 +14,34 @@ public class BuildingHealth : MonoBehaviour
     private RectTransform canvasRect;
     [SerializeField]
     private float currentHealth;
+    private DestroyBuildedTower destroyBuilding;
     private GameState globalScripts;
     private RectTransform hpBackgroundImage;
     private GameObject hpCanvas;
     private RectTransform hpImage;
     [SerializeField]
     private float maxHealth;
+
+    private Renderer renderer;
+
+    private TowerController towerController;
+
     private TowerSlot towerSlotScript;
-    private DestroyBuildedTower destroyBuilding;
+
     [SerializeField]
     private WaveSpawn waveSpawn;
+
     [SerializeField]
     private GameObject winLoseObject;
+
     [SerializeField]
     private WinLoseWindow winLoseScript;
+
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+        set { maxHealth = value; }
+    }
 
     public void AddHealth(float hp)
     {
@@ -37,6 +51,24 @@ public class BuildingHealth : MonoBehaviour
     public void EditMaxHealth(float newMaxHealth)
     {
         maxHealth = newMaxHealth;
+    }
+
+    public int LevelStars()
+    {
+        if (currentHealth == maxHealth)
+        {
+            return 3;
+        }
+        else if (currentHealth < maxHealth)
+        {
+            return 2;
+        }
+        else if (maxHealth / 2 > currentHealth)
+        {
+            return 1;
+        }
+        else
+            return 0;
     }
 
     public void RemoveHealth(float Damage)
@@ -82,7 +114,7 @@ public class BuildingHealth : MonoBehaviour
             waveSpawn.WaveStart = false;
             waveSpawn.Enemys = 0;
             winLoseObject.SetActive(true);
-            winLoseScript.WinLoseWave(false, waveSpawn.EnemyInfo,0);
+            winLoseScript.WinLoseWave(false, waveSpawn.EnemyInfo, 0);
             currentHealth = maxHealth;
             GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (var enemy in enemys)
@@ -92,10 +124,15 @@ public class BuildingHealth : MonoBehaviour
         }
         else
         {
-            towerSlotScript.enabled = true;
+            //towerSlotScript.enabled = true;
             destroyBuilding.enabled = false;
-        GameObject.Destroy(this.gameObject);
-
+            renderer.material.color = Color.red;
+            gameObject.tag = "Destroyed";
+            transform.parent.gameObject.tag = "Destroyed";
+            if (towerController != null)
+            {
+                towerController.CanShoot = false;
+            }
         }
     }
 
@@ -123,25 +160,11 @@ public class BuildingHealth : MonoBehaviour
         setMaxSize(canvasRect);
         setMaxSize(hpImage);
         setMaxSize(hpBackgroundImage);
-
+        renderer = GetComponent<Renderer>();
         currentHealth = maxHealth;
-    }
-
-    public int LevelStars()
-    {
-        if (currentHealth == maxHealth)
+        if (GetComponent<TowerController>() != null)
         {
-            return 3;
+            towerController = GetComponent<TowerController>();
         }
-        else if (currentHealth < maxHealth)
-        {
-            return 2;
-        }
-        else if(maxHealth/2 > currentHealth)
-        {
-            return 1;
-        }
-        else
-            return 0;
     }
 }

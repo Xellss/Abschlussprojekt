@@ -36,6 +36,10 @@ public class BuildingInformation : ScriptableObject
     private int buildingSellPrice;
     [SerializeField]
     private BuildingTypes buildingTypes;
+    [SerializeField]
+    private int repairAmount;
+    [SerializeField]
+    private float repairTime;
 
     public int BuildingAmount
     {
@@ -83,5 +87,17 @@ public class BuildingInformation : ScriptableObject
     {
         get { return buildingTypes; }
         set { buildingTypes = value; }
+    }
+
+    public int RepairAmount
+    {
+        get { return repairAmount; }
+        set { repairAmount = value; }
+    }
+
+    public float RepairTime
+    {
+        get { return repairTime; }
+        set { repairTime = value; }
     }
 }

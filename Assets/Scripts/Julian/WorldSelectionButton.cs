@@ -12,17 +12,26 @@ using UnityEngine.SceneManagement;
 
 public class WorldSelectionButton : MonoBehaviour {
 
+
+    [SerializeField]
+    GameObject loadingText;
+
+
     public void OnClick_Level1()
     {
+        loadingText.SetActive(true);
         SceneManager.LoadScene("Level1");
     }
     public void OnClick_Level2()
     {
+        loadingText.SetActive(true);
+
         SceneManager.LoadScene("Level2");
     }
     public void OnClick_Level3()
     {
-    SceneManager.LoadScene("Level3");
+        loadingText.SetActive(true);
+        SceneManager.LoadScene("Level3");
     }
     public void OnClick_StartGame()
     {
