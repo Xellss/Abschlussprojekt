@@ -35,11 +35,19 @@ public class TowerSlot : MonoBehaviour, IPointerClickHandler
 
             if (wallSlot)
             {
+                if (shopBehavoiur.TowerShopCard)
+                {
+
                 shopBehavoiur.TowerShopCard.SetActive(false);
+                }
             }
             else
             {
+                if (shopBehavoiur.TowerShopCard != null)
+                {
+
                 shopBehavoiur.TowerShopCard.SetActive(true);
+                }
             }
         }
     }

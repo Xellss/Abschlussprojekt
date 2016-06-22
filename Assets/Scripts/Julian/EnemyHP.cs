@@ -39,7 +39,10 @@ public class EnemyHP : MonoBehaviour
     public void Decrease(int damage)
     {
         currentHealth = currentHealth - damage;
+        if (this.gameObject.tag == "Enemy")
+        {
         transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+        }
 
         if (currentHealth <= 0)
         {
@@ -54,8 +57,11 @@ public class EnemyHP : MonoBehaviour
     public void Reset()
     {
         gameObject.SetActive(false);
-        transform.position = new Vector3(0, 0, 40);
+        if (this.gameObject.tag == "Enemy")
+        {
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        }
+        transform.position = new Vector3(0, 0, 40);
         CurrentHealth = MaxHealth;
     }
 

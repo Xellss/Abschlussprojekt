@@ -83,6 +83,7 @@ public class BuildingHealth : MonoBehaviour
         canvasRect = hpCanvas.GetComponent<RectTransform>();
         hpBackgroundImage = hpCanvas.transform.FindChild("HPBackgroundImage").GetComponent<RectTransform>();
         hpImage = hpCanvas.transform.FindChild("HPImage").GetComponent<RectTransform>();
+        waveSpawn = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
     }
 
     private void FixedUpdate()
@@ -145,6 +146,19 @@ public class BuildingHealth : MonoBehaviour
             //other.gameObject.SetActive(false);
             enemyHP.Decrease(enemyHP.CurrentHealth);
             //other.gameObject.GetComponent<EnemyHP>().Reset();
+        }
+        if (other.gameObject.tag == "Asteroid" && gameObject.tag == "Building")
+        {
+            AsteroidEnemyKI enemyHP = other.gameObject.GetComponent<AsteroidEnemyKI>();
+            int damage = enemyHP.Damage;
+            if (gameObject.layer == LayerMask.NameToLayer("Wall"))
+            {
+                damage = 1;
+            }
+            currentHealth -= damage;
+            other.gameObject.SetActive(false);
+            other.gameObject.transform.position = new Vector3(0, 0, 40);
+            waveSpawn.Enemys--;
         }
     }
 
