@@ -1,11 +1,12 @@
 ﻿/////////////////////////////////////////////////
+/////////////////////////////////////////////////
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
 ///           Author: Daniel Lause            ///
 ///                                           ///
 ///                                           ///
-/////////////////////////////////////////////////
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,7 +34,7 @@ public class BaseTerrainManager : MonoBehaviour
             towerSlot.enabled = true;
             gameObject.name = "UnlockedTerrain";
             gameObject.tag = "UnlockedTerrain";
-            buyButton.DestroyAsteroids();
+            buyButton.DestroyAsteroids(unlock);
             GameObject.Destroy(buyButton.gameObject);
             Component.Destroy(this);
         }
@@ -50,6 +51,11 @@ public class BaseTerrainManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(unlockTimer());
+    }
+    IEnumerator unlockTimer()
+    {
+        yield return new WaitForEndOfFrame();
         if (unlock)
             UnlockTerrain();
     }
