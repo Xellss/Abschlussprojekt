@@ -23,11 +23,11 @@ public class BuyButton : MonoBehaviour
         terrainManager.UnlockTerrain();
     }
 
-    public void DestroyAsteroids()
+    public void DestroyAsteroids(bool unlock)
     {
         if (ButtonAsteroids != null)
         {
-        planetTerraforming.Terraforming(transform.parent.position, ButtonAsteroids.transform.parent);
+        planetTerraforming.Terraforming(transform.parent.position, ButtonAsteroids.transform.parent, unlock);
         GameObject.Destroy(ButtonAsteroids);
         }
         else

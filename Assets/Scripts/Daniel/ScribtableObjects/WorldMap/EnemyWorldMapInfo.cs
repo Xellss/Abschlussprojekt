@@ -13,7 +13,6 @@ public class EnemyWorldMapInfo : ScriptableObject
 {
     [SerializeField]
     private string enemyGroupName;
-
     [SerializeField]
     private Sprite enemyMapImage;
     [SerializeField]

@@ -1,16 +1,24 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 using UnityEngine.UI;
 
-public class PlanetTerraforming : MonoBehaviour {
-
-    GameState gameState;
-
+public class PlanetTerraforming : MonoBehaviour
+{
+    private GameState gameState;
+    private Text goldAmount;
     //PoolPrefab[] planetPrefabs;
-
-    Text goldAmount;
     [SerializeField]
     private TerraformingPlanet terraformingPlanetScribtableObject;
+    private bool unlockedFromBegin;
+    [SerializeField]
+    bool levelHavePlanets = false;
 
     public TerraformingPlanet TerraformingPlanetScribtableObject
     {
@@ -18,16 +26,22 @@ public class PlanetTerraforming : MonoBehaviour {
         set { terraformingPlanetScribtableObject = value; }
     }
 
+    public void Terraforming(Vector3 position, Transform parentObject, bool unlock)
+    {
+        if (levelHavePlanets)
+        {
+
+        unlockedFromBegin = unlock;
+        GameObject newPlanet = ObjectPool.Instance.GetPooledObject(chosePlanetPrefab());
+        newPlanet.transform.position = position;
+        newPlanet.transform.SetParent(parentObject);
+        }
+    }
+
     private void Awake()
     {
         gameState = GetComponent<GameState>();
         goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
-    }
-    public void Terraforming(Vector3 position,Transform parentObject)
-    {
-       GameObject newPlanet= ObjectPool.Instance.GetPooledObject(chosePlanetPrefab());
-        newPlanet.transform.position =position;
-        newPlanet.transform.SetParent(parentObject);
     }
 
     private PoolPrefab chosePlanetPrefab()
@@ -37,9 +51,12 @@ public class PlanetTerraforming : MonoBehaviour {
         //Debug.Log(percent);
         if (percent <= terraformingPlanetScribtableObject.GasPlanetChanceInPercent)
         {
-            print("Herzlichen Glückwunsch, du hast einen Gas-Planeten erschaffen. Du bekommst " + terraformingPlanetScribtableObject.GasPlanetGoldBonus + " Gold als Belohnung");
-            gameState.GoldAmount += terraformingPlanetScribtableObject.GasPlanetGoldBonus;
-            goldAmount.text = gameState.GoldAmount.ToString();
+            if (!unlockedFromBegin)
+            {
+                print("Herzlichen Glückwunsch, du hast einen Gas-Planeten erschaffen. Du bekommst " + terraformingPlanetScribtableObject.GasPlanetGoldBonus + " Gold als Belohnung");
+                gameState.GoldAmount += terraformingPlanetScribtableObject.GasPlanetGoldBonus;
+                goldAmount.text = gameState.GoldAmount.ToString();
+            }
             return terraformingPlanetScribtableObject.GasPlanetPrefabs[Random.Range(0, terraformingPlanetScribtableObject.GasPlanetPrefabs.Length)];
         }
         else
@@ -47,6 +64,4 @@ public class PlanetTerraforming : MonoBehaviour {
             return terraformingPlanetScribtableObject.RegularPlanetPrefabs[Random.Range(0, terraformingPlanetScribtableObject.RegularPlanetPrefabs.Length)];
         }
     }
-
-
 }
