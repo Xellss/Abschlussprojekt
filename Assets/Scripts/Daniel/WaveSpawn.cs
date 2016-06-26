@@ -16,7 +16,6 @@ public class WaveSpawn : MonoBehaviour
     private bool clearWave = false;
     [SerializeField]
     private Edge[] edges;
-    [SerializeField]
     private int enemyCountPerSpawnPoint;
     private EnemyWorldMapInfo enemyInfo;
     [SerializeField]
@@ -32,19 +31,18 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private bool spawn;
     private float spawnDelay;
-    [SerializeField]
     private int spawnPointCounter;
-    [SerializeField]
     private List<Vector3> spawnPoints;
+    private List<Vector3> spezialSpawnPoints;
+    [SerializeField]
+    private BuildingHealth sunHealth;
+    private List<GameObject> visualSpawnFeedbacks;
     private int waveCounter = 0;
     private Wave[] waves;
     private bool waveStart = false;
     private WinLoseWindow winLoseScript;
     [SerializeField]
     private GameObject winLoseWindow;
-
-    [SerializeField]
-    BuildingHealth sunHealth;
 
     public int EnemyCountPerSpawnPoint
     {
@@ -114,25 +112,30 @@ public class WaveSpawn : MonoBehaviour
             waveStart = value;
         }
     }
+
     public void CreateSpawnpoints()
     {
-        if (!waveStart)
-        {
-            for (int i = 0; i < spawnPointCounter; i++)
-            {
-                Vector3 newPosition = spawnPosition();
-                spawnPoints.Add(newPosition);
-                GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-                lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
-            }
-        }
-    }
-    public void SpawnEnemy()
-    {
-        clearWave = false;
+        visualSpawnFeedbacks.Clear();
+        spawnPoints.Clear();
         //if (!waveStart)
         //{
-        //    for (int i = 0; i < spawnPointCounter; i++)
+        for (int i = 0; i < Waves[waveCounter].SpawnPoints; i++)
+        {
+            Vector3 newPosition = spawnPosition();
+            spawnPoints.Add(newPosition);
+            GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+            lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+            visualSpawnFeedbacks.Add(lookAtSpawn);
+        }
+        //}
+    }
+
+    public void SpawnEnemy()
+    {
+        //clearWave = false;
+        //if (!waveStart)
+        //{
+        //    for (int i = 0; i < Waves[waveCounter].SpawnPoints; i++)
         //    {
         //        Vector3 newPosition = spawnPosition();
         //        spawnPoints.Add(newPosition);
@@ -151,6 +154,10 @@ public class WaveSpawn : MonoBehaviour
                 waveStart = true;
             }
         }
+        if (Waves[waveCounter].SpezialWave.Enemys != null)
+        {
+            StartCoroutine(spezialSpawnDelay(waveCounter));
+        }
         waveCounter++;
         if (waveCounter >= waves.Length)
         {
@@ -167,11 +174,14 @@ public class WaveSpawn : MonoBehaviour
     {
         spawnPoints = new List<Vector3>();
         winLoseScript = winLoseWindow.GetComponent<WinLoseWindow>();
+        visualSpawnFeedbacks = new List<GameObject>();
+        spezialSpawnPoints = new List<Vector3>();
     }
 
     private IEnumerator spawnerDelay(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
+        CreateSpawnpoints();
         SpawnEnemy();
     }
 
@@ -182,6 +192,33 @@ public class WaveSpawn : MonoBehaviour
         Edge edge = edges[sideNumber];
 
         return Vector3.Lerp(edge.First.position, edge.Second.position, Random.value);
+    }
+
+    private void spezialSpawn(int wavecounter)
+    {
+        for (int i = 0; i < Waves[wavecounter].SpezialWave.SpawnPoints; i++)
+        {
+            Vector3 newPosition = spawnPosition();
+            spezialSpawnPoints.Add(newPosition);
+            GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+            lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+            visualSpawnFeedbacks.Add(lookAtSpawn);
+        }
+        foreach (var spawnPoint in spezialSpawnPoints)
+        {
+            for (int k = 0; k < Waves[wavecounter].SpezialWave.enemyPerWave; k++)
+            {
+                newEnemy = ObjectPool.Instance.GetPooledObject(Waves[wavecounter].SpezialWave.Enemys);
+                newEnemy.transform.position = spawnPoint;
+                enemys++;
+            }
+        }
+    }
+
+    private IEnumerator spezialSpawnDelay(int wavecounter)
+    {
+        yield return new WaitForSeconds(enemyInfo.Waves[waveCounter].SpezialWave.SpawnAfterWaveBegin);
+        spezialSpawn(wavecounter);
     }
 
     private void Start()
