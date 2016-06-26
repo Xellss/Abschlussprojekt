@@ -44,6 +44,14 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private GameObject winLoseWindow;
 
+    [SerializeField]
+    List<Transform> manuelSpawnPoints;
+
+
+    [SerializeField]
+    bool spezialSpawnPointManuelSetting = false;
+    [SerializeField]
+    bool spawnPointManuelSetting = false;
     public int EnemyCountPerSpawnPoint
     {
         get
@@ -117,8 +125,9 @@ public class WaveSpawn : MonoBehaviour
     {
         visualSpawnFeedbacks.Clear();
         spawnPoints.Clear();
-        //if (!waveStart)
-        //{
+        if (!spawnPointManuelSetting)
+        {
+
         for (int i = 0; i < Waves[waveCounter].SpawnPoints; i++)
         {
             Vector3 newPosition = spawnPosition();
@@ -127,22 +136,23 @@ public class WaveSpawn : MonoBehaviour
             lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
             visualSpawnFeedbacks.Add(lookAtSpawn);
         }
-        //}
+        }
+        else
+        {
+            for (int i = 0; i < Waves[waveCounter].SpawnPoints; i++)
+            {
+                Transform spawnpoint = manuelSpawnPoints[Random.Range(0, manuelSpawnPoints.Count)];
+                spawnPoints.Add(spawnpoint.position);
+                manuelSpawnPoints.Remove(spawnpoint);
+                GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = spawnpoint.position;
+                visualSpawnFeedbacks.Add(lookAtSpawn);
+            }
+        }
     }
 
     public void SpawnEnemy()
     {
-        //clearWave = false;
-        //if (!waveStart)
-        //{
-        //    for (int i = 0; i < Waves[waveCounter].SpawnPoints; i++)
-        //    {
-        //        Vector3 newPosition = spawnPosition();
-        //        spawnPoints.Add(newPosition);
-        //        GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-        //        lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
-        //    }
-        //}
 
         foreach (var spawnPoint in spawnPoints)
         {
@@ -196,6 +206,8 @@ public class WaveSpawn : MonoBehaviour
 
     private void spezialSpawn(int wavecounter)
     {
+        if (!spezialSpawnPointManuelSetting)
+        {
         for (int i = 0; i < Waves[wavecounter].SpezialWave.SpawnPoints; i++)
         {
             Vector3 newPosition = spawnPosition();
@@ -203,6 +215,21 @@ public class WaveSpawn : MonoBehaviour
             GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
             lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
             visualSpawnFeedbacks.Add(lookAtSpawn);
+        }
+        }
+        else
+        {
+            spawnPoints.Clear();
+            spezialSpawnPoints.Clear();
+            for (int i = 0; i < Waves[wavecounter].SpezialWave.SpawnPoints; i++)
+            {
+                Transform spawnpoint = manuelSpawnPoints[Random.Range(0,manuelSpawnPoints.Count)];
+                spezialSpawnPoints.Add(spawnpoint.position);
+                manuelSpawnPoints.Remove(spawnpoint);
+                GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = spawnpoint.position;
+                visualSpawnFeedbacks.Add(lookAtSpawn);
+            }
         }
         foreach (var spawnPoint in spezialSpawnPoints)
         {

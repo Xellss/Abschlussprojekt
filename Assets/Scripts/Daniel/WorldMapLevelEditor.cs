@@ -11,7 +11,7 @@ public class WorldMapLevelEditor : MonoBehaviour {
     void Start()
     {
         worldMapDetails = GameObject.Find("WorldMapDetails").GetComponent<WorldMapDetails>();
-        clearLevel= worldMapDetails.WorldLevel[levelNumber - 1].ClearLevel;
+        //clearLevel= worldMapDetails.WorldLevel[levelNumber - 1].ClearLevel;
     }
 
 }
