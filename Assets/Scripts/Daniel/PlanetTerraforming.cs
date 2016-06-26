@@ -18,7 +18,7 @@ public class PlanetTerraforming : MonoBehaviour
     private TerraformingPlanet terraformingPlanetScribtableObject;
     private bool unlockedFromBegin;
     [SerializeField]
-    bool levelHavePlanets = false;
+    bool levelHavePlanets = true;
 
     public TerraformingPlanet TerraformingPlanetScribtableObject
     {
