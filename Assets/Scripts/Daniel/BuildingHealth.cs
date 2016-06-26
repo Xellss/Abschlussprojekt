@@ -141,27 +141,49 @@ public class BuildingHealth : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy" && gameObject.tag == "Building")
         {
-            EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
-            currentHealth -= enemyHP.CurrentHealth;
-            //other.gameObject.SetActive(false);
-            enemyHP.Decrease(enemyHP.CurrentHealth);
-            //other.gameObject.GetComponent<EnemyHP>().Reset();
+            onTriggerEnemy(other);
+            //EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
+            //currentHealth -= enemyHP.CurrentHealth;
+            ////other.gameObject.SetActive(false);
+            //enemyHP.Decrease(enemyHP.CurrentHealth);
+            ////other.gameObject.GetComponent<EnemyHP>().Reset();
         }
         if (other.gameObject.tag == "Asteroid" && gameObject.tag == "Building")
         {
-            AsteroidEnemyKI enemyHP = other.gameObject.GetComponent<AsteroidEnemyKI>();
-            int damage = enemyHP.Damage;
-            if (gameObject.layer == LayerMask.NameToLayer("Wall"))
-            {
-                damage = 1;
-            }
-            currentHealth -= damage;
-            other.gameObject.SetActive(false);
-            other.gameObject.transform.position = new Vector3(0, 0, 40);
-            waveSpawn.Enemys--;
+            onTriggerAsteroid(other);
+            //AsteroidEnemyKI enemyHP = other.gameObject.GetComponent<AsteroidEnemyKI>();
+            //int damage = enemyHP.Damage;
+            //if (gameObject.layer == LayerMask.NameToLayer("Wall"))
+            //{
+            //    damage = 1;
+            //}
+            //currentHealth -= damage;
+            //other.gameObject.SetActive(false);
+            //other.gameObject.transform.position = new Vector3(0, 0, 40);
+            //waveSpawn.Enemys--;
         }
     }
-
+    private void onTriggerEnemy(Collider other)
+    {
+        EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
+        currentHealth -= enemyHP.CurrentHealth;
+        //other.gameObject.SetActive(false);
+        enemyHP.Decrease(enemyHP.CurrentHealth);
+        //other.gameObject.GetComponent<EnemyHP>().Reset();
+    }
+    private void onTriggerAsteroid(Collider other)
+    {
+        AsteroidEnemyKI enemyHP = other.gameObject.GetComponent<AsteroidEnemyKI>();
+        int damage = enemyHP.Damage;
+        if (gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            damage = 1;
+        }
+        currentHealth -= damage;
+        other.gameObject.SetActive(false);
+        other.gameObject.transform.position = new Vector3(0, 0, 40);
+        waveSpawn.Enemys--;
+    }
     private void setMaxSize(RectTransform rectangle)
     {
         rectangle.sizeDelta = new Vector2(maxHealth / 100, rectangle.rect.height);
