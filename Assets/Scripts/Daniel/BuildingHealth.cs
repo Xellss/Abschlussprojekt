@@ -1,13 +1,15 @@
 ﻿/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+using System.Collections;
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
 ///           Author: Daniel Lause            ///
 ///                                           ///
 ///                                           ///
-/////////////////////////////////////////////////
-
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildingHealth : MonoBehaviour
 {
@@ -21,6 +23,9 @@ public class BuildingHealth : MonoBehaviour
     private RectTransform hpImage;
     [SerializeField]
     private float maxHealth;
+
+    [SerializeField]
+    Slider hpSlider;
 
     private Renderer renderer;
 
@@ -86,7 +91,7 @@ public class BuildingHealth : MonoBehaviour
         waveSpawn = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (currentHealth < 0)
             currentHealth = 0;
@@ -96,8 +101,9 @@ public class BuildingHealth : MonoBehaviour
 
         if (currentHealth < maxHealth)
         {
+            //hpImage.sizeDelta = new Vector2(currentHealth / 100, hpImage.rect.height);
             hpCanvas.SetActive(true);
-            hpImage.sizeDelta = new Vector2(currentHealth / 100, hpImage.rect.height);
+            hpSlider.value = currentHealth;
         }
         else
             hpCanvas.SetActive(false);
@@ -142,46 +148,33 @@ public class BuildingHealth : MonoBehaviour
         if (other.gameObject.tag == "Enemy" && gameObject.tag == "Building")
         {
             onTriggerEnemy(other);
-            //EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
-            //currentHealth -= enemyHP.CurrentHealth;
-            ////other.gameObject.SetActive(false);
-            //enemyHP.Decrease(enemyHP.CurrentHealth);
-            ////other.gameObject.GetComponent<EnemyHP>().Reset();
+           
         }
         if (other.gameObject.tag == "Asteroid" && gameObject.tag == "Building")
         {
-            onTriggerAsteroid(other);
-            //AsteroidEnemyKI enemyHP = other.gameObject.GetComponent<AsteroidEnemyKI>();
-            //int damage = enemyHP.Damage;
-            //if (gameObject.layer == LayerMask.NameToLayer("Wall"))
-            //{
-            //    damage = 1;
-            //}
-            //currentHealth -= damage;
-            //other.gameObject.SetActive(false);
-            //other.gameObject.transform.position = new Vector3(0, 0, 40);
-            //waveSpawn.Enemys--;
+            onTriggerAsteroid(other.gameObject);
+           
         }
     }
     private void onTriggerEnemy(Collider other)
     {
         EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
-        currentHealth -= enemyHP.CurrentHealth;
+        StartCoroutine(reduceHealth(5, enemyHP.CurrentHealth));
         //other.gameObject.SetActive(false);
         enemyHP.Decrease(enemyHP.CurrentHealth);
         //other.gameObject.GetComponent<EnemyHP>().Reset();
     }
-    private void onTriggerAsteroid(Collider other)
+    private void onTriggerAsteroid(GameObject other)
     {
-        AsteroidEnemyKI enemyHP = other.gameObject.GetComponent<AsteroidEnemyKI>();
+        AsteroidEnemyKI enemyHP = other.GetComponent<AsteroidEnemyKI>();
         int damage = enemyHP.Damage;
         if (gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
             damage = 1;
         }
-        currentHealth -= damage;
-        other.gameObject.SetActive(false);
-        other.gameObject.transform.position = new Vector3(0, 0, 40);
+        StartCoroutine(reduceHealth(5, damage));
+        other.SetActive(false);
+        other.transform.position = new Vector3(0, 0, 40);
         waveSpawn.Enemys--;
     }
     private void setMaxSize(RectTransform rectangle)
@@ -194,13 +187,27 @@ public class BuildingHealth : MonoBehaviour
         towerSlotScript = transform.GetComponentInParent<TowerSlot>();
         destroyBuilding = transform.GetComponentInParent<DestroyBuildedTower>();
         setMaxSize(canvasRect);
-        setMaxSize(hpImage);
-        setMaxSize(hpBackgroundImage);
+        //setMaxSize(hpImage);
+        //setMaxSize(hpBackgroundImage);
         renderer = GetComponent<Renderer>();
         currentHealth = maxHealth;
+        hpSlider.maxValue = maxHealth;
         if (GetComponent<TowerController>() != null)
         {
             towerController = GetComponent<TowerController>();
+        }
+    }
+    IEnumerator reduceHealth(int step, int total)
+    {
+        int remaining = total;
+        while (remaining >0)
+        {
+            currentHealth -= Mathf.Min(remaining, step);
+            // Anm. @Fabio: Approved by Jöran. Andernfalls Bug innerhalb Unity.
+            if (currentHealth == maxHealth / 2)
+                currentHealth--;
+            remaining -= step;
+            yield return null;
         }
     }
 }
