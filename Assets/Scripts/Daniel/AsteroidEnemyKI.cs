@@ -3,7 +3,6 @@ using System.Collections;
 
 public class AsteroidEnemyKI : MonoBehaviour {
 
-
     GameObject sun;
     NavMeshAgent myAgent;
 
