@@ -12,6 +12,16 @@ using UnityEngine;
 [Serializable]
 public class Wave
 {
+
+    [SerializeField]
+    private Transform[] wayPoints;
+
+    public Transform[] WayPoints
+    {
+        get { return wayPoints; }
+        set { wayPoints = value; }
+    }
+
     [SerializeField]
     private int enemysPerWave;
 
