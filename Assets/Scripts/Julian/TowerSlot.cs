@@ -1,17 +1,18 @@
 ﻿/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+using System;
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
 ///     Author: Julian Hopp & Daniel Lause    ///
 ///                                           ///
 ///                                           ///
-/////////////////////////////////////////////////
-
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TowerSlot : MonoBehaviour, IPointerClickHandler
+public class TowerSlot : MonoBehaviour, IPointerClickHandler 
 {
     private GameState gameState;
     private Text gold;
@@ -25,6 +26,8 @@ public class TowerSlot : MonoBehaviour, IPointerClickHandler
     //[SerializeField]
     //private TowerController towerPrefab;
     ShopButtonBehaviour shopBehavoiur;
+
+    private float delta;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -62,4 +65,5 @@ public class TowerSlot : MonoBehaviour, IPointerClickHandler
             gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
         shopBehavoiur = GameObject.Find("Canvas").GetComponent<ShopButtonBehaviour>();
     }
+   
 }

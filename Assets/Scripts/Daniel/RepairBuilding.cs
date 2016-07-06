@@ -62,7 +62,14 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         yield return new WaitForSeconds(time);
         health.AddHealth(health.MaxHealth);
         destroyBuilding.enabled = true;
-        renderer.material.color = Color.white;
+        if (renderer.material != null)
+        {
+            renderer.material.color = Color.white;
+
+        }
+        else
+            GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+
         gameObject.tag = "Building";
 
         if (towerController != null)

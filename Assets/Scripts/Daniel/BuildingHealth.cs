@@ -133,7 +133,13 @@ public class BuildingHealth : MonoBehaviour
         {
             //towerSlotScript.enabled = true;
             destroyBuilding.enabled = false;
-            renderer.material.color = Color.red;
+            if (renderer != null)
+            {
+                renderer.material.color = Color.red;
+            }
+            else
+                GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+
             gameObject.tag = "Destroyed";
             transform.parent.gameObject.tag = "Destroyed";
             if (towerController != null)
@@ -148,12 +154,15 @@ public class BuildingHealth : MonoBehaviour
         if (other.gameObject.tag == "Enemy" && gameObject.tag == "Building")
         {
             onTriggerEnemy(other);
-           
+        }
+        if (other.gameObject.tag == "LaserBullet" && gameObject.tag == "Building")
+        {
+            onTriggerBullet(other);
         }
         if (other.gameObject.tag == "Asteroid" && gameObject.tag == "Building")
         {
             onTriggerAsteroid(other.gameObject);
-           
+
         }
     }
     private void onTriggerEnemy(Collider other)
@@ -163,6 +172,12 @@ public class BuildingHealth : MonoBehaviour
         //other.gameObject.SetActive(false);
         enemyHP.Decrease(enemyHP.CurrentHealth);
         //other.gameObject.GetComponent<EnemyHP>().Reset();
+    }
+    private void onTriggerBullet(Collider other)
+    {
+        StartCoroutine(reduceHealth(5, other.GetComponent<LaserInfos>().Damage));
+        other.gameObject.SetActive(false);
+        other.gameObject.transform.position = new Vector3(0, 0, 40);
     }
     private void onTriggerAsteroid(GameObject other)
     {
@@ -200,7 +215,7 @@ public class BuildingHealth : MonoBehaviour
     IEnumerator reduceHealth(int step, int total)
     {
         int remaining = total;
-        while (remaining >0)
+        while (remaining > 0)
         {
             currentHealth -= Mathf.Min(remaining, step);
             // Anm. @Fabio: Approved by Jöran. Andernfalls Bug innerhalb Unity.

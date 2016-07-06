@@ -1,73 +1,50 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
 using DG.Tweening;
+using System.Collections;
 using System.Linq;
+using UnityEngine;
 
 public class EnemyKi : MonoBehaviour
 {
-
-    Transform waypointArray;
-
-    [SerializeField]
-    GameObject laserSpawnPosition;
-
-    [SerializeField]
-    PoolPrefab laserBullet;
-
-    [SerializeField]
-    private int damage;
-
-    [SerializeField]
-    private float laserSpeed;
-
-    [SerializeField]
-    private float shotDelay;
-
-    private GameObject newLaser;
-
     [SerializeField]
     private bool canShot;
-
     [SerializeField]
-    private bool shotNow;
-
+    private int damage;
+    [SerializeField, Tooltip("lower = faster")]
+    private int flySpeed = 0;
+    private RaycastHit hit;
+    [SerializeField]
+    private PoolPrefab laserBullet;
+    [SerializeField]
+    private GameObject laserSpawnPosition;
+    [SerializeField]
+    private float laserSpeed;
+    private GameObject newLaser;
     [SerializeField]
     private PathType pathType = PathType.CatmullRom;
-    //[SerializeField]
+    [SerializeField]
+    private float shotDelay;
+    [SerializeField]
+    private bool shotNow;
+    private Transform waypointArray;
     private Transform[] waypointObjects;
 
     private Vector3[] waypoints;
 
-    [SerializeField, Tooltip("lower = faster")]
-    int flySpeed = 0;
-
-    RaycastHit hit;
-
-    void Update()
-    {
-        if (shotNow)
-        {
-            shot();
-            shotNow = false;
-        }
-    }
-
-    void Awake()
+    private void Awake()
     {
         waypointArray = GameObject.Find("EnemyWaypoints").transform;
         waypointObjects = waypointArray.Cast<Transform>().ToArray();
     }
-    void Start()
-    {
-        setPath();
-        laserSpeed = laserSpeed * 1000;
-    }
-    void shot()
-    {
-        StartCoroutine(shotWithDelay());
-    }
 
-    void setPath()
+    private void setPath()
     {
         waypoints = new Vector3[waypointObjects.Length];
         for (int i = 0; i < waypointObjects.Length; i++)
@@ -81,17 +58,21 @@ public class EnemyKi : MonoBehaviour
         t.SetEase(Ease.Linear).SetLoops(-1);
     }
 
-    IEnumerator shotWithDelay()
+    private void shot()
+    {
+        StartCoroutine(shotWithDelay());
+    }
+
+    private IEnumerator shotWithDelay()
     {
         if (canShot)
         {
-
             Ray ray = new Ray(laserSpawnPosition.transform.position, transform.forward);
             Physics.Raycast(ray, out hit);
             if (hit.collider != null && hit.collider.gameObject.tag == "Building")
             {
-
                 newLaser = ObjectPool.Instance.GetPooledObject(laserBullet);
+                newLaser.GetComponent<LaserInfos>().Damage = damage;
                 newLaser.transform.position = laserSpawnPosition.transform.position;
                 Rigidbody laserBody = newLaser.GetComponent<Rigidbody>();
                 laserBody.transform.LookAt(transform.forward);
@@ -101,6 +82,21 @@ public class EnemyKi : MonoBehaviour
             else
                 yield return new WaitForSeconds(0);
             StartCoroutine(shotWithDelay());
+        }
+    }
+
+    private void Start()
+    {
+        setPath();
+        laserSpeed = laserSpeed * 1000;
+    }
+
+    private void Update()
+    {
+        if (shotNow)
+        {
+            shot();
+            shotNow = false;
         }
     }
 }

@@ -70,7 +70,7 @@ public class ShopCardCreator : MonoBehaviour
         foreach (var buildingInfo in buildingInfos)
         {
             GameObject shopCard = (GameObject)Instantiate(Resources.Load("Prefabs/BuildingShopCard"));
-            shopCard.transform.SetParent(content.transform);
+            shopCard.transform.SetParent(content.transform, false);
             shopCard.name = shopCardMark + buildingInfo.BuildingName;
             editShopCard(shopCard, buildingInfo);
             shopCards.Add(shopCard, buildingInfo);

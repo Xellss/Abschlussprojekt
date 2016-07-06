@@ -132,9 +132,9 @@ public class WaveSpawn : MonoBehaviour
         {
             Vector3 newPosition = spawnPosition();
             spawnPoints.Add(newPosition);
-            GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-            lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
-            visualSpawnFeedbacks.Add(lookAtSpawn);
+            //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+            //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+            //visualSpawnFeedbacks.Add(lookAtSpawn);
         }
         }
         else
@@ -144,9 +144,9 @@ public class WaveSpawn : MonoBehaviour
                 Transform spawnpoint = manuelSpawnPoints[Random.Range(0, manuelSpawnPoints.Count)];
                 spawnPoints.Add(spawnpoint.position);
                 manuelSpawnPoints.Remove(spawnpoint);
-                GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-                lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = spawnpoint.position;
-                visualSpawnFeedbacks.Add(lookAtSpawn);
+                //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = spawnpoint.position;
+                //visualSpawnFeedbacks.Add(lookAtSpawn);
             }
         }
     }
@@ -212,9 +212,9 @@ public class WaveSpawn : MonoBehaviour
         {
             Vector3 newPosition = spawnPosition();
             spezialSpawnPoints.Add(newPosition);
-            GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-            lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
-            visualSpawnFeedbacks.Add(lookAtSpawn);
+            //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+            //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+            //visualSpawnFeedbacks.Add(lookAtSpawn);
         }
         }
         else
@@ -226,9 +226,9 @@ public class WaveSpawn : MonoBehaviour
                 Transform spawnpoint = manuelSpawnPoints[Random.Range(0,manuelSpawnPoints.Count)];
                 spezialSpawnPoints.Add(spawnpoint.position);
                 manuelSpawnPoints.Remove(spawnpoint);
-                GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-                lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = spawnpoint.position;
-                visualSpawnFeedbacks.Add(lookAtSpawn);
+                //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = spawnpoint.position;
+                //visualSpawnFeedbacks.Add(lookAtSpawn);
             }
         }
         foreach (var spawnPoint in spezialSpawnPoints)
