@@ -35,6 +35,11 @@ public class WorldSelectionButton : MonoBehaviour
         loadingText.SetActive(true);
         SceneManager.LoadScene("Level4");
     }
+    public void OnClick_Level11()
+    {
+        loadingText.SetActive(true);
+        SceneManager.LoadScene("KiTest");
+    }
     public void OnClick_Level15()
     {
         loadingText.SetActive(true);
