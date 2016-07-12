@@ -62,7 +62,7 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         yield return new WaitForSeconds(time);
         health.AddHealth(health.MaxHealth);
         destroyBuilding.enabled = true;
-        if (renderer.material != null)
+        if (renderer != null)
         {
             renderer.material.color = Color.white;
 
@@ -72,6 +72,12 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
 
         gameObject.tag = "Building";
 
+
+        if (health.LookAtEnemy!= null)
+        {
+            health.LookAtEnemy.LookActive = true;
+            health.LookAtEnemy.StartLookAt();
+        }
         if (towerController != null)
         {
             towerController.CanShoot = true;

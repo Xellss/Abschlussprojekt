@@ -25,6 +25,17 @@ public class BuildingHealth : MonoBehaviour
     private float maxHealth;
 
     [SerializeField]
+    LookAtEnemy lookAtEnemy;
+
+
+    public LookAtEnemy LookAtEnemy
+    {
+        get { return lookAtEnemy; }
+        set { lookAtEnemy = value; }
+    }
+
+
+    [SerializeField]
     Slider hpSlider;
 
     private Renderer renderer;
@@ -140,6 +151,12 @@ public class BuildingHealth : MonoBehaviour
             else
                 GetComponentInChildren<MeshRenderer>().material.color = Color.red;
 
+
+            if (lookAtEnemy!= null)
+            {
+                lookAtEnemy.LookActive = false;
+                lookAtEnemy.EndLookAt();
+            }
             gameObject.tag = "Destroyed";
             transform.parent.gameObject.tag = "Destroyed";
             if (towerController != null)

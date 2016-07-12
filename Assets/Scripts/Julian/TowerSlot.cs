@@ -42,14 +42,15 @@ public class TowerSlot : MonoBehaviour, IPointerClickHandler
                 {
 
                 shopBehavoiur.TowerShopCard.SetActive(false);
+                    shopBehavoiur.WallShopCard.SetActive(true);
                 }
             }
             else
             {
                 if (shopBehavoiur.TowerShopCard != null)
                 {
-
                 shopBehavoiur.TowerShopCard.SetActive(true);
+                    shopBehavoiur.WallShopCard.SetActive(false);
                 }
             }
         }

@@ -51,7 +51,7 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
     {
         gamestate.GoldAmount += buildingInformation.BuildingSellPrice;
         goldAmount.text = gamestate.GoldAmount.ToString();
-        GameObject.Destroy(transform.GetChild(0).gameObject);
+        GameObject.Destroy(transform.GetChild(1).gameObject);
         towerSlot.enabled = true;
         sellTowerButtonGameObject.SetActive(false);
         this.enabled = false;

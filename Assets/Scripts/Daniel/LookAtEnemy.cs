@@ -8,14 +8,23 @@ public class LookAtEnemy : MonoBehaviour
     [SerializeField]
     float lookAtEnemyRadius = 0;
 
+    private bool lookActive=true;
+
+    public bool LookActive
+    {
+        get { return lookActive; }
+        set { lookActive = value; }
+    }
+
+
 
     void Start()
     {
-        StartCoroutine("lookUpdate");
+        StartLookAt();
     }
     IEnumerator lookUpdate()
     {
-        while (true)
+        while (lookActive)
         {
             Collider[] collider = Physics.OverlapSphere(transform.position, lookAtEnemyRadius, LayerMask.GetMask("Enemy"), QueryTriggerInteraction.Collide);
             if (collider.Length > 0)
@@ -32,5 +41,14 @@ public class LookAtEnemy : MonoBehaviour
     public void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position, lookAtEnemyRadius);
+    }
+
+    public void EndLookAt()
+    {
+        StopCoroutine("lookUpdate");
+    }
+    public void StartLookAt()
+    {
+        StartCoroutine("lookUpdate");
     }
 }
