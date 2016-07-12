@@ -46,6 +46,15 @@ public class ShopButtonBehaviour : MonoBehaviour
         set { towerShopCard = value; }
     }
 
+    private GameObject wallShopCard;
+
+    public GameObject WallShopCard
+    {
+        get { return wallShopCard; }
+        set { wallShopCard = value; }
+    }
+
+
 
     public void OnClickGiveGold()
     {
@@ -80,10 +89,7 @@ public class ShopButtonBehaviour : MonoBehaviour
         sellBuilding.enabled = true;
         gameState.GoldAmount -= buildingCardInformation.BuildingGoldCost;
         goldAmount.text = gameState.GoldAmount.ToString();
-        //Time.timeScale = 1;
-        //Camera.main.gameObject.GetComponent<Animator>().SetTrigger("BuildMenuClosed");
-        //animator.SetTrigger("ShopFadeOut");
-        //shop.SetActive(false);
+       
         newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, towerSlotTransform.position, Quaternion.identity);
         newBuilding.layer = LayerMask.NameToLayer(buildingCardInformation.BuildingTypes.ToString());
         newBuilding.name = buildingCardInformation.BuildingName;
@@ -155,6 +161,7 @@ public class ShopButtonBehaviour : MonoBehaviour
     private void Start()
     {
         towerShopCard = GameObject.Find("ShopCard_Tower");
+        wallShopCard = GameObject.Find("ShopCard_Wall");
         //shop.SetActive(false);
     }
 
