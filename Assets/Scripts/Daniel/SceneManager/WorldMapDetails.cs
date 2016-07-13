@@ -9,11 +9,18 @@
 
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class WorldMapDetails : MonoBehaviour
 {
     private WorldMapLevelEditor currentEditor;
     private WorldMapLevel currentLevel;
+
+
+    WorldSelectionButton mybehavour;
+    [SerializeField]
+    Text starAmount;
 
     private Transform[] levelAray;
     [SerializeField]
@@ -53,6 +60,7 @@ public class WorldMapDetails : MonoBehaviour
                 stars += worldLevel[i].StarsOnClear;
             }
             starCount = stars;
+            starAmount.text = starCount.ToString();
         }
     }
 
@@ -90,11 +98,11 @@ public class WorldMapDetails : MonoBehaviour
                 worldLevel[i].ClearLevel = true;
                 currentEditor.ClearLevel = true;
             }
+            //currentEditor.Button.onClick.AddListener(delegate {mybehavour.OnClickWorldButton("Level" + currentEditor.LevelNumber); });
             currentEditor.SetButton();
             if (oldEditor != null && !oldEditor.ClearLevel && currentEditor.LevelNumber > 1)
             {
-                Debug.Log(oldEditor.name);
-                Debug.Log(currentEditor.name);
+               
                 currentEditor.Button.interactable = false;
                 worldLevel[i].ClearLevel = false;
                 worldLevel[i].StarsOnClear = 0;
@@ -119,6 +127,10 @@ public class WorldMapDetails : MonoBehaviour
 
     private void Start()
     {
+        mybehavour = GetComponent<WorldSelectionButton>();
         fillWorldMap();
+
     }
+
+
 }

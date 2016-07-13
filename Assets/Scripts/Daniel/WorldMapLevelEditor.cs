@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class WorldMapLevelEditor : MonoBehaviour
 {
+   
 
     private Button button;
 
@@ -56,7 +57,7 @@ public class WorldMapLevelEditor : MonoBehaviour
     {
         worldMapDetails = GameObject.Find("WorldMapDetails").GetComponent<WorldMapDetails>();
         button = GetComponent<Button>();
-        worldSelectionButton = GameObject.Find("WorldMapCanvas").GetComponent<WorldSelectionButton>();
+        worldSelectionButton = worldMapDetails.GetComponent<WorldSelectionButton>();
         //clearLevel= worldMapDetails.WorldLevel[levelNumber - 1].ClearLevel;
     }
 }

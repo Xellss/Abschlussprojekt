@@ -29,10 +29,15 @@ public class WinLoseWindow : MonoBehaviour
     [SerializeField]
     private Text windowHeader;
 
+    WorldSelectionButton button;
+
+        void Start()
+    {
+        button = GameObject.Find("WorldMapDetails").GetComponent<WorldSelectionButton>();
+    }
     public void OnClickClose()
     {
-        //this.gameObject.SetActive(false);
-        SceneManager.LoadScene("WorldMap");
+        button.OnClickWorldMap();
     }
 
     public void WinLoseWave(bool winWave, EnemyWorldMapInfo enemyInfo, int stars)
