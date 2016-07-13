@@ -1,19 +1,26 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
 using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
 using UnityEngine.UI;
 
 public class RepairBuilding : MonoBehaviour, IPointerClickHandler
 {
-    GameState gamestate;
-    Renderer renderer;
-    DestroyBuildedTower destroyBuilding;
-    TowerController towerController;
-    Text goldAmount;
-    BuildingHealth health;
-    bool repair = false;
     private BuildingInformation buildingInfo;
+    private DestroyBuildedTower destroyBuilding;
+    private GameState gamestate;
+    private Text goldAmount;
+    private BuildingHealth health;
+    private Renderer renderer;
+    private bool repair = false;
+    private TowerController towerController;
 
     public BuildingInformation BuildingInfo
     {
@@ -21,16 +28,6 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         set { buildingInfo = value; }
     }
 
-
-    private void Start()
-    {
-        health = GetComponent<BuildingHealth>();
-        gamestate = GameObject.Find("GlobalScripts").GetComponent<GameState>();
-        destroyBuilding = GetComponentInParent<DestroyBuildedTower>();
-        towerController = GetComponentInParent<TowerController>();
-        goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
-        renderer = GetComponent<Renderer>();
-    }
     public void OnPointerClick(PointerEventData eventData)
     {
         if (this.gameObject.tag == "Destroyed" && !repair)
@@ -41,7 +38,8 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
             destroyBuilding.SellTowerButton.onClick.AddListener(delegate { repairBuilding(); });
         }
     }
-    void repairBuilding()
+
+    private void repairBuilding()
     {
         if ((buildingInfo.RepairAmount <= gamestate.GoldAmount) && !repair)
         {
@@ -57,7 +55,7 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    IEnumerator repairTime(float time)
+    private IEnumerator repairTime(float time)
     {
         yield return new WaitForSeconds(time);
         health.AddHealth(health.MaxHealth);
@@ -65,15 +63,13 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         if (renderer != null)
         {
             renderer.material.color = Color.white;
-
         }
         else
             GetComponentInChildren<MeshRenderer>().material.color = Color.white;
 
         gameObject.tag = "Building";
 
-
-        if (health.LookAtEnemy!= null)
+        if (health.LookAtEnemy != null)
         {
             health.LookAtEnemy.LookActive = true;
             health.LookAtEnemy.StartLookAt();
@@ -83,5 +79,15 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
             towerController.CanShoot = true;
         }
         repair = false;
+    }
+
+    private void Start()
+    {
+        health = GetComponent<BuildingHealth>();
+        gamestate = GameObject.Find("GlobalScripts").GetComponent<GameState>();
+        destroyBuilding = GetComponentInParent<DestroyBuildedTower>();
+        towerController = GetComponentInParent<TowerController>();
+        goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
+        renderer = GetComponent<Renderer>();
     }
 }

@@ -26,13 +26,19 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private GameObject lookAtSpawnPrefab;
     [SerializeField]
+    private List<Transform> manuelSpawnPoints;
+    [SerializeField]
     private MapButtonBehaviour mapBehaviour;
     private GameObject newEnemy;
     [SerializeField]
     private bool spawn;
     private float spawnDelay;
     private int spawnPointCounter;
+    [SerializeField]
+    private bool spawnPointManuelSetting = false;
     private List<Vector3> spawnPoints;
+    [SerializeField]
+    private bool spezialSpawnPointManuelSetting = false;
     private List<Vector3> spezialSpawnPoints;
     [SerializeField]
     private BuildingHealth sunHealth;
@@ -44,14 +50,6 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private GameObject winLoseWindow;
 
-    [SerializeField]
-    List<Transform> manuelSpawnPoints;
-
-
-    [SerializeField]
-    bool spezialSpawnPointManuelSetting = false;
-    [SerializeField]
-    bool spawnPointManuelSetting = false;
     public int EnemyCountPerSpawnPoint
     {
         get
@@ -127,15 +125,14 @@ public class WaveSpawn : MonoBehaviour
         spawnPoints.Clear();
         if (!spawnPointManuelSetting)
         {
-
-        for (int i = 0; i < Waves[waveCounter].SpawnPoints; i++)
-        {
-            Vector3 newPosition = spawnPosition();
-            spawnPoints.Add(newPosition);
-            //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-            //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
-            //visualSpawnFeedbacks.Add(lookAtSpawn);
-        }
+            for (int i = 0; i < Waves[waveCounter].SpawnPoints; i++)
+            {
+                Vector3 newPosition = spawnPosition();
+                spawnPoints.Add(newPosition);
+                //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+                //visualSpawnFeedbacks.Add(lookAtSpawn);
+            }
         }
         else
         {
@@ -153,7 +150,6 @@ public class WaveSpawn : MonoBehaviour
 
     public void SpawnEnemy()
     {
-
         foreach (var spawnPoint in spawnPoints)
         {
             for (int k = 0; k < Waves[waveCounter].enemyPerWave; k++)
@@ -208,14 +204,14 @@ public class WaveSpawn : MonoBehaviour
     {
         if (!spezialSpawnPointManuelSetting)
         {
-        for (int i = 0; i < Waves[wavecounter].SpezialWave.SpawnPoints; i++)
-        {
-            Vector3 newPosition = spawnPosition();
-            spezialSpawnPoints.Add(newPosition);
-            //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
-            //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
-            //visualSpawnFeedbacks.Add(lookAtSpawn);
-        }
+            for (int i = 0; i < Waves[wavecounter].SpezialWave.SpawnPoints; i++)
+            {
+                Vector3 newPosition = spawnPosition();
+                spezialSpawnPoints.Add(newPosition);
+                //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);
+                //lookAtSpawn.GetComponent<LookAtEnemy>().LookAtVector = newPosition;
+                //visualSpawnFeedbacks.Add(lookAtSpawn);
+            }
         }
         else
         {
@@ -223,7 +219,7 @@ public class WaveSpawn : MonoBehaviour
             spezialSpawnPoints.Clear();
             for (int i = 0; i < Waves[wavecounter].SpezialWave.SpawnPoints; i++)
             {
-                Transform spawnpoint = manuelSpawnPoints[Random.Range(0,manuelSpawnPoints.Count)];
+                Transform spawnpoint = manuelSpawnPoints[Random.Range(0, manuelSpawnPoints.Count)];
                 spezialSpawnPoints.Add(spawnpoint.position);
                 manuelSpawnPoints.Remove(spawnpoint);
                 //GameObject lookAtSpawn = (GameObject)Instantiate(lookAtSpawnPrefab, Vector3.zero, Quaternion.identity);

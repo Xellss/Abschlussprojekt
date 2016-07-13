@@ -18,22 +18,13 @@ public class GameState : MonoBehaviour
     [SerializeField]
     private int goldAmount;
     [SerializeField]
+    private GameObject loseScreen;
+    [SerializeField]
     private int outPostGoldAmount;
     [SerializeField]
     private string playerName;
     [SerializeField]
     private List<TerrainModel> terrains;
-
-    [SerializeField]
-    private GameObject loseScreen;
-
-
-    public GameObject LoseScreen
-    {
-        get { return loseScreen; }
-        set { loseScreen = value; }
-    }
-
 
     public List<BuildingModel> Buildings
     {
@@ -45,6 +36,12 @@ public class GameState : MonoBehaviour
     {
         get { return goldAmount; }
         set { goldAmount = value; }
+    }
+
+    public GameObject LoseScreen
+    {
+        get { return loseScreen; }
+        set { loseScreen = value; }
     }
 
     public int OutPostGoldAmount

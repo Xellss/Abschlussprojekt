@@ -7,11 +7,14 @@
 ///                                           ///
 /////////////////////////////////////////////////
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class EnemyEditor : MonoBehaviour
 {
+    [SerializeField]
+    private Text enemyGroupName;
+    [SerializeField]
+    private Image enemyImage;
     [SerializeField]
     private EnemyWorldMapInfo enemyInfoScribtableObject;
 
@@ -21,16 +24,6 @@ public class EnemyEditor : MonoBehaviour
         set { enemyInfoScribtableObject = value; }
     }
 
-    [SerializeField]
-    private Text enemyGroupName;
-    [SerializeField]
-    private Image enemyImage;
-
-
-    private void Start()
-    {
-        editEnemyCard();
-    }
     private void editEnemyCard()
     {
         enemyGroupName.text = enemyInfoScribtableObject.EnemyGroupName;
@@ -41,5 +34,10 @@ public class EnemyEditor : MonoBehaviour
         //{
         //    itemRewardText.text = enemyInfoScribtableObject.ItemReward.name;
         //}
+    }
+
+    private void Start()
+    {
+        editEnemyCard();
     }
 }

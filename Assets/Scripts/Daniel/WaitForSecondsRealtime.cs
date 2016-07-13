@@ -1,19 +1,27 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 
 public sealed class WaitForSecondsRealtime : CustomYieldInstruction
 {
-	private float targetTime;
+    private float targetTime;
 
-	public override bool keepWaiting
-	{
-		get
-		{
-			return targetTime > Time.realtimeSinceStartup;
-		}
-	}
+    public override bool keepWaiting
+    {
+        get
+        {
+            return targetTime > Time.realtimeSinceStartup;
+        }
+    }
 
-	public WaitForSecondsRealtime(float time)
-	{
-		targetTime = Time.realtimeSinceStartup + time;
-	}
+    public WaitForSecondsRealtime(float time)
+    {
+        targetTime = Time.realtimeSinceStartup + time;
+    }
 }

@@ -1,18 +1,28 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
+    private bool runTimer = false;
     [SerializeField]
     private WaveSpawn spawner;
     [SerializeField]
+    private Animator timerAnimator;
+    [SerializeField]
+    private GameObject timerPanel;
+    [SerializeField]
+    private Text timerText;
+    [SerializeField]
     private float timerTime;
-
-    [SerializeField]
-    Animator timerAnimator;
-    [SerializeField]
-    GameObject timerPanel;
 
     public float TimerTime
     {
@@ -20,34 +30,29 @@ public class Timer : MonoBehaviour
         set { timerTime = value; }
     }
 
-    [SerializeField]
-    private Text timerText;
-
-    private bool runTimer = false;
-    void Start()
+    private void Start()
     {
         runTimer = true;
         StartCoroutine(waitASecond());
         timerText.text = ((int)timerTime).ToString();
-
     }
-    void Update()
-    {
 
+    private void Update()
+    {
         if (timerTime <= 0)
         {
             timerTime = 0;
         }
         else
-        timerTime -= Time.deltaTime;
-
+            timerTime -= Time.deltaTime;
     }
-    IEnumerator waitASecond()
+
+    private IEnumerator waitASecond()
     {
         if (runTimer)
         {
             runTimer = false;
-        spawner.CreateSpawnpoints();
+            spawner.CreateSpawnpoints();
         }
         if (timerTime <= 0)
         {
@@ -57,13 +62,12 @@ public class Timer : MonoBehaviour
             timerPanel.SetActive(false);
             spawner.SpawnEnemy();
         }
-        if (runTimer &&TimerTime <= 5)
+        if (runTimer && TimerTime <= 5)
         {
             timerAnimator.SetTrigger("StartAnimation");
         }
         yield return new WaitForSeconds(1);
-        timerText.text = ((int)timerTime+1).ToString();
+        timerText.text = ((int)timerTime + 1).ToString();
         StartCoroutine(waitASecond());
-
     }
 }

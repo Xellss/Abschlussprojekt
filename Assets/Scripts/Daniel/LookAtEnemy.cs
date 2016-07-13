@@ -1,14 +1,19 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
 using System.Collections;
-using System;
+using UnityEngine;
 
 public class LookAtEnemy : MonoBehaviour
 {
-
+    private bool lookActive = true;
     [SerializeField]
-    float lookAtEnemyRadius = 0;
-
-    private bool lookActive=true;
+    private float lookAtEnemyRadius = 0;
 
     public bool LookActive
     {
@@ -16,13 +21,22 @@ public class LookAtEnemy : MonoBehaviour
         set { lookActive = value; }
     }
 
-
-
-    void Start()
+    public void EndLookAt()
     {
-        StartLookAt();
+        StopCoroutine("lookUpdate");
     }
-    IEnumerator lookUpdate()
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, lookAtEnemyRadius);
+    }
+
+    public void StartLookAt()
+    {
+        StartCoroutine("lookUpdate");
+    }
+
+    private IEnumerator lookUpdate()
     {
         while (lookActive)
         {
@@ -38,17 +52,8 @@ public class LookAtEnemy : MonoBehaviour
         }
     }
 
-    public void OnDrawGizmos()
+    private void Start()
     {
-        Gizmos.DrawSphere(transform.position, lookAtEnemyRadius);
-    }
-
-    public void EndLookAt()
-    {
-        StopCoroutine("lookUpdate");
-    }
-    public void StartLookAt()
-    {
-        StartCoroutine("lookUpdate");
+        StartLookAt();
     }
 }
