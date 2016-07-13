@@ -12,34 +12,26 @@ using UnityEngine;
 [Serializable]
 public class Wave
 {
-
-    [SerializeField]
-    private Transform[] wayPoints;
-
-    public Transform[] WayPoints
-    {
-        get { return wayPoints; }
-        set { wayPoints = value; }
-    }
-
     [SerializeField]
     private int enemysPerWave;
+    [SerializeField]
+    private int spawnPoints;
+    [SerializeField]
+    private SpezialWave spezialWave;
+    [SerializeField]
+    private Transform[] wayPoints;
 
     public int enemyPerWave
     {
         get { return enemysPerWave; }
         set { enemysPerWave = value; }
     }
-    [SerializeField]
-    private int spawnPoints;
 
     public int SpawnPoints
     {
         get { return spawnPoints; }
         set { spawnPoints = value; }
     }
-    [SerializeField]
-    private SpezialWave spezialWave;
 
     public SpezialWave SpezialWave
     {
@@ -47,5 +39,9 @@ public class Wave
         set { spezialWave = value; }
     }
 
-
+    public Transform[] WayPoints
+    {
+        get { return wayPoints; }
+        set { wayPoints = value; }
+    }
 }

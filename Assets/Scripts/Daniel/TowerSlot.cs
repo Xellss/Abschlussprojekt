@@ -1,47 +1,48 @@
 ﻿/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-
-using System;
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///     Author: Julian Hopp & Daniel Lause    ///
+///           Author: Daniel Lause            ///
 ///                                           ///
 ///                                           ///
+/////////////////////////////////////////////////
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TowerSlot : MonoBehaviour, IPointerClickHandler 
+public class TowerSlot : MonoBehaviour, IPointerClickHandler
 {
+    private bool buildingOnSlot = false;
+    private float delta;
     private GameState gameState;
     private Text gold;
     private GameObject ground;
     private bool hasTower = false;
     private Renderer myRenderer;
     private Transform myTransform;
+    //[SerializeField]
+    //private TowerController towerPrefab;
+    private ShopButtonBehaviour shopBehavoiur;
     private ShopButtonBehaviour shopButtonBehavior;
     [SerializeField]
     private bool wallSlot = false;
-    //[SerializeField]
-    //private TowerController towerPrefab;
-    ShopButtonBehaviour shopBehavoiur;
 
-    private float delta;
+    public bool BuildingOnSlot
+    {
+        get { return buildingOnSlot; }
+        set { buildingOnSlot = value; }
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         //ground.layer = LayerMask.NameToLayer("Default");
         if (gameObject.GetComponent<BaseTerrainManager>() == null)
         {
-            shopButtonBehavior.OnTowerSlotClick(transform, this);
-
             if (wallSlot)
             {
                 if (shopBehavoiur.TowerShopCard)
                 {
-
-                shopBehavoiur.TowerShopCard.SetActive(false);
+                    shopBehavoiur.TowerShopCard.SetActive(false);
                     shopBehavoiur.WallShopCard.SetActive(true);
                 }
             }
@@ -49,12 +50,14 @@ public class TowerSlot : MonoBehaviour, IPointerClickHandler
             {
                 if (shopBehavoiur.TowerShopCard != null)
                 {
-                shopBehavoiur.TowerShopCard.SetActive(true);
+                    shopBehavoiur.TowerShopCard.SetActive(true);
                     shopBehavoiur.WallShopCard.SetActive(false);
                 }
             }
+            shopButtonBehavior.OnTowerSlotClick(transform, this);
         }
     }
+
     private void Awake()
     {
         //ground = GameObject.Find("Ground");
@@ -66,5 +69,4 @@ public class TowerSlot : MonoBehaviour, IPointerClickHandler
             gold = GameObject.Find("GoldAmountOutpost").GetComponent<Text>();
         shopBehavoiur = GameObject.Find("Canvas").GetComponent<ShopButtonBehaviour>();
     }
-   
 }

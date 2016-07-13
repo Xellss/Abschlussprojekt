@@ -1,6 +1,15 @@
 ﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
 /////////////////////////////////////////////////
 using System.Collections;
+
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
@@ -9,10 +18,10 @@ using System.Collections;
 ///                                           ///
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class ShopButtonBehaviour : MonoBehaviour
 {
+    private Animator animator;
     private BuildingInformation buildingCardInformation;
     private Text buildingInformationText;
     private BuildingSpawn buildingSpawn;
@@ -21,24 +30,22 @@ public class ShopButtonBehaviour : MonoBehaviour
     [SerializeField]
     private Text goldAmount;
     private GameObject Ground;
+    private bool menuOpen;
+    private bool menuOpening;
     [SerializeField]
     private GameObject newBuilding;
+    private RepairBuilding repairBuilding;
+    private MeshRenderer selectedShopCardRenderer;
+    private DestroyBuildedTower sellBuilding;
     private GameObject shop;
     [SerializeField]
     private GameObject shopBuildButton;
     [SerializeField]
     private Text shopGoldAmount;
+    private GameObject towerShopCard;
     private TowerSlot towerSlotScript;
     private Transform towerSlotTransform;
-    private DestroyBuildedTower sellBuilding;
-    private RepairBuilding repairBuilding;
-    private Animator animator;
-    private bool menuOpen;
-    private bool menuOpening;
-
-    private MeshRenderer selectedShopCardRenderer;
-
-    private GameObject towerShopCard;
+    private GameObject wallShopCard;
 
     public GameObject TowerShopCard
     {
@@ -46,15 +53,11 @@ public class ShopButtonBehaviour : MonoBehaviour
         set { towerShopCard = value; }
     }
 
-    private GameObject wallShopCard;
-
     public GameObject WallShopCard
     {
         get { return wallShopCard; }
         set { wallShopCard = value; }
     }
-
-
 
     public void OnClickGiveGold()
     {
@@ -79,6 +82,16 @@ public class ShopButtonBehaviour : MonoBehaviour
             {
                 shopBuildButton.GetComponent<Button>().interactable = false;
             }
+
+            if (!towerSlotScript.BuildingOnSlot)
+            {
+                shopBuildButton.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                shopBuildButton.GetComponent<Button>().interactable = false;
+                buildingInformationText.text = "Es kann nur ein Gebäude auf jedem Slot gebaut werden.";
+            }
         }
     }
 
@@ -89,7 +102,7 @@ public class ShopButtonBehaviour : MonoBehaviour
         sellBuilding.enabled = true;
         gameState.GoldAmount -= buildingCardInformation.BuildingGoldCost;
         goldAmount.text = gameState.GoldAmount.ToString();
-       
+
         newBuilding = (GameObject)Instantiate(buildingCardInformation.BuildingPrefab, towerSlotTransform.position, Quaternion.identity);
         newBuilding.layer = LayerMask.NameToLayer(buildingCardInformation.BuildingTypes.ToString());
         newBuilding.name = buildingCardInformation.BuildingName;
@@ -101,6 +114,9 @@ public class ShopButtonBehaviour : MonoBehaviour
         Ground.layer = LayerMask.NameToLayer("Ground");
         repairBuilding = newBuilding.GetComponent<RepairBuilding>();
         repairBuilding.BuildingInfo = buildingCardInformation;
+        shopBuildButton.SetActive(false);
+        buildingInformationText.text = "Wähle eine Shop Karte aus, um Informationen zu erhalten oder dieses Gebäude zu bauen.";
+        towerSlotScript.BuildingOnSlot = true;
         //towerShopCard.SetActive(true);
     }
 
@@ -125,6 +141,8 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnTowerSlotClick(Transform slotPosition, TowerSlot towerSlotScript)
     {
+        shopBuildButton.SetActive(false);
+        buildingInformationText.text = "Wähle eine Shop Karte aus, um Informationen zu erhalten oder dieses Gebäude zu bauen.";
         this.towerSlotScript = towerSlotScript;
         this.towerSlotTransform = slotPosition;
         if (selectedShopCardRenderer != null)
@@ -141,7 +159,7 @@ public class ShopButtonBehaviour : MonoBehaviour
         cardCreator.CanBuyBuilding();
         shopBuildButton.SetActive(false);
         buildingInformationText.text = "Wähle eine Shop Karte aus, um Informationen zu erhalten oder dieses Gebäude zu bauen.";
-        shop.SetActive(true);
+        //shop.SetActive(true);
         Camera.main.gameObject.GetComponent<Animator>().SetTrigger("BuildMenuOpen");
         animator.SetTrigger("ShopFadeIn");
         StartCoroutine("timescale");
@@ -158,6 +176,7 @@ public class ShopButtonBehaviour : MonoBehaviour
         Ground = GameObject.Find("Ground");
         animator = shop.GetComponent<Animator>();
     }
+
     private void Start()
     {
         towerShopCard = GameObject.Find("ShopCard_Tower");
@@ -165,7 +184,7 @@ public class ShopButtonBehaviour : MonoBehaviour
         //shop.SetActive(false);
     }
 
-    IEnumerator timescale()
+    private IEnumerator timescale()
     {
         //if (Time.timeScale == 0)
         //{
@@ -176,8 +195,4 @@ public class ShopButtonBehaviour : MonoBehaviour
         menuOpening = false;
         menuOpen = true;
     }
-
-  
 }
-
-

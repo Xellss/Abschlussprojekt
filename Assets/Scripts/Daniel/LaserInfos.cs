@@ -7,15 +7,14 @@
 ///                                           ///
 /////////////////////////////////////////////////
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class SunClickBehaviour : MonoBehaviour, IPointerClickHandler
+public class LaserInfos : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject worldMap;
+    private int damage;
 
-    public void OnPointerClick(PointerEventData eventData)
+    public int Damage
     {
-        worldMap.SetActive(true);
+        get { return damage; }
+        set { damage = value; }
     }
 }

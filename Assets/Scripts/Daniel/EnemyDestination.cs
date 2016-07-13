@@ -33,5 +33,4 @@ public class EnemyDestination : MonoBehaviour
         moveTo.MainBaseLevel = objectPool.MainBaseScene;
         moveTo.SearchNewBuilding = true;
     }
-
 }

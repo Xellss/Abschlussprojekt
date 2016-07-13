@@ -14,21 +14,19 @@ public class MapButtonBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject attackButton;
     [SerializeField]
-    private WaveSpawn waveSpawner;
-    [SerializeField]
-    private GameObject worldMap;
-
-    [SerializeField]
-    private Text infoText;
+    private Text goldReward;
     [SerializeField]
     private GameObject goldRewardGameObject;
     [SerializeField]
-    private GameObject itemRewardGameObject;
-    [SerializeField]
-    private Text goldReward;
+    private Text infoText;
     [SerializeField]
     private Text itemReward;
-
+    [SerializeField]
+    private GameObject itemRewardGameObject;
+    [SerializeField]
+    private WaveSpawn waveSpawner;
+    [SerializeField]
+    private GameObject worldMap;
 
     public void OnClickAttack()
     {
@@ -38,6 +36,15 @@ public class MapButtonBehaviour : MonoBehaviour
         itemRewardGameObject.SetActive(false);
         worldMap.SetActive(false);
         waveSpawner.SpawnEnemy();
+    }
+
+    public void OnClickCancel()
+    {
+        infoText.text = "Wähle einen Gegner um Informationen zu erhalten";
+        attackButton.SetActive(false);
+        goldRewardGameObject.SetActive(false);
+        itemRewardGameObject.SetActive(false);
+        worldMap.SetActive(false);
     }
 
     public void OnClickEnemyCard(EnemyEditor enemyEditor)
@@ -57,14 +64,4 @@ public class MapButtonBehaviour : MonoBehaviour
         }
         attackButton.SetActive(true);
     }
-
-    public void OnClickCancel()
-    {
-        infoText.text = "Wähle einen Gegner um Informationen zu erhalten";
-        attackButton.SetActive(false);
-        goldRewardGameObject.SetActive(false);
-        itemRewardGameObject.SetActive(false);
-        worldMap.SetActive(false);
-    }
-
 }

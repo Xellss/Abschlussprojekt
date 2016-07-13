@@ -1,11 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
 
 public class HideButtonOnClickOutside : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-
     private bool focus;
 
     public void OnPointerClick(PointerEventData eventData)
@@ -34,12 +39,12 @@ public class HideButtonOnClickOutside : MonoBehaviour, IPointerEnterHandler, IPo
             panel.SetActive(false);
         }
     }
-    void Update()
+
+    private void Update()
     {
         if (!focus)
         {
-
-        HideIfClickedOutside(this.gameObject);
+            HideIfClickedOutside(this.gameObject);
         }
     }
 }

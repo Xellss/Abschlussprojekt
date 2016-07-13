@@ -7,33 +7,30 @@
 ///                                           ///
 /////////////////////////////////////////////////
 
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class BuyButton : MonoBehaviour
 {
     [SerializeField]
     private GameObject ButtonAsteroids;
-    private BaseTerrainManager terrainManager;
-
     private PlanetTerraforming planetTerraforming;
-
-    public void OnBuyButtonClicked()
-    {
-        terrainManager.UnlockTerrain();
-    }
+    private BaseTerrainManager terrainManager;
 
     public void DestroyAsteroids(bool unlock)
     {
         if (ButtonAsteroids != null)
         {
-        planetTerraforming.Terraforming(transform.parent.position, ButtonAsteroids.transform.parent, unlock);
-        GameObject.Destroy(ButtonAsteroids);
+            planetTerraforming.Terraforming(transform.parent.position, ButtonAsteroids.transform.parent, unlock);
+            GameObject.Destroy(ButtonAsteroids);
         }
         else
         {
-
         }
+    }
+
+    public void OnBuyButtonClicked()
+    {
+        terrainManager.UnlockTerrain();
     }
 
     private void Awake()

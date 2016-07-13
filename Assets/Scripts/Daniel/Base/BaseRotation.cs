@@ -1,7 +1,15 @@
 ﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
 /////////////////////////////////////////////////
-using System;
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
 using System.Collections;
+
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
@@ -13,12 +21,12 @@ using UnityEngine.EventSystems;
 
 public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler
 {
+    private float delta;
     private GameObject ground;
+    private float rotation;
     [SerializeField]
     private float RotationSpeed = 1;
-    private float delta;
 
-    private float rotation;
     public void OnBeginDrag(PointerEventData eventData)
     {
         StopCoroutine("endinertia");
@@ -52,11 +60,6 @@ public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDra
         ground.layer = LayerMask.NameToLayer("Ground");
     }
 
-    private void Awake()
-    {
-        ground = GameObject.Find("Ground");
-    }
-
     public void OnEndDrag(PointerEventData eventData)
     {
         if (delta <= 10)
@@ -64,6 +67,11 @@ public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDra
             return;
         }
         StartCoroutine("endinertia");
+    }
+
+    private void Awake()
+    {
+        ground = GameObject.Find("Ground");
     }
 
     private IEnumerator endinertia()

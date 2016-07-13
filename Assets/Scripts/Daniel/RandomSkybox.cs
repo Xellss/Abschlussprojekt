@@ -1,19 +1,23 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 
 public class RandomSkybox : MonoBehaviour
 {
-
     [SerializeField]
     private Material[] skyBoxes;
 
-    void Awake()
+    private void Awake()
     {
         if (skyBoxes != null)
         {
-
-        RenderSettings.skybox = skyBoxes[Random.Range(0, skyBoxes.Length)];
+            RenderSettings.skybox = skyBoxes[Random.Range(0, skyBoxes.Length)];
         }
-
     }
 }

@@ -1,7 +1,16 @@
 ﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
 /////////////////////////////////////////////////
 
 using System.Collections;
+
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
@@ -22,22 +31,11 @@ public class BuildingHealth : MonoBehaviour
     private GameObject hpCanvas;
     private RectTransform hpImage;
     [SerializeField]
+    private Slider hpSlider;
+    [SerializeField]
+    private LookAtEnemy lookAtEnemy;
+    [SerializeField]
     private float maxHealth;
-
-    [SerializeField]
-    LookAtEnemy lookAtEnemy;
-
-
-    public LookAtEnemy LookAtEnemy
-    {
-        get { return lookAtEnemy; }
-        set { lookAtEnemy = value; }
-    }
-
-
-    [SerializeField]
-    Slider hpSlider;
-
     private Renderer renderer;
 
     private TowerController towerController;
@@ -52,6 +50,12 @@ public class BuildingHealth : MonoBehaviour
 
     [SerializeField]
     private WinLoseWindow winLoseScript;
+
+    public LookAtEnemy LookAtEnemy
+    {
+        get { return lookAtEnemy; }
+        set { lookAtEnemy = value; }
+    }
 
     public float MaxHealth
     {
@@ -151,8 +155,7 @@ public class BuildingHealth : MonoBehaviour
             else
                 GetComponentInChildren<MeshRenderer>().material.color = Color.red;
 
-
-            if (lookAtEnemy!= null)
+            if (lookAtEnemy != null)
             {
                 lookAtEnemy.LookActive = false;
                 lookAtEnemy.EndLookAt();
@@ -164,6 +167,36 @@ public class BuildingHealth : MonoBehaviour
                 towerController.CanShoot = false;
             }
         }
+    }
+
+    private void onTriggerAsteroid(GameObject other)
+    {
+        AsteroidEnemyKI enemyHP = other.GetComponent<AsteroidEnemyKI>();
+        int damage = enemyHP.Damage;
+        if (gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            damage = 1;
+        }
+        StartCoroutine(reduceHealth(5, damage));
+        other.SetActive(false);
+        other.transform.position = new Vector3(0, 0, 40);
+        waveSpawn.Enemys--;
+    }
+
+    private void onTriggerBullet(Collider other)
+    {
+        StartCoroutine(reduceHealth(5, other.GetComponent<LaserInfos>().Damage));
+        other.gameObject.SetActive(false);
+        other.gameObject.transform.position = new Vector3(0, 0, 40);
+    }
+
+    private void onTriggerEnemy(Collider other)
+    {
+        EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
+        StartCoroutine(reduceHealth(5, enemyHP.CurrentHealth));
+        //other.gameObject.SetActive(false);
+        enemyHP.Decrease(enemyHP.CurrentHealth);
+        //other.gameObject.GetComponent<EnemyHP>().Reset();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -179,36 +212,23 @@ public class BuildingHealth : MonoBehaviour
         if (other.gameObject.tag == "Asteroid" && gameObject.tag == "Building")
         {
             onTriggerAsteroid(other.gameObject);
+        }
+    }
 
-        }
-    }
-    private void onTriggerEnemy(Collider other)
+    private IEnumerator reduceHealth(int step, int total)
     {
-        EnemyHP enemyHP = other.gameObject.GetComponent<EnemyHP>();
-        StartCoroutine(reduceHealth(5, enemyHP.CurrentHealth));
-        //other.gameObject.SetActive(false);
-        enemyHP.Decrease(enemyHP.CurrentHealth);
-        //other.gameObject.GetComponent<EnemyHP>().Reset();
-    }
-    private void onTriggerBullet(Collider other)
-    {
-        StartCoroutine(reduceHealth(5, other.GetComponent<LaserInfos>().Damage));
-        other.gameObject.SetActive(false);
-        other.gameObject.transform.position = new Vector3(0, 0, 40);
-    }
-    private void onTriggerAsteroid(GameObject other)
-    {
-        AsteroidEnemyKI enemyHP = other.GetComponent<AsteroidEnemyKI>();
-        int damage = enemyHP.Damage;
-        if (gameObject.layer == LayerMask.NameToLayer("Wall"))
+        int remaining = total;
+        while (remaining > 0)
         {
-            damage = 1;
+            currentHealth -= Mathf.Min(remaining, step);
+            // Anm. @Fabio: Approved by Jöran. Andernfalls Bug innerhalb Unity.
+            if (currentHealth == maxHealth / 2)
+                currentHealth--;
+            remaining -= step;
+            yield return null;
         }
-        StartCoroutine(reduceHealth(5, damage));
-        other.SetActive(false);
-        other.transform.position = new Vector3(0, 0, 40);
-        waveSpawn.Enemys--;
     }
+
     private void setMaxSize(RectTransform rectangle)
     {
         rectangle.sizeDelta = new Vector2(maxHealth / 100, rectangle.rect.height);
@@ -227,19 +247,6 @@ public class BuildingHealth : MonoBehaviour
         if (GetComponent<TowerController>() != null)
         {
             towerController = GetComponent<TowerController>();
-        }
-    }
-    IEnumerator reduceHealth(int step, int total)
-    {
-        int remaining = total;
-        while (remaining > 0)
-        {
-            currentHealth -= Mathf.Min(remaining, step);
-            // Anm. @Fabio: Approved by Jöran. Andernfalls Bug innerhalb Unity.
-            if (currentHealth == maxHealth / 2)
-                currentHealth--;
-            remaining -= step;
-            yield return null;
         }
     }
 }

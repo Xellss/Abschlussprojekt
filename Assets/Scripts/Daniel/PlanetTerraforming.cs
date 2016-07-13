@@ -13,12 +13,12 @@ public class PlanetTerraforming : MonoBehaviour
 {
     private GameState gameState;
     private Text goldAmount;
+    [SerializeField]
+    private bool levelHavePlanets = true;
     //PoolPrefab[] planetPrefabs;
     [SerializeField]
     private TerraformingPlanet terraformingPlanetScribtableObject;
     private bool unlockedFromBegin;
-    [SerializeField]
-    bool levelHavePlanets = true;
 
     public TerraformingPlanet TerraformingPlanetScribtableObject
     {
@@ -30,11 +30,10 @@ public class PlanetTerraforming : MonoBehaviour
     {
         if (levelHavePlanets)
         {
-
-        unlockedFromBegin = unlock;
-        GameObject newPlanet = ObjectPool.Instance.GetPooledObject(chosePlanetPrefab());
-        newPlanet.transform.position = position;
-        newPlanet.transform.SetParent(parentObject);
+            unlockedFromBegin = unlock;
+            GameObject newPlanet = ObjectPool.Instance.GetPooledObject(chosePlanetPrefab());
+            newPlanet.transform.position = position;
+            newPlanet.transform.SetParent(parentObject);
         }
     }
 

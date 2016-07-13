@@ -1,13 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 
-public class AsteroidEnemyKI : MonoBehaviour {
-
-    GameObject sun;
-    NavMeshAgent myAgent;
-
+public class AsteroidEnemyKI : MonoBehaviour
+{
     [SerializeField]
     private int damage;
+    private NavMeshAgent myAgent;
+    private GameObject sun;
 
     public int Damage
     {
@@ -15,14 +21,14 @@ public class AsteroidEnemyKI : MonoBehaviour {
         set { damage = value; }
     }
 
-    void Awake()
+    private void Awake()
     {
         myAgent = GetComponent<NavMeshAgent>();
         sun = GameObject.Find("Sun");
     }
-    void Start()
+
+    private void Start()
     {
         myAgent.SetDestination(sun.transform.position);
     }
-
 }

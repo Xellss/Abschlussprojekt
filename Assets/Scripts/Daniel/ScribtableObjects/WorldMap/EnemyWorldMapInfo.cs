@@ -23,6 +23,8 @@ public class EnemyWorldMapInfo : ScriptableObject
     [SerializeField, Tooltip("is not needed")]
     private GameObject itemReward;
 
+    [SerializeField]
+    private float spawnDelay;
     [SerializeField, TextArea]
     private string waveInformationText;
 
@@ -59,6 +61,12 @@ public class EnemyWorldMapInfo : ScriptableObject
         set { itemReward = value; }
     }
 
+    public float SpawnDelay
+    {
+        get { return spawnDelay; }
+        set { spawnDelay = value; }
+    }
+
     public string WaveInformationText
     {
         get { return waveInformationText; }
@@ -70,14 +78,4 @@ public class EnemyWorldMapInfo : ScriptableObject
         get { return waves; }
         set { waves = value; }
     }
-
-   [SerializeField]
-    private float spawnDelay;
-
-    public float SpawnDelay
-    {
-        get { return spawnDelay; }
-        set { spawnDelay = value; }
-    }
-
 }

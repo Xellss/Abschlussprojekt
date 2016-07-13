@@ -1,4 +1,12 @@
 ﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
 /////////////////////////////////////////////////
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
@@ -53,7 +61,8 @@ public class BaseTerrainManager : MonoBehaviour
     {
         StartCoroutine(unlockTimer());
     }
-    IEnumerator unlockTimer()
+
+    private IEnumerator unlockTimer()
     {
         yield return new WaitForEndOfFrame();
         if (unlock)
