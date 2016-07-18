@@ -64,7 +64,7 @@ public class TowerController : MonoBehaviour
     private void ResetBullet(BulletController bullet)
     {
         bullet.transform.position = BulletSpawnpoint.position;
-        bullet.SetColor(myRenderer.material.color);
+        //bullet.SetColor(myRenderer.material.color);
         bullet.gameObject.SetActive(true);
     }
 
