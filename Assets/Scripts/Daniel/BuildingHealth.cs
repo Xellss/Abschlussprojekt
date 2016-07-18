@@ -141,7 +141,11 @@ public class BuildingHealth : MonoBehaviour
             GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (var enemy in enemys)
             {
+                if (enemy.GetComponent<EnemyHP>() != null)
+                {
+
                 enemy.GetComponent<EnemyHP>().Reset();
+                }
             }
         }
         else
