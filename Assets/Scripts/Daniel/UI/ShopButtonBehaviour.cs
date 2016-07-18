@@ -47,6 +47,9 @@ public class ShopButtonBehaviour : MonoBehaviour
     private Transform towerSlotTransform;
     private GameObject wallShopCard;
 
+    [SerializeField]
+    GameObject restartWindow;
+
     public GameObject TowerShopCard
     {
         get { return towerShopCard; }
@@ -59,6 +62,10 @@ public class ShopButtonBehaviour : MonoBehaviour
         set { wallShopCard = value; }
     }
 
+    public void OnClickLevelManager()
+    {
+        restartWindow.SetActive(true);
+    }
     public void OnClickGiveGold()
     {
         gameState.GoldAmount += 5000;
@@ -97,6 +104,8 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnClickShopCardBuild()
     {
+        restartWindow.SetActive(false);
+
         sellBuilding = towerSlotTransform.GetComponent<DestroyBuildedTower>();
         sellBuilding.BuildingInformation = buildingCardInformation;
         sellBuilding.enabled = true;
@@ -131,16 +140,19 @@ public class ShopButtonBehaviour : MonoBehaviour
             selectedShopCardRenderer.enabled = false;
         }
         //towerShopCard.SetActive(true);
+        restartWindow.SetActive(false);
         Time.timeScale = 1;
         StopCoroutine("timescale");
         Camera.main.gameObject.GetComponent<Animator>().SetTrigger("BuildMenuClosed");
         animator.SetTrigger("ShopFadeOut");
         //shop.SetActive(false);
         Ground.layer = LayerMask.NameToLayer("Ground");
+
     }
 
     public void OnTowerSlotClick(Transform slotPosition, TowerSlot towerSlotScript)
     {
+        restartWindow.SetActive(false);
         shopBuildButton.SetActive(false);
         buildingInformationText.text = "Wähle eine Shop Karte aus, um Informationen zu erhalten oder dieses Gebäude zu bauen.";
         this.towerSlotScript = towerSlotScript;
