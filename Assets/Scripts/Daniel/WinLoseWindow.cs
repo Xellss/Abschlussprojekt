@@ -7,7 +7,6 @@
 ///                                           ///
 /////////////////////////////////////////////////
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinLoseWindow : MonoBehaviour
@@ -29,11 +28,12 @@ public class WinLoseWindow : MonoBehaviour
     [SerializeField]
     private Text windowHeader;
 
+    WorldMapDetails mapDetails;
+
     WorldSelectionButton button;
 
         void Start()
     {
-        button = GameObject.Find("WorldMapDetails").GetComponent<WorldSelectionButton>();
     }
     public void OnClickClose()
     {
@@ -42,24 +42,19 @@ public class WinLoseWindow : MonoBehaviour
 
     public void WinLoseWave(bool winWave, EnemyWorldMapInfo enemyInfo, int stars)
     {
+        mapDetails = GameObject.Find("WorldMapDetails").GetComponent<WorldMapDetails>();
+        button = GameObject.Find("WorldMapDetails").GetComponent<WorldSelectionButton>();
         if (winWave)
         {
+            mapDetails.CurrentLevelStarCount = stars;
             windowHeader.text = "Gewonnen. Du bekommst für dieses Level " + stars + " Sterne.";
             informationText.text = "Herzlichen Glückwunsch, du hast den Angriff der " + enemyInfo.EnemyGroupName + " erfolgreich abgewehrt.";
-            //rewardGoldObject.SetActive(true);
-            //rewardGoldText.text = enemyInfo.GoldReward.ToString();
-            //gamestate.GoldAmount += enemyInfo.GoldReward;
-            //GoldAmount.text = gamestate.GoldAmount.ToString();
         }
         else
         {
+            mapDetails.CurrentLevelStarCount = stars;
             windowHeader.text = "Verloren. Du bekommst keinen Stern.";
             informationText.text = "Du hast gegen die " + enemyInfo.EnemyGroupName + " verloren. Es gibt nur die Halbe beute für dich.";
-            //rewardGoldObject.SetActive(true);
-            //int goldReward = enemyInfo.GoldReward / 2;
-            //rewardGoldText.text = goldReward.ToString();
-            //gamestate.GoldAmount += goldReward;
-            //GoldAmount.text = gamestate.GoldAmount.ToString();
         }
     }
 }

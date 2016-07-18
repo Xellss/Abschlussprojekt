@@ -13,11 +13,11 @@ using UnityEngine.SceneManagement;
 
 public class WorldSelectionButton : MonoBehaviour
 {
-    [SerializeField]
     private GameObject loadingText;
 
-    [SerializeField]
-    GameObject WorldMapDetails;
+    WorldMapDetails mapDetails;
+
+
 
     public void OnClick_StartGame()
     {
@@ -25,30 +25,55 @@ public class WorldSelectionButton : MonoBehaviour
     }
     public void OnClickWorldMap()
     {
-        StartCoroutine(load("WorldMap"));
+        StartCoroutine(loadWorldMap("WorldMap"));
         
     }
 
     void Awake()
     {
         DontDestroyOnLoad(this);
+        loadingText = GameObject.Find("Loading");
+        loadingText.SetActive(false);
     }
 
     public void OnClickWorldButton(string levelName)
     {
         StartCoroutine(load(levelName));
-        //SceneManager.LoadScene(levelName);
-
-        //GameObject.Destroy(this.gameObject);
     }
 
     private IEnumerator load(string levelName)
     {
         yield return SceneManager.LoadSceneAsync(levelName);
         Scene mainBase = SceneManager.GetSceneByName(levelName);
-        //loadingCanvis.SetActive(false);
         SceneManager.SetActiveScene(mainBase);
+        loadingText = GameObject.Find("Loading");
+        mapDetails = GetComponent<WorldMapDetails>();
+        mapDetails.CurrentLevel = levelName;
+        if (loadingText != null)
+        {
+        loadingText.SetActive(false);
+            mapDetails.FillWorldMap();
+        }
         //GameObject.Destroy(this.gameObject);
+    }
+
+    private IEnumerator loadWorldMap(string levelName)
+    {
+        yield return SceneManager.LoadSceneAsync(levelName);
+        Scene mainBase = SceneManager.GetSceneByName(levelName);
+        SceneManager.SetActiveScene(mainBase);
+        loadingText = GameObject.Find("Loading");
+        mapDetails = GetComponent<WorldMapDetails>();
+        if (loadingText != null)
+        {
+            loadingText.SetActive(false);
+            mapDetails.FillWorldMap();
+        }
+        //GameObject.Destroy(this.gameObject);
+    }
+
+    void Start()
+    {
     }
 
 }

@@ -47,7 +47,9 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
             gamestate.GoldAmount -= buildingInfo.RepairAmount;
             goldAmount.text = gamestate.GoldAmount.ToString();
             destroyBuilding.SellTowerButtonGameObject.SetActive(false);
-            StartCoroutine(repairTime(buildingInfo.RepairTime));
+
+            //StartCoroutine(repairTime(buildingInfo.RepairTime));
+            StartCoroutine(repairTime(0));
         }
         else
         {
