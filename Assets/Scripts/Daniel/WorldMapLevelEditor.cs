@@ -50,13 +50,13 @@ public class WorldMapLevelEditor : MonoBehaviour
 
     public void SetButton()
     {
+        button = GetComponent<Button>();
         button.onClick.AddListener(delegate { worldSelectionButton.OnClickWorldButton(this.gameObject.name); });
     }
 
     private void Start()
     {
         worldMapDetails = GameObject.Find("WorldMapDetails").GetComponent<WorldMapDetails>();
-        button = GetComponent<Button>();
         worldSelectionButton = worldMapDetails.GetComponent<WorldSelectionButton>();
         //clearLevel= worldMapDetails.WorldLevel[levelNumber - 1].ClearLevel;
     }

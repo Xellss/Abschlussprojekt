@@ -9,21 +9,30 @@
 
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WorldMapDetails : MonoBehaviour
 {
     private WorldMapLevelEditor currentEditor;
-    private WorldMapLevel currentLevel;
+    [SerializeField]
+    private string currentLevel;
+
+    [SerializeField]
+    private int currentLevelStarCount;
+
+    public int CurrentLevelStarCount
+    {
+        get { return currentLevelStarCount; }
+        set { currentLevelStarCount = value; }
+    }
+
+
 
 
     WorldSelectionButton mybehavour;
-    [SerializeField]
     Text starAmount;
 
     private Transform[] levelAray;
-    [SerializeField]
     private Transform levelContainer;
     private WorldMapLevelEditor oldEditor;
     [SerializeField]
@@ -31,7 +40,7 @@ public class WorldMapDetails : MonoBehaviour
     [SerializeField]
     private WorldMapLevel[] worldLevel;
 
-    public WorldMapLevel CurrentLevel
+    public string CurrentLevel
     {
         get { return currentLevel; }
         set { currentLevel = value; }
@@ -64,8 +73,11 @@ public class WorldMapDetails : MonoBehaviour
         }
     }
 
-    private void fillWorldMap()
+    public void FillWorldMap()
     {
+        mybehavour = GetComponent<WorldSelectionButton>();
+        levelContainer = GameObject.Find("LevelContainer").transform;
+        starAmount = GameObject.Find("StarAmount").GetComponent<Text>();
         levelAray = levelContainer.Cast<Transform>().ToArray();
         worldLevel = new WorldMapLevel[levelAray.Length];
 
@@ -77,6 +89,14 @@ public class WorldMapDetails : MonoBehaviour
             currentEditor = levelAray[i].gameObject.GetComponent<WorldMapLevelEditor>();
             currentEditor.LevelNumber = i + 1;
             levelAray[i].gameObject.name = "Level" + currentEditor.LevelNumber;
+
+            if (levelAray[i].gameObject.name == currentLevel)
+            {
+                if (currentEditor.StarsOnClear < currentLevelStarCount)
+                {
+                currentEditor.StarsOnClear = currentLevelStarCount;
+                }
+            }
 
             worldLevel[i] = new WorldMapLevel();
             worldLevel[i].LevelButton = currentEditor.gameObject;
@@ -127,10 +147,12 @@ public class WorldMapDetails : MonoBehaviour
 
     private void Start()
     {
-        mybehavour = GetComponent<WorldSelectionButton>();
-        fillWorldMap();
+        
+
+
+        FillWorldMap();
 
     }
-
+    
 
 }
