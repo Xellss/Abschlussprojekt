@@ -14,6 +14,8 @@ using UnityEngine.UI;
 public class WorldMapDetails : MonoBehaviour
 {
     private WorldMapLevelEditor currentEditor;
+
+    private WorldMapLevelEditor oldArrayEditor;
     [SerializeField]
     private string currentLevel;
 
@@ -26,13 +28,12 @@ public class WorldMapDetails : MonoBehaviour
         set { currentLevelStarCount = value; }
     }
 
-
-
-
     WorldSelectionButton mybehavour;
     Text starAmount;
 
     private Transform[] levelAray;
+    [SerializeField]
+    private WorldMapLevel[] oldLevelArray;
     private Transform levelContainer;
     private WorldMapLevelEditor oldEditor;
     [SerializeField]
@@ -89,6 +90,14 @@ public class WorldMapDetails : MonoBehaviour
             currentEditor = levelAray[i].gameObject.GetComponent<WorldMapLevelEditor>();
             currentEditor.LevelNumber = i + 1;
             levelAray[i].gameObject.name = "Level" + currentEditor.LevelNumber;
+
+            if (oldLevelArray != null && oldLevelArray.Length >0)
+            {
+                if (oldLevelArray[i].StarsOnClear > currentEditor.StarsOnClear)
+                {
+                    currentEditor.StarsOnClear = oldLevelArray[i].StarsOnClear;
+                }
+            }
 
             if (levelAray[i].gameObject.name == currentLevel)
             {
@@ -147,11 +156,12 @@ public class WorldMapDetails : MonoBehaviour
 
     private void Start()
     {
-        
-
-
         FillWorldMap();
+    }
 
+    public void SaveOldLevelArray()
+    {
+        oldLevelArray = worldLevel;
     }
     
 
