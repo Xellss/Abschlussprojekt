@@ -41,7 +41,7 @@ public class EnemyHP : MonoBehaviour
         currentHealth = currentHealth - damage;
         if (this.gameObject.tag == "Enemy")
         {
-        transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+            transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
         }
 
         if (currentHealth <= 0)
@@ -59,10 +59,28 @@ public class EnemyHP : MonoBehaviour
         gameObject.SetActive(false);
         if (this.gameObject.tag == "Enemy")
         {
-        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
         transform.position = new Vector3(0, 0, 40);
         CurrentHealth = MaxHealth;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bomb")
+        {
+            Bomb bomb = other.gameObject.GetComponent<Bomb>();
+            Rigidbody bombRigid = other.gameObject.GetComponent<Rigidbody>();
+            bombRigid.velocity = Vector3.zero;
+            bomb.PlayAnimation();
+            Decrease(bomb.Damage);
+        }
+        if (other.gameObject.tag == "Bullet")
+        {
+            BulletController bullet = other.gameObject.GetComponent<BulletController>();
+            Decrease(bullet.DamagePoints);
+            other.gameObject.SetActive(false);
+        }
     }
 
     private void Awake()

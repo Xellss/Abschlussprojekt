@@ -11,8 +11,17 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
+public enum EnemyTypes
+{
+    Normal,
+    Tank,
+    Carrier,
+}
+
 public class EnemyKi : MonoBehaviour
 {
+    [SerializeField]
+    private EnemyTypes enemyType;
     [SerializeField]
     private bool canShot;
     [SerializeField]
@@ -35,12 +44,23 @@ public class EnemyKi : MonoBehaviour
     private bool shotNow;
     private Transform waypointArray;
     private Transform[] waypointObjects;
+    private EnemyHP enemyHP;
+    private bool carrierTrigger;
+
+    [SerializeField]
+    private float tankRange;
+
+    [SerializeField]
+    private string wayPointContainerName;
+    GameObject sun;
+    [SerializeField]
+    private Transform target;
 
     private Vector3[] waypoints;
-
+    Tween t;
     private void Awake()
     {
-        waypointArray = GameObject.Find("EnemyWaypoints").transform;
+        waypointArray = GameObject.Find(wayPointContainerName).transform;
         waypointObjects = waypointArray.Cast<Transform>().ToArray();
     }
 
@@ -51,19 +71,15 @@ public class EnemyKi : MonoBehaviour
         {
             waypoints[i] = waypointObjects[i].position;
         }
-        Tween t = transform.DOPath(waypoints, flySpeed, pathType)
-            .SetOptions(true)
-            .SetLookAt(0.001f);
-
-        t.SetEase(Ease.Linear).SetLoops(-1);
+        t = transform.DOPath(waypoints, flySpeed, pathType)
+           .SetOptions(false)
+           .SetAutoKill(false)
+           .SetEase(Ease.Linear).SetLoops(0)
+           .SetLookAt(0.001f);
     }
 
-    private void shot()
-    {
-        StartCoroutine(shotWithDelay());
-    }
 
-    private IEnumerator shotWithDelay()
+    private IEnumerator normalShotWithDelay()
     {
         if (canShot)
         {
@@ -81,22 +97,106 @@ public class EnemyKi : MonoBehaviour
             }
             else
                 yield return new WaitForSeconds(0);
-            StartCoroutine(shotWithDelay());
+            StartCoroutine(normalShotWithDelay());
+        }
+    }
+    private IEnumerator tankShotWithDelay()
+    {
+        if (canShot)
+        {
+            if (target != null && target.gameObject.tag == "Building")
+            {
+                newLaser = ObjectPool.Instance.GetPooledObject(laserBullet);
+                newLaser.GetComponent<LaserInfos>().Damage = damage;
+                newLaser.transform.position = laserSpawnPosition.transform.position;
+                Rigidbody laserBody = newLaser.GetComponent<Rigidbody>();
+                laserBody.transform.LookAt(target);
+                laserBody.AddForce(laserBody.transform.forward * laserSpeed * Time.deltaTime, ForceMode.Impulse);
+                yield return new WaitForSeconds(shotDelay);
+            }
+            else
+            {
+                Collider[] collider = Physics.OverlapSphere(transform.position, tankRange);
+                foreach (var coll in collider)
+                {
+                    if (coll.gameObject.tag == "Building")
+                    {
+                        target = coll.transform;
+                    }
+                }
+                yield return null;
+            }
+            StartCoroutine(tankShotWithDelay());
+        }
+    }
+    private IEnumerator carrierShotWithDelay()
+    {
+        if (canShot)
+        {
+            GameObject sun = GameObject.Find("Sun");
+                newLaser = ObjectPool.Instance.GetPooledObject(laserBullet);
+                newLaser.GetComponent<LaserInfos>().Damage = damage;
+                newLaser.transform.position = laserSpawnPosition.transform.position;
+                Rigidbody laserBody = newLaser.GetComponent<Rigidbody>();
+                laserBody.transform.LookAt(sun.transform);
+                laserBody.AddForce(transform.forward * laserSpeed * Time.deltaTime, ForceMode.Impulse);
+            yield return new WaitForSeconds(0);
         }
     }
 
     private void Start()
     {
+        enemyHP = GetComponent<EnemyHP>();
         setPath();
         laserSpeed = laserSpeed * 1000;
     }
 
     private void Update()
     {
+        if (!t.IsPlaying() && enemyType != EnemyTypes.Carrier)
+        {
+            for (int i = 0; i < waypointObjects.Length; i++)
+            {
+                waypoints[i] = waypointObjects[i].position;
+            }
+            t = transform.DOPath(waypoints, flySpeed, pathType)
+               .SetOptions(true)
+               .SetLookAt(0.001f);
+
+            t.SetEase(Ease.Linear).SetLoops(-1);
+        }
+        else if (!t.IsPlaying() && enemyType == EnemyTypes.Carrier)
+        {
+            t.Kill();
+            enemyHP.Decrease(enemyHP.CurrentHealth);
+
+        }
         if (shotNow)
         {
-            shot();
+            if (enemyType == EnemyTypes.Normal)
+                StartCoroutine(normalShotWithDelay());
+            else if (enemyType == EnemyTypes.Tank)
+                StartCoroutine(tankShotWithDelay());
+            else if (enemyType == EnemyTypes.Carrier && carrierTrigger)
+            {
+                //StartCoroutine(carrierShotWithDelay());
+                carrierTrigger = false;
+            }
             shotNow = false;
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "CarrierTrigger")
+        {
+        GameObject sun = GameObject.Find("Sun").gameObject;
+                newLaser = ObjectPool.Instance.GetPooledObject(laserBullet);
+                newLaser.GetComponent<LaserInfos>().Damage = damage;
+                newLaser.transform.position = laserSpawnPosition.transform.position;
+                Rigidbody laserBody = newLaser.GetComponent<Rigidbody>();
+                laserBody.transform.LookAt(sun.transform);
+                laserBody.AddForce(laserBody.transform.forward * laserSpeed * Time.deltaTime, ForceMode.Impulse);
         }
     }
 }

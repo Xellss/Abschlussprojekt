@@ -21,14 +21,14 @@ public class BulletController : MonoBehaviour
 
     public Transform Target { get; set; }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Enemy")
-        {
-            other.GetComponent<EnemyHP>().Decrease(DamagePoints);
-            gameObject.SetActive(false);
-        }
-    }
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag == "Enemy")
+    //    {
+    //        other.GetComponent<EnemyHP>().Decrease(DamagePoints);
+    //        gameObject.SetActive(false);
+    //    }
+    //}
 
     public void SetColor(Color color)
     {

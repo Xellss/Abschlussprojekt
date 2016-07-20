@@ -1,12 +1,5 @@
 ﻿// Copyright (c) 2016 Daniel Bortfeld
-/////////////////////////////////////////////////
-///                                           ///
-///      Source Code - Abschlussprojekt       ///
-///                                           ///
-///           Changes by: Julian Hopp         ///
-///                                           ///
-///                                           ///
-/////////////////////////////////////////////////
+
 
 using UnityEngine;
 

@@ -6,22 +6,14 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
 
 using System.Collections;
-
-///                                           ///
-///      Source Code - Abschlussprojekt       ///
-///                                           ///
-///           Author: Daniel Lause            ///
-///                                           ///
-///                                           ///
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildingHealth : MonoBehaviour
 {
+    private BombTower bombTower;
     private RectTransform canvasRect;
     [SerializeField]
     private float currentHealth;
@@ -36,7 +28,7 @@ public class BuildingHealth : MonoBehaviour
     private LookAtEnemy lookAtEnemy;
     [SerializeField]
     private float maxHealth;
-    private Renderer renderer;
+    private Renderer[] renderer;
 
     private TowerController towerController;
 
@@ -152,9 +144,12 @@ public class BuildingHealth : MonoBehaviour
         {
             //towerSlotScript.enabled = true;
             destroyBuilding.enabled = false;
-            if (renderer != null)
+            if (renderer.Length >0)
             {
-                renderer.material.color = Color.red;
+                for (int i = 0; i < renderer.Length; i++)
+                {
+                renderer[i].material.color = Color.red;
+                }
             }
             else
                 GetComponentInChildren<MeshRenderer>().material.color = Color.red;
@@ -169,6 +164,10 @@ public class BuildingHealth : MonoBehaviour
             if (towerController != null)
             {
                 towerController.CanShoot = false;
+            }
+            if (bombTower != null)
+            {
+                bombTower.CanShoot = false;
             }
         }
     }
@@ -243,14 +242,16 @@ public class BuildingHealth : MonoBehaviour
         towerSlotScript = transform.GetComponentInParent<TowerSlot>();
         destroyBuilding = transform.GetComponentInParent<DestroyBuildedTower>();
         setMaxSize(canvasRect);
-        //setMaxSize(hpImage);
-        //setMaxSize(hpBackgroundImage);
-        renderer = GetComponent<Renderer>();
+        renderer = GetComponentsInChildren<Renderer>();
         currentHealth = maxHealth;
         hpSlider.maxValue = maxHealth;
         if (GetComponent<TowerController>() != null)
         {
             towerController = GetComponent<TowerController>();
+        }
+        if (GetComponent<BombTower>() != null)
+        {
+            bombTower = GetComponent<BombTower>();
         }
     }
 }

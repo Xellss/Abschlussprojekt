@@ -26,11 +26,6 @@ public class LookAtEnemy : MonoBehaviour
         StopCoroutine("lookUpdate");
     }
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(transform.position, lookAtEnemyRadius);
-    }
-
     public void StartLookAt()
     {
         StartCoroutine("lookUpdate");

@@ -6,16 +6,8 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-using System.Collections;
 
-///                                           ///
-///      Source Code - Abschlussprojekt       ///
-///                                           ///
-///           Author: Daniel Lause            ///
-///                                           ///
-///                                           ///
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +27,8 @@ public class ShopButtonBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject newBuilding;
     private RepairBuilding repairBuilding;
+    [SerializeField]
+    private GameObject restartWindow;
     private MeshRenderer selectedShopCardRenderer;
     private DestroyBuildedTower sellBuilding;
     private GameObject shop;
@@ -42,34 +36,18 @@ public class ShopButtonBehaviour : MonoBehaviour
     private GameObject shopBuildButton;
     [SerializeField]
     private Text shopGoldAmount;
-    private GameObject towerShopCard;
     private TowerSlot towerSlotScript;
     private Transform towerSlotTransform;
-    private GameObject wallShopCard;
 
-    [SerializeField]
-    GameObject restartWindow;
-
-    public GameObject TowerShopCard
+    public void OnClickGiveGold()
     {
-        get { return towerShopCard; }
-        set { towerShopCard = value; }
-    }
-
-    public GameObject WallShopCard
-    {
-        get { return wallShopCard; }
-        set { wallShopCard = value; }
+        gameState.GoldAmount += 5000;
+        goldAmount.text = gameState.GoldAmount.ToString();
     }
 
     public void OnClickLevelManager()
     {
         restartWindow.SetActive(true);
-    }
-    public void OnClickGiveGold()
-    {
-        gameState.GoldAmount += 5000;
-        goldAmount.text = gameState.GoldAmount.ToString();
     }
 
     public void OnClickShopCard(BuildingSpawn buildingSpawn, BuildingInformation cardInformation, GameObject buildButton, Text buildingInformation, Button shopCardBuildButton)
@@ -147,7 +125,6 @@ public class ShopButtonBehaviour : MonoBehaviour
         animator.SetTrigger("ShopFadeOut");
         //shop.SetActive(false);
         Ground.layer = LayerMask.NameToLayer("Ground");
-
     }
 
     public void OnTowerSlotClick(Transform slotPosition, TowerSlot towerSlotScript)
@@ -177,6 +154,22 @@ public class ShopButtonBehaviour : MonoBehaviour
         StartCoroutine("timescale");
     }
 
+    public void TowerCardsSetActive(bool active)
+    {
+        foreach (var towerCard in cardCreator.TowerShopCards)
+        {
+            towerCard.SetActive(active);
+        }
+    }
+
+    public void WallCardsSetActive(bool active)
+    {
+        foreach (var wallCard in cardCreator.WallShopCards)
+        {
+            wallCard.SetActive(active);
+        }
+    }
+
     private void Awake()
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
@@ -191,8 +184,8 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     private void Start()
     {
-        towerShopCard = GameObject.Find("ShopCard_Tower");
-        wallShopCard = GameObject.Find("ShopCard_Wall");
+        //towerShopCards = GameObject.Find("ShopCard_Tower");
+        //wallShopCards = GameObject.Find("ShopCard_Wall");
         //shop.SetActive(false);
     }
 

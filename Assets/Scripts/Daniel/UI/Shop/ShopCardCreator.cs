@@ -19,7 +19,14 @@ public class ShopCardCreator : MonoBehaviour
     [SerializeField]
     private Text buildingInformation;
     [SerializeField]
-    private BuildingInformation[] buildingInfos;
+    private ShopCardCategorys shopCardCategorys;
+
+    public ShopCardCategorys ShopCardCategorys
+    {
+        get { return shopCardCategorys; }
+        set { shopCardCategorys = value; }
+    }
+
     private Text buildingName;
     private BuildingSpawn buildingSpawn;
     private ShopButtonBehaviour buttonBehaviour;
@@ -32,6 +39,24 @@ public class ShopCardCreator : MonoBehaviour
     private Button shopCardBuildButton;
     private Button shopCardButton;
     private string shopCardMark = "ShopCard_";
+
+    private List<GameObject> towerShopCards;
+
+    public List<GameObject> TowerShopCards
+    {
+        get { return towerShopCards; }
+        set { towerShopCards = value; }
+    }
+
+    private List<GameObject> wallShopCards;
+
+    public List<GameObject> WallShopCards
+    {
+        get { return wallShopCards; }
+        set { wallShopCards = value; }
+    }
+
+
 
     private Dictionary<GameObject, BuildingInformation> shopCards;
 
@@ -67,11 +92,23 @@ public class ShopCardCreator : MonoBehaviour
 
     private void createShopCards()
     {
-        foreach (var buildingInfo in buildingInfos)
+        towerShopCards = new List<GameObject>();
+        wallShopCards = new List<GameObject>();
+        foreach (var buildingInfo in shopCardCategorys.TowerInformation)
         {
             GameObject shopCard = (GameObject)Instantiate(Resources.Load("Prefabs/BuildingShopCard"));
             shopCard.transform.SetParent(content.transform, false);
             shopCard.name = shopCardMark + buildingInfo.BuildingName;
+            towerShopCards.Add(shopCard);
+            editShopCard(shopCard, buildingInfo);
+            shopCards.Add(shopCard, buildingInfo);
+        }
+        foreach (var buildingInfo in shopCardCategorys.WallInformation)
+        {
+            GameObject shopCard = (GameObject)Instantiate(Resources.Load("Prefabs/BuildingShopCard"));
+            shopCard.transform.SetParent(content.transform, false);
+            shopCard.name = shopCardMark + buildingInfo.BuildingName;
+            wallShopCards.Add(shopCard);
             editShopCard(shopCard, buildingInfo);
             shopCards.Add(shopCard, buildingInfo);
         }

@@ -21,6 +21,7 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
     private Renderer renderer;
     private bool repair = false;
     private TowerController towerController;
+    private BombTower bombTower;
 
     public BuildingInformation BuildingInfo
     {
@@ -80,6 +81,10 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         {
             towerController.CanShoot = true;
         }
+        if (bombTower != null)
+        {
+            bombTower.CanShoot = true;
+        }
         repair = false;
     }
 
@@ -89,7 +94,8 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         gamestate = GameObject.Find("GlobalScripts").GetComponent<GameState>();
         destroyBuilding = GetComponentInParent<DestroyBuildedTower>();
         towerController = GetComponentInParent<TowerController>();
+        bombTower = GetComponentInParent<BombTower>();
         goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
-        renderer = GetComponent<Renderer>();
+        renderer = GetComponentInChildren<Renderer>();
     }
 }
