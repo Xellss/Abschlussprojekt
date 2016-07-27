@@ -13,18 +13,69 @@ using UnityEngine;
 public class Wave
 {
     [SerializeField]
-    private int enemysPerWave;
+    private float delayToLastWave;
+    [SerializeField]
+    private PoolPrefab enemyPrefab;
+    [SerializeField]
+    private int waveGoldReward;
+
+    public int WaveGoldReward
+    {
+        get { return waveGoldReward; }
+        set { waveGoldReward = value; }
+    }
+
+
+    [SerializeField]
+    private int enemyCount;
+
     [SerializeField]
     private int spawnPoints;
-    [SerializeField]
-    private SpezialWave spezialWave;
-    [SerializeField]
-    private Transform[] wayPoints;
 
-    public int enemyPerWave
+    [SerializeField, Tooltip("SpawnAfterClearLastWave")]
+    private bool spawnAfterClearLastWave;
+
+    public bool SpawnAfterClearLastWave
     {
-        get { return enemysPerWave; }
-        set { enemysPerWave = value; }
+        get { return spawnAfterClearLastWave; }
+        set { spawnAfterClearLastWave = value; }
+    }
+    [SerializeField]
+    private bool canBuildAfterWave;
+
+    public bool CanBuildAfterWave
+    {
+        get { return canBuildAfterWave; }
+        set { canBuildAfterWave = value; }
+    }
+
+
+    [SerializeField]
+    private string doTweenPathContainer;
+
+    public string DoTweenPathContainer
+    {
+        get { return doTweenPathContainer; }
+        set { doTweenPathContainer = value; }
+    }
+
+
+    public float DelayToLastWave
+    {
+        get { return delayToLastWave; }
+        set { delayToLastWave = value; }
+    }
+
+    public int EnemyCount
+    {
+        get { return enemyCount; }
+        set { enemyCount = value; }
+    }
+
+    public PoolPrefab EnemyPrefab
+    {
+        get { return enemyPrefab; }
+        set { enemyPrefab = value; }
     }
 
     public int SpawnPoints
@@ -33,15 +84,4 @@ public class Wave
         set { spawnPoints = value; }
     }
 
-    public SpezialWave SpezialWave
-    {
-        get { return spezialWave; }
-        set { spezialWave = value; }
-    }
-
-    public Transform[] WayPoints
-    {
-        get { return wayPoints; }
-        set { wayPoints = value; }
-    }
 }

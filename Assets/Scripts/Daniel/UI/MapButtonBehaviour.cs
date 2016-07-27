@@ -47,21 +47,21 @@ public class MapButtonBehaviour : MonoBehaviour
         worldMap.SetActive(false);
     }
 
-    public void OnClickEnemyCard(EnemyEditor enemyEditor)
-    {
-        EnemyWorldMapInfo enemyInfo = enemyEditor.EnemyInfoScribtableObject;
-        waveSpawner.EnemyPrefab = enemyInfo.EnemyPrefab;
-        waveSpawner.Waves = enemyInfo.Waves;
-        waveSpawner.SpawnDelay = enemyInfo.SpawnDelay;
-        waveSpawner.EnemyInfo = enemyInfo;
-        infoText.text = enemyInfo.WaveInformationText;
-        goldReward.text = enemyInfo.GoldReward.ToString();
-        goldRewardGameObject.SetActive(true);
-        if (enemyInfo.ItemReward != null)
-        {
-            itemReward.text = enemyInfo.ItemReward.name;
-            itemRewardGameObject.SetActive(true);
-        }
-        attackButton.SetActive(true);
-    }
+    //public void OnClickEnemyCard(EnemyEditor enemyEditor)
+    //{
+    //    EnemyWorldMapInfo enemyInfo = enemyEditor.EnemyInfoScribtableObject;
+    //    //waveSpawner.EnemyPrefab = enemyInfo.EnemyPrefab;
+    //    waveSpawner.Waves = enemyInfo.Waves;
+    //    //waveSpawner.SpawnDelay = enemyInfo.SpawnDelay;
+    //    waveSpawner.WaveInfo = enemyInfo;
+    //    infoText.text = enemyInfo.WaveInformationText;
+    //    goldReward.text = enemyInfo.GoldReward.ToString();
+    //    goldRewardGameObject.SetActive(true);
+    //    if (enemyInfo.ItemReward != null)
+    //    {
+    //        itemReward.text = enemyInfo.ItemReward.name;
+    //        itemRewardGameObject.SetActive(true);
+    //    }
+    //    attackButton.SetActive(true);
+    //}
 }

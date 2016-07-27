@@ -22,6 +22,8 @@ public class EnemyHP : MonoBehaviour
     [SerializeField]
     private int maxHealth = 100;
 
+    EnemyKi enemyKi;
+
     private WaveSpawn waveSpawner;
 
     public int CurrentHealth
@@ -39,7 +41,7 @@ public class EnemyHP : MonoBehaviour
     public void Decrease(int damage)
     {
         currentHealth = currentHealth - damage;
-        if (this.gameObject.tag == "Enemy")
+        if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
         {
             transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
         }
@@ -49,7 +51,8 @@ public class EnemyHP : MonoBehaviour
             gameState.GoldAmount += GoldDropAmount;
             gold.text = gameState.GoldAmount.ToString();
             itemdrop.DropItemCheck();
-            waveSpawner.Enemys--;
+            waveSpawner.WaveEnemyCount--;
+            waveSpawner.TotalEnemyCount--;
             Reset();
         }
     }
@@ -57,7 +60,7 @@ public class EnemyHP : MonoBehaviour
     public void Reset()
     {
         gameObject.SetActive(false);
-        if (this.gameObject.tag == "Enemy")
+        if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
         {
             transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
@@ -85,6 +88,7 @@ public class EnemyHP : MonoBehaviour
 
     private void Awake()
     {
+        enemyKi = GetComponent<EnemyKi>();
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         CurrentHealth = MaxHealth;
         itemdrop = GetComponent<ItemDrop>();

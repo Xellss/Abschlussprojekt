@@ -39,6 +39,7 @@ public class ShopCardCreator : MonoBehaviour
     private Button shopCardBuildButton;
     private Button shopCardButton;
     private string shopCardMark = "ShopCard_";
+    DragAndDropBuilding dragAndDrop;
 
     private List<GameObject> towerShopCards;
 
@@ -102,6 +103,7 @@ public class ShopCardCreator : MonoBehaviour
             towerShopCards.Add(shopCard);
             editShopCard(shopCard, buildingInfo);
             shopCards.Add(shopCard, buildingInfo);
+            shopCard.GetComponent<DragAndDropBuilding>().BuildingInfo = buildingInfo;
         }
         foreach (var buildingInfo in shopCardCategorys.WallInformation)
         {
@@ -111,6 +113,7 @@ public class ShopCardCreator : MonoBehaviour
             wallShopCards.Add(shopCard);
             editShopCard(shopCard, buildingInfo);
             shopCards.Add(shopCard, buildingInfo);
+            shopCard.GetComponent<DragAndDropBuilding>().BuildingInfo = buildingInfo;
         }
     }
 

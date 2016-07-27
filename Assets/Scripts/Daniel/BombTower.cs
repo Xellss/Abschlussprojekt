@@ -7,7 +7,8 @@ public class BombTower : MonoBehaviour {
     private PoolPrefab bombPrefab;
     [SerializeField]
     private float shootSpeed;
-
+    [SerializeField]
+    shootRadius shootRadius;
     public PoolPrefab BombPrefab
     {
         get { return bombPrefab; }
@@ -57,11 +58,21 @@ public class BombTower : MonoBehaviour {
                 }
             }
         }
-        else
-        {
-            //yield return null;
-        }
-            //StartCoroutine(shoot());
+
+
+        //shooting = false;
+        //if (shootRadius.EnemyList.Count>0)
+        //{
+        //        if (shooting && canShoot)
+        //        {
+        //            shooting = true;
+        //            GameObject newBomb = ObjectPool.Instance.GetPooledObject(bombPrefab);
+        //            newBomb.transform.position = bombSpawn.transform.position;
+        //            Rigidbody laserBody = newBomb.GetComponent<Rigidbody>();
+        //            laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
+        //            laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.deltaTime, ForceMode.Impulse);
+        //        }
+        //}
     }
 
     private void ResetBullet(BulletController bullet)
