@@ -18,6 +18,13 @@ public class BuildingHealth : MonoBehaviour
     [SerializeField]
     private float currentHealth;
     private DestroyBuildedTower destroyBuilding;
+
+    public DestroyBuildedTower DestroyBuilding
+    {
+        get { return destroyBuilding; }
+        set { destroyBuilding = value; }
+    }
+
     private GameState globalScripts;
     private RectTransform hpBackgroundImage;
     private GameObject hpCanvas;
@@ -128,7 +135,7 @@ public class BuildingHealth : MonoBehaviour
             waveSpawn.WaveStart = false;
             waveSpawn.Enemys = 0;
             winLoseObject.SetActive(true);
-            winLoseScript.WinLoseWave(false, waveSpawn.EnemyInfo, 0);
+            winLoseScript.WinLoseWave(false, waveSpawn.WaveInfo, 0);
             currentHealth = maxHealth;
             GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (var enemy in enemys)

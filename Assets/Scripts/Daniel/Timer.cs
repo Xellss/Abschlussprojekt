@@ -23,6 +23,14 @@ public class Timer : MonoBehaviour
     private Text timerText;
     [SerializeField]
     private float timerTime;
+    [SerializeField]
+    private GameObject buildMenu;
+
+    [SerializeField]
+    private GameObject nextWaveButton;
+
+    [SerializeField]
+    GameObject newBuildingContainer;
 
     public float TimerTime
     {
@@ -60,9 +68,19 @@ public class Timer : MonoBehaviour
             timerText.text = ((int)timerTime).ToString();
             StopAllCoroutines();
             timerPanel.SetActive(false);
+            nextWaveButton.SetActive(true);
+
+            if (newBuildingContainer.transform.childCount>0)
+            {
+                for (int i = 0; i < newBuildingContainer.transform.childCount; i++)
+                {
+                    GameObject.Destroy(newBuildingContainer.transform.GetChild(i).gameObject);
+                }
+            }
+            buildMenu.SetActive(false);
             spawner.SpawnEnemy();
         }
-        if (runTimer && TimerTime <= 5)
+        if (TimerTime <= 6)
         {
             timerAnimator.SetTrigger("StartAnimation");
         }

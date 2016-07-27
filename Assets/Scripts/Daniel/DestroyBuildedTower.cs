@@ -20,7 +20,7 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
     private Button sellTowerButton;
     [SerializeField]
     private GameObject sellTowerButtonGameObject;
-
+    private ShopCardCreator shopCardCreator;
     private TowerSlot towerSlot;
 
     public BuildingInformation BuildingInformation
@@ -51,7 +51,8 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
     {
         gamestate.GoldAmount += buildingInformation.BuildingSellPrice;
         goldAmount.text = gamestate.GoldAmount.ToString();
-        GameObject.Destroy(transform.GetChild(1).gameObject);
+        shopCardCreator.CanBuyBuilding();
+        GameObject.Destroy(transform.GetChild(2).gameObject);
         towerSlot.enabled = true;
         towerSlot.BuildingOnSlot = false;
         sellTowerButtonGameObject.SetActive(false);
@@ -71,10 +72,12 @@ public class DestroyBuildedTower : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
+        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         gamestate = (GameState)FindObjectOfType(typeof(GameState));
         towerSlot = GetComponent<TowerSlot>();
         sellTowerButton = sellTowerButtonGameObject.GetComponent<Button>();
         goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
+        
         sellButtonText = sellTowerButtonGameObject.transform.FindChild("Text").GetComponent<Text>();
     }
 }

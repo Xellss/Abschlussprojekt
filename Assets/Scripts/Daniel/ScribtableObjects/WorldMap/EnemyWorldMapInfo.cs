@@ -11,6 +11,15 @@ using UnityEngine;
 [SerializeField]
 public class EnemyWorldMapInfo : ScriptableObject
 {
+
+    private int levelEnemyCount;
+
+    public int LevelEnemyCount
+    {
+        get { return levelEnemyCount; }
+        set { levelEnemyCount = value; }
+    }
+
     [SerializeField]
     private string enemyGroupName;
     [SerializeField]

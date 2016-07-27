@@ -11,21 +11,15 @@ using UnityEngine;
 
 public class BuyButton : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject ButtonAsteroids;
+    //[SerializeField]
+    //private GameObject ButtonAsteroids;
     private PlanetTerraforming planetTerraforming;
     private BaseTerrainManager terrainManager;
 
     public void DestroyAsteroids(bool unlock)
     {
-        if (ButtonAsteroids != null)
-        {
-            planetTerraforming.Terraforming(transform.parent.position, ButtonAsteroids.transform.parent, unlock);
-            GameObject.Destroy(ButtonAsteroids);
-        }
-        else
-        {
-        }
+            planetTerraforming.Terraforming(transform.parent.position,transform.parent, unlock);
+            //GameObject.Destroy(ButtonAsteroids);
     }
 
     public void OnBuyButtonClicked()

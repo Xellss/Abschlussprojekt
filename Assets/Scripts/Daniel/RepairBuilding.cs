@@ -15,13 +15,20 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
 {
     private BuildingInformation buildingInfo;
     private DestroyBuildedTower destroyBuilding;
+    public DestroyBuildedTower DestroyBuilding
+    {
+        get { return destroyBuilding; }
+        set { destroyBuilding = value; }
+    }
+
     private GameState gamestate;
     private Text goldAmount;
     private BuildingHealth health;
-    private Renderer renderer;
+    private Renderer[] renderer;
     private bool repair = false;
     private TowerController towerController;
     private BombTower bombTower;
+    private ShopCardCreator shopCardCreator;
 
     public BuildingInformation BuildingInfo
     {
@@ -47,6 +54,7 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
             repair = true;
             gamestate.GoldAmount -= buildingInfo.RepairAmount;
             goldAmount.text = gamestate.GoldAmount.ToString();
+            shopCardCreator.CanBuyBuilding();
             destroyBuilding.SellTowerButtonGameObject.SetActive(false);
 
             //StartCoroutine(repairTime(buildingInfo.RepairTime));
@@ -63,9 +71,16 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         yield return new WaitForSeconds(time);
         health.AddHealth(health.MaxHealth);
         destroyBuilding.enabled = true;
+
         if (renderer != null)
         {
-            renderer.material.color = Color.white;
+            if (renderer.Length > 0)
+            {
+                for (int i = 0; i < renderer.Length; i++)
+                {
+                    renderer[i].material.color = Color.white;
+                }
+            }
         }
         else
             GetComponentInChildren<MeshRenderer>().material.color = Color.white;
@@ -90,12 +105,13 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
+        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         health = GetComponent<BuildingHealth>();
         gamestate = GameObject.Find("GlobalScripts").GetComponent<GameState>();
         destroyBuilding = GetComponentInParent<DestroyBuildedTower>();
         towerController = GetComponentInParent<TowerController>();
         bombTower = GetComponentInParent<BombTower>();
         goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
-        renderer = GetComponentInChildren<Renderer>();
+        renderer = GetComponentsInChildren<Renderer>();
     }
 }

@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TowerSlot : MonoBehaviour, IPointerClickHandler
+public class TowerSlot : MonoBehaviour/*, IPointerClickHandler*/
 {
     private bool buildingOnSlot = false;
     private float delta;
@@ -33,24 +33,24 @@ public class TowerSlot : MonoBehaviour, IPointerClickHandler
         set { buildingOnSlot = value; }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        //ground.layer = LayerMask.NameToLayer("Default");
-        if (gameObject.GetComponent<BaseTerrainManager>() == null)
-        {
-            if (wallSlot)
-            {
-                shopBehavoiur.TowerCardsSetActive(false);
-                shopBehavoiur.WallCardsSetActive(true);
-            }
-            else
-            {
-                shopBehavoiur.TowerCardsSetActive(true);
-                shopBehavoiur.WallCardsSetActive(false);
-            }
-            shopButtonBehavior.OnTowerSlotClick(transform, this);
-        }
-    }
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    //ground.layer = LayerMask.NameToLayer("Default");
+    //    if (gameObject.GetComponent<BaseTerrainManager>() == null)
+    //    {
+    //        if (wallSlot)
+    //        {
+    //            shopBehavoiur.TowerCardsSetActive(false);
+    //            shopBehavoiur.WallCardsSetActive(true);
+    //        }
+    //        else
+    //        {
+    //            shopBehavoiur.TowerCardsSetActive(true);
+    //            shopBehavoiur.WallCardsSetActive(false);
+    //        }
+    //        shopButtonBehavior.OnTowerSlotClick(transform, this);
+    //    }
+    //}
 
     private void Awake()
     {

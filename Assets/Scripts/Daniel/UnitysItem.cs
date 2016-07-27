@@ -14,6 +14,7 @@ public class UnitysItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 {
     private GameState gameState;
     private Text goldText;
+    private ShopCardCreator shopCardCreator;
     [SerializeField]
     private float timerTime = 10;
     [SerializeField]
@@ -23,6 +24,7 @@ public class UnitysItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         gameState.GoldAmount += unitysOnClick;
         goldText.text = gameState.GoldAmount.ToString();
+        shopCardCreator.CanBuyBuilding();
         GameObject.Destroy(this.gameObject);
     }
 
@@ -30,11 +32,13 @@ public class UnitysItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         gameState.GoldAmount += unitysOnClick;
         goldText.text = gameState.GoldAmount.ToString();
+        shopCardCreator.CanBuyBuilding();
         GameObject.Destroy(this.gameObject);
     }
 
     private void Start()
     {
+        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         goldText = GameObject.Find("GoldAmount").GetComponent<Text>();
         gameState = GameObject.Find("GlobalScripts").GetComponent<GameState>();
     }
@@ -43,6 +47,9 @@ public class UnitysItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         if (timerTime <= 0)
         {
+            gameState.GoldAmount += unitysOnClick;
+            goldText.text = gameState.GoldAmount.ToString();
+            shopCardCreator.CanBuyBuilding();
             GameObject.Destroy(this.gameObject);
         }
         else
