@@ -1,12 +1,30 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Author: Daniel Lause            ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
 using UnityEngine.UI;
 
 public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerExitHandler
 {
     private BuildingInformation buildingInfo;
+
+    private bool click;
+    private bool follow;
+    private GameState gameState;
+    private Text goldAmountText;
+    private RaycastHit hit;
+    private GameObject newBuilding;
+    private GameObject newBuildingContainer;
+    private RepairBuilding repairBuilding;
+    private DestroyBuildedTower sellBuilding;
+    private ShopCardCreator shopCardCreator;
+    private GameObject starBase;
 
     public BuildingInformation BuildingInfo
     {
@@ -14,45 +32,21 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
         set { buildingInfo = value; }
     }
 
-    private GameObject newBuilding;
-
     public GameObject NewBuilding
     {
         get { return newBuilding; }
         set { newBuilding = value; }
     }
 
-
-    bool click;
-    private bool follow;
-    private RaycastHit hit;
-    private RepairBuilding repairBuilding;
-    DestroyBuildedTower sellBuilding;
-
-    GameObject newBuildingContainer;
-    private GameState gameState;
-    private Text goldAmountText;
-    private ShopCardCreator shopCardCreator;
-
-    void Awake()
-    {
-        gameState = (GameState)FindObjectOfType(typeof(GameState));
-        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
-        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
-        newBuildingContainer = GameObject.Find("newBuildingContainer");
-    }
-
     public void OnDrag(PointerEventData eventData)
     {
         if (!click && gameState.GoldAmount >= buildingInfo.BuildingGoldCost)
         {
-
             click = true;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit);
             if (hit.transform != null)
             {
-
                 newBuilding = (GameObject)Instantiate(buildingInfo.BuildingPrefab, new Vector3(hit.point.x, 0, hit.point.z), Quaternion.identity);
                 newBuilding.transform.SetParent(newBuildingContainer.transform);
             }
@@ -60,29 +54,16 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnEnable()
     {
-        follow = false;
-    }
-
-    void Update()
-    {
-        if (click)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out hit);
-            if (hit.transform != null)
-            {
-                newBuilding.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
-            }
-        }
+        goldAmountText.text = gameState.GoldAmount.ToString();
+        shopCardCreator.CanBuyBuilding();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         if (click)
         {
-
             Collider[] colliders = Physics.OverlapSphere(newBuilding.transform.position, 1);
 
             foreach (var collider in colliders)
@@ -110,21 +91,44 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
                         newBuilding.GetComponent<BuildingHealth>().DestroyBuilding = sellBuilding;
                         newBuilding.GetComponent<RepairBuilding>().DestroyBuilding = sellBuilding;
 
+                        var direction = starBase.transform.position - newBuilding.transform.position;
+                        direction.y = 0;
+                        newBuilding.transform.rotation = Quaternion.LookRotation(-direction);
+
                         return;
                     }
                 }
             }
-
         }
         click = false;
         GameObject.Destroy(newBuilding);
         return;
-
     }
 
-    public void OnEnable()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        goldAmountText.text = gameState.GoldAmount.ToString();
-        shopCardCreator.CanBuyBuilding();
+        follow = false;
+    }
+
+    private void Awake()
+    {
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
+        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
+        newBuildingContainer = GameObject.Find("newBuildingContainer");
+        starBase = GameObject.Find("SunSystem");
+    }
+
+    private void Update()
+    {
+        if (click)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(ray, out hit);
+            if (hit.transform != null)
+            {
+                newBuilding.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
+            }
+        }
     }
 }

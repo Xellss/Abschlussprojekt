@@ -211,10 +211,7 @@ public class BuildingHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy" && gameObject.tag == "Building")
-        {
-            onTriggerEnemy(other);
-        }
+      
         if (other.gameObject.tag == "LaserBullet" && gameObject.tag == "Building")
         {
             onTriggerBullet(other);

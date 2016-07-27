@@ -12,7 +12,7 @@ public class shootRadius : MonoBehaviour {
         set { enemyList = value; }
     }
 
-    void Start()
+    void Awake()
     {
         enemyList = new List<Transform>();
     }

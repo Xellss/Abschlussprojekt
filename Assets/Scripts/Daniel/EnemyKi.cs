@@ -100,21 +100,21 @@ public class EnemyKi : MonoBehaviour
             other.gameObject.SetActive(false);
         }
 
-        //if (other.gameObject.tag == "ShootRadius")
-        //{
-        //     shootRadius = other.GetComponent<shootRadius>();
-        //    shootRadius.EnemyList.Add(transform);
-        //}
+        if (other.gameObject.tag == "ShootRadius")
+        {
+            shootRadius = other.GetComponent<shootRadius>();
+            shootRadius.EnemyList.Add(transform);
+        }
     }
 
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject.tag == "ShootRadius")
-    //    {
-    //        shootRadius = other.GetComponent<shootRadius>();
-    //        shootRadius.EnemyList.Remove(transform);
-    //    }
-    //}
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "ShootRadius")
+        {
+            shootRadius = other.GetComponent<shootRadius>();
+            shootRadius.EnemyList.Remove(transform);
+        }
+    }
 
     private void Awake()
     {
