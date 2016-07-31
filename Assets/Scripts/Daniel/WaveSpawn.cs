@@ -16,12 +16,15 @@ public class WaveSpawn : MonoBehaviour
 {
     private bool clearWave = false;
 
+    shootRadius[] shootRadiusArray;
     [SerializeField]
     private Edge[] edges;
 
     [SerializeField]
     private Image skipButton;
 
+
+    int waveSpawnCounter =0;
     [SerializeField]
     private GameObject buildMenu;
 
@@ -171,6 +174,7 @@ public class WaveSpawn : MonoBehaviour
             for (int k = 0; k < Waves[waveCounter].EnemyCount; k++)
             {
                 newEnemy = ObjectPool.Instance.GetPooledObject(Waves[waveCounter].EnemyPrefab);
+                newEnemy.GetComponent<EnemyKi>().enabled = true;
                 newEnemy.transform.position = spawnPoint;
                 waveEnemyCount++;
                 enemys++;
@@ -191,6 +195,8 @@ public class WaveSpawn : MonoBehaviour
             }
             else
             {
+                waveSpawnCounter++;
+                CreateSpawnpoints();
                 StartCoroutine(buildTime());
             }
         }
@@ -200,6 +206,19 @@ public class WaveSpawn : MonoBehaviour
     {
         spawnPoints = new List<Vector3>();
         winLoseScript = winLoseWindow.GetComponent<WinLoseWindow>();
+        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
+        gameState = (GameState)FindObjectOfType(typeof(GameState));
+        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
+
+        if (waveInfo != null)
+        {
+            waves = waveInfo.Waves;
+
+            foreach (var wave in waves)
+            {
+                totalEnemyCount += wave.EnemyCount;
+            }
+        }
     }
 
     private IEnumerator buildTime()
@@ -242,28 +261,28 @@ public class WaveSpawn : MonoBehaviour
 
     private Vector3 spawnPosition()
     {
-        int sideNumber = Random.Range(0, edges.Length);
+        //int sideNumber = Random.Range(0, edges.Length);
 
-        Edge edge = edges[sideNumber];
+        Edge edge = edges[waveSpawnCounter];
 
         return Vector3.Lerp(edge.First.position, edge.Second.position, Random.value);
     }
 
     private void Start()
     {
-        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
-        gameState = (GameState)FindObjectOfType(typeof(GameState));
-        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
+        //shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
+        //gameState = (GameState)FindObjectOfType(typeof(GameState));
+        //goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
 
-        if (waveInfo != null)
-        {
-            waves = waveInfo.Waves;
+        //if (waveInfo != null)
+        //{
+        //    waves = waveInfo.Waves;
 
-            foreach (var wave in waves)
-            {
-                totalEnemyCount += wave.EnemyCount;
-            }
-        }
+        //    foreach (var wave in waves)
+        //    {
+        //        totalEnemyCount += wave.EnemyCount;
+        //    }
+        //}
     }
 
     private void Update()

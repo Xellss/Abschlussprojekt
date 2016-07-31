@@ -32,14 +32,14 @@ public class Wave
     [SerializeField]
     private int spawnPoints;
 
-    [SerializeField, Tooltip("SpawnAfterClearLastWave")]
-    private bool spawnAfterClearLastWave;
+    //[SerializeField, Tooltip("SpawnAfterClearLastWave")]
+    //private bool spawnAfterClearLastWave;
 
-    public bool SpawnAfterClearLastWave
-    {
-        get { return spawnAfterClearLastWave; }
-        set { spawnAfterClearLastWave = value; }
-    }
+    //public bool SpawnAfterClearLastWave
+    //{
+    //    get { return spawnAfterClearLastWave; }
+    //    set { spawnAfterClearLastWave = value; }
+    //}
     [SerializeField]
     private bool canBuildAfterWave;
 
@@ -50,14 +50,14 @@ public class Wave
     }
 
 
-    [SerializeField]
-    private string doTweenPathContainer;
+    //[SerializeField]
+    //private string doTweenPathContainer;
 
-    public string DoTweenPathContainer
-    {
-        get { return doTweenPathContainer; }
-        set { doTweenPathContainer = value; }
-    }
+    //public string DoTweenPathContainer
+    //{
+    //    get { return doTweenPathContainer; }
+    //    set { doTweenPathContainer = value; }
+    //}
 
 
     public float DelayToLastWave

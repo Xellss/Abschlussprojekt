@@ -14,6 +14,7 @@ using UnityEngine.UI;
 public class BuildingHealth : MonoBehaviour
 {
     private BombTower bombTower;
+    Animator animator;
     private RectTransform canvasRect;
     [SerializeField]
     private float currentHealth;
@@ -27,6 +28,7 @@ public class BuildingHealth : MonoBehaviour
 
     private GameState globalScripts;
     private RectTransform hpBackgroundImage;
+    [SerializeField]
     private GameObject hpCanvas;
     private RectTransform hpImage;
     [SerializeField]
@@ -90,15 +92,19 @@ public class BuildingHealth : MonoBehaviour
             return 0;
     }
 
-    public void RemoveHealth(float Damage)
+    public void RemoveHealth(int Damage)
     {
-        currentHealth -= Damage;
+        StartCoroutine(reduceHealth(5, Damage));
     }
 
     private void Awake()
     {
         globalScripts = GameObject.Find("GlobalScripts").GetComponent<GameState>();
+        if (hpCanvas == null)
+        {
+
         hpCanvas = transform.FindChild("HP").gameObject;
+        }
         canvasRect = hpCanvas.GetComponent<RectTransform>();
         hpBackgroundImage = hpCanvas.transform.FindChild("HPBackgroundImage").GetComponent<RectTransform>();
         hpImage = hpCanvas.transform.FindChild("HPImage").GetComponent<RectTransform>();
@@ -143,7 +149,7 @@ public class BuildingHealth : MonoBehaviour
                 if (enemy.GetComponent<EnemyHP>() != null)
                 {
 
-                enemy.GetComponent<EnemyHP>().Reset();
+                    enemy.GetComponent<EnemyHP>().Reset();
                 }
             }
         }
@@ -151,11 +157,11 @@ public class BuildingHealth : MonoBehaviour
         {
             //towerSlotScript.enabled = true;
             destroyBuilding.enabled = false;
-            if (renderer.Length >0)
+            if (renderer.Length > 0)
             {
                 for (int i = 0; i < renderer.Length; i++)
                 {
-                renderer[i].material.color = Color.red;
+                    renderer[i].material.color = Color.red;
                 }
             }
             else
@@ -211,7 +217,7 @@ public class BuildingHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-      
+
         if (other.gameObject.tag == "LaserBullet" && gameObject.tag == "Building")
         {
             onTriggerBullet(other);
@@ -224,6 +230,10 @@ public class BuildingHealth : MonoBehaviour
 
     private IEnumerator reduceHealth(int step, int total)
     {
+        if (gameObject.tag == "BaseShield")
+        {
+            animator.SetTrigger("BaseUnderAttack");
+        }
         int remaining = total;
         while (remaining > 0)
         {
@@ -256,6 +266,10 @@ public class BuildingHealth : MonoBehaviour
         if (GetComponent<BombTower>() != null)
         {
             bombTower = GetComponent<BombTower>();
+        }
+        if (gameObject.layer == LayerMask.NameToLayer("MainBuilding"))
+        {
+            animator = GetComponent<Animator>();
         }
     }
 }

@@ -1,17 +1,19 @@
 ﻿/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+using System.Collections;
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
 ///           Author: Julian Hopp             ///
 ///                                           ///
 ///                                           ///
-/////////////////////////////////////////////////
-
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHP : MonoBehaviour
 {
+    BoxCollider myCollider;
     [SerializeField]
     private int currentHealth = 100;
     private GameState gameState;
@@ -21,7 +23,10 @@ public class EnemyHP : MonoBehaviour
     private ItemDrop itemdrop;
     [SerializeField]
     private int maxHealth = 100;
-
+    [SerializeField]
+    GameObject explosionEffect;
+    [SerializeField]
+    GameObject enemyModel;
     EnemyKi enemyKi;
 
     private WaveSpawn waveSpawner;
@@ -51,23 +56,35 @@ public class EnemyHP : MonoBehaviour
             gameState.GoldAmount += GoldDropAmount;
             gold.text = gameState.GoldAmount.ToString();
             itemdrop.DropItemCheck();
-            waveSpawner.WaveEnemyCount--;
-            waveSpawner.TotalEnemyCount--;
             Reset();
         }
     }
 
     public void Reset()
     {
-        gameObject.SetActive(false);
+        StartCoroutine(enemyExplosion());
+    }
+
+    IEnumerator enemyExplosion()
+    {
+        explosionEffect.SetActive(true);
+        enemyModel.SetActive(false);
+        myCollider.enabled = false;
+        yield return new WaitForSeconds(1);
+        explosionEffect.SetActive(false);
+        enemyModel.SetActive(true);
+        waveSpawner.WaveEnemyCount--;
+        waveSpawner.TotalEnemyCount--;
         if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
         {
             transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
         transform.position = new Vector3(0, 0, 40);
         CurrentHealth = MaxHealth;
-    }
+        myCollider.enabled = true;
+        gameObject.SetActive(false);
 
+    }
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Bomb")
@@ -94,5 +111,6 @@ public class EnemyHP : MonoBehaviour
         itemdrop = GetComponent<ItemDrop>();
         gold = GameObject.Find("GoldAmount").GetComponent<Text>();
         waveSpawner = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
+        myCollider = GetComponent<BoxCollider>();
     }
 }

@@ -90,7 +90,7 @@ public class BombTower : MonoBehaviour {
                 Rigidbody laserBody = newBomb.GetComponent<Rigidbody>();
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
                 laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.deltaTime, ForceMode.Impulse);
-
+                StartCoroutine(destoyBomb(newBomb));
 
             }
         }
@@ -102,7 +102,11 @@ public class BombTower : MonoBehaviour {
         //bullet.SetColor(myRenderer.material.color);
         bullet.gameObject.SetActive(true);
     }
-
+    IEnumerator destoyBomb(GameObject bomb)
+    {
+        yield return new WaitForSeconds(8);
+        bomb.SetActive(false);
+    }
     private void Start()
     {
         //StartCoroutine(shoot());

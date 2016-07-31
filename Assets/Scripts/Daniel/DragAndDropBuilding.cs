@@ -15,6 +15,13 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
     private BuildingInformation buildingInfo;
 
     private bool click;
+
+    public bool Click
+    {
+        get { return click; }
+        set { click = value; }
+    }
+
     private bool follow;
     private GameState gameState;
     private Text goldAmountText;
@@ -38,6 +45,7 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
         set { newBuilding = value; }
     }
 
+
     public void OnDrag(PointerEventData eventData)
     {
         if (!click && gameState.GoldAmount >= buildingInfo.BuildingGoldCost)
@@ -58,51 +66,60 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
     {
         goldAmountText.text = gameState.GoldAmount.ToString();
         shopCardCreator.CanBuyBuilding();
+        click = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (click)
+        try
         {
-            Collider[] colliders = Physics.OverlapSphere(newBuilding.transform.position, 1);
-
-            foreach (var collider in colliders)
+            if (click)
             {
-                if (collider.CompareTag("UnlockedTerrain"))
+                Collider[] colliders = Physics.OverlapSphere(newBuilding.transform.position, 1);
+
+                foreach (var collider in colliders)
                 {
-                    TowerSlot slotScript = collider.gameObject.transform.GetComponent<TowerSlot>();
-                    if (!slotScript.BuildingOnSlot)
+                    if (collider.CompareTag("UnlockedTerrain"))
                     {
-                        click = false;
-                        newBuilding.transform.position = collider.gameObject.transform.position;
-                        newBuilding.transform.SetParent(collider.gameObject.transform);
-                        slotScript.BuildingOnSlot = true;
+                        TowerSlot slotScript = collider.gameObject.transform.GetComponent<TowerSlot>();
+                        if (!slotScript.BuildingOnSlot)
+                        {
+                            click = false;
+                            newBuilding.transform.position = collider.gameObject.transform.position;
+                            newBuilding.transform.SetParent(collider.gameObject.transform);
+                            slotScript.BuildingOnSlot = true;
 
-                        gameState.GoldAmount -= buildingInfo.BuildingGoldCost;
-                        goldAmountText.text = gameState.GoldAmount.ToString();
-                        shopCardCreator.CanBuyBuilding();
-                        newBuilding.layer = LayerMask.NameToLayer(buildingInfo.BuildingTypes.ToString());
-                        newBuilding.tag = "Building";
-                        repairBuilding = newBuilding.GetComponent<RepairBuilding>();
-                        repairBuilding.BuildingInfo = buildingInfo;
-                        sellBuilding = collider.gameObject.transform.GetComponent<DestroyBuildedTower>();
-                        sellBuilding.BuildingInformation = buildingInfo;
-                        sellBuilding.enabled = true;
-                        newBuilding.GetComponent<BuildingHealth>().DestroyBuilding = sellBuilding;
-                        newBuilding.GetComponent<RepairBuilding>().DestroyBuilding = sellBuilding;
+                            gameState.GoldAmount -= buildingInfo.BuildingGoldCost;
+                            goldAmountText.text = gameState.GoldAmount.ToString();
+                            shopCardCreator.CanBuyBuilding();
+                            newBuilding.layer = LayerMask.NameToLayer(buildingInfo.BuildingTypes.ToString());
+                            newBuilding.tag = "Tower";
+                            //repairBuilding = newBuilding.GetComponent<RepairBuilding>();
+                            //repairBuilding.BuildingInfo = buildingInfo;
+                            //sellBuilding = collider.gameObject.transform.GetComponent<DestroyBuildedTower>();
+                            //sellBuilding.BuildingInformation = buildingInfo;
+                            //sellBuilding.enabled = true;
+                            newBuilding.GetComponent<BuildingHealth>().DestroyBuilding = sellBuilding;
+                            //newBuilding.GetComponent<RepairBuilding>().DestroyBuilding = sellBuilding;
 
-                        var direction = starBase.transform.position - newBuilding.transform.position;
-                        direction.y = 0;
-                        newBuilding.transform.rotation = Quaternion.LookRotation(-direction);
+                            var direction = starBase.transform.position - newBuilding.transform.position;
+                            direction.y = 0;
+                            newBuilding.transform.rotation = Quaternion.LookRotation(-direction);
 
-                        return;
+                            return;
+                        }
                     }
                 }
             }
+            click = false;
+            GameObject.Destroy(newBuilding);
+            return;
         }
-        click = false;
-        GameObject.Destroy(newBuilding);
-        return;
+        catch (MissingReferenceException)
+        {
+            return;
+        }
+        
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -121,14 +138,21 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
 
     private void Update()
     {
-        if (click)
+        try
+        {
+         if (click)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit);
-            if (hit.transform != null)
+            if (hit.transform != null && newBuilding.activeInHierarchy)
             {
                 newBuilding.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
             }
+        }
+        }
+        catch (MissingReferenceException)
+        {
+            return;
         }
     }
 }
