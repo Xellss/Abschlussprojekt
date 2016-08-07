@@ -32,6 +32,9 @@ public class Timer : MonoBehaviour
     [SerializeField]
     GameObject newBuildingContainer;
 
+    [SerializeField]
+    Tutorial tutorial;
+
     public float TimerTime
     {
         get { return timerTime; }
@@ -40,6 +43,19 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
+        if (tutorial == null)
+        {
+            StartTimer();
+        }
+        else
+        {
+            timerText.text = ((int)timerTime).ToString();
+        }
+    }
+    bool startTimer = false;
+    public void StartTimer()
+    {
+        startTimer = true;
         runTimer = true;
         StartCoroutine(waitASecond());
         timerText.text = ((int)timerTime).ToString();
@@ -51,8 +67,10 @@ public class Timer : MonoBehaviour
         {
             timerTime = 0;
         }
-        else
+        else if (startTimer)
+        {
             timerTime -= Time.deltaTime;
+        }
     }
 
     private IEnumerator waitASecond()
@@ -69,8 +87,12 @@ public class Timer : MonoBehaviour
             StopAllCoroutines();
             timerPanel.SetActive(false);
             nextWaveButton.SetActive(true);
+            if (tutorial !=null)
+            {
+            tutorial.TimerTuTClear = true;
+            }
 
-            if (newBuildingContainer.transform.childCount>0)
+            if (newBuildingContainer.transform.childCount > 0)
             {
                 for (int i = 0; i < newBuildingContainer.transform.childCount; i++)
                 {

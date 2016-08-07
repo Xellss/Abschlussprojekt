@@ -25,7 +25,7 @@ public class shootRadius : MonoBehaviour
         enemyList = new List<Transform>();
     }
 
-    private void checkList()
+    public void CheckList()
     {
         if (enemyList.Count == 0)
         {
@@ -39,6 +39,6 @@ public class shootRadius : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("checkList", 0, 0.2f);
+        InvokeRepeating("CheckList", 0, 0.1f);
     }
 }

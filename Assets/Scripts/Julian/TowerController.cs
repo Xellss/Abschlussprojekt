@@ -19,6 +19,7 @@ public class TowerController : MonoBehaviour
     [SerializeField]
     private float shootSpeed = 0;
 
+
     [SerializeField]
     private int damage;
 
@@ -66,6 +67,7 @@ public class TowerController : MonoBehaviour
         //        }
         //    }
         //}
+                shootRadius.CheckList();
         shooting = false;
         if (shootRadius.EnemyList.Count > 0)
         {
@@ -81,8 +83,8 @@ public class TowerController : MonoBehaviour
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
                 laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.deltaTime, ForceMode.Impulse);
 
-
             }
+                shootRadius.CheckList();
         }
     }
 

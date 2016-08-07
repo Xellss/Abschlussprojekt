@@ -32,6 +32,8 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
     private DestroyBuildedTower sellBuilding;
     private ShopCardCreator shopCardCreator;
     private GameObject starBase;
+    private Tutorial tutorial;
+    private Timer timer;
 
     public BuildingInformation BuildingInfo
     {
@@ -50,6 +52,10 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
     {
         if (!click && gameState.GoldAmount >= buildingInfo.BuildingGoldCost)
         {
+            if (tutorial != null)
+            {
+            tutorial.BuildInProgress = true;
+            }
             click = true;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit);
@@ -105,7 +111,10 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
                             var direction = starBase.transform.position - newBuilding.transform.position;
                             direction.y = 0;
                             newBuilding.transform.rotation = Quaternion.LookRotation(-direction);
-
+                            if (tutorial != null)
+                            {
+                                tutorial.BuildTutClear = true;
+                            }
                             return;
                         }
                     }
@@ -113,6 +122,10 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
             }
             click = false;
             GameObject.Destroy(newBuilding);
+            if (tutorial != null)
+            {
+            tutorial.BuildInProgress = false;
+            }
             return;
         }
         catch (MissingReferenceException)
@@ -130,6 +143,11 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
     private void Awake()
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
+        if (gameState.gameObject.GetComponent<Tutorial>() != null)
+        {
+        tutorial = gameState.gameObject.GetComponent<Tutorial>();
+            timer = gameState.gameObject.GetComponent<Timer>();
+        }
         goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
         shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         newBuildingContainer = GameObject.Find("newBuildingContainer");

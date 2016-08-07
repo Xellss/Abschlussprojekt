@@ -25,7 +25,7 @@ public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDra
     private GameObject ground;
     private float rotation;
     [SerializeField]
-    private float RotationSpeed = 1;
+    private float RotationSpeed = 45;
 
     public void OnBeginDrag(PointerEventData eventData)
     {

@@ -82,7 +82,7 @@ public class BombTower : MonoBehaviour {
             if (!shooting && canShoot)
             {
                 shooting = true;
-
+                shootRadius.CheckList();
                 GameObject newBomb = ObjectPool.Instance.GetPooledObject(bombPrefab);
                 newBomb.transform.position = bombSpawn.position;
                 //newBomb.GetComponent<LaserInfos>().Damage = damage;
@@ -91,6 +91,7 @@ public class BombTower : MonoBehaviour {
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
                 laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.deltaTime, ForceMode.Impulse);
                 StartCoroutine(destoyBomb(newBomb));
+                shootRadius.CheckList();
 
             }
         }
