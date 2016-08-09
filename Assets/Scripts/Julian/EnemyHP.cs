@@ -1,13 +1,13 @@
 ﻿/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-
-using System.Collections;
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
 ///           Author: Julian Hopp             ///
 ///                                           ///
 ///                                           ///
+/////////////////////////////////////////////////
+
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -99,6 +99,14 @@ public class EnemyHP : MonoBehaviour
         {
             BulletController bullet = other.gameObject.GetComponent<BulletController>();
             Decrease(bullet.DamagePoints);
+            other.gameObject.SetActive(false);
+        }
+        if (other.gameObject.tag == "Slow")
+        {
+            BulletController bullet = other.gameObject.GetComponent<BulletController>();
+            Decrease(bullet.DamagePoints);
+            //int flyspeed = GetComponent<AsteroidEnemyKI>();
+            enemyKi.FlySpeed -= 15;
             other.gameObject.SetActive(false);
         }
     }

@@ -21,7 +21,7 @@ public enum EnemyTypes
 public class EnemyKi : MonoBehaviour
 {
 
-    
+
     [SerializeField]
     private bool canShot;
     private bool carrierTrigger;
@@ -33,6 +33,13 @@ public class EnemyKi : MonoBehaviour
 
     [SerializeField, Tooltip("lower = faster")]
     private int flySpeed = 0;
+
+    public int FlySpeed
+    {
+        get { return FlySpeed; }
+        set { FlySpeed = value; }
+    }
+
 
     private RaycastHit hit;
 
@@ -266,5 +273,5 @@ public class EnemyKi : MonoBehaviour
     //    //}
     //}
 
-   
+
 }

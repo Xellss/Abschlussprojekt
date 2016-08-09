@@ -9,7 +9,7 @@ public class TutorialBehavior : MonoBehaviour
         Time.timeScale = 0;
     }
 
-  public void OnButtonClick()
+    public void OnButtonClick()
     {
         Time.timeScale = 1;
         this.gameObject.SetActive(false);
