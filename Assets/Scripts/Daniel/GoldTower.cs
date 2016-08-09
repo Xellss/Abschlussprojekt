@@ -31,12 +31,16 @@ public class GoldTower : MonoBehaviour {
     [SerializeField]
     private float effectDelay;
     private ShopCardCreator shopCardCreator;
+    private WaveSpawn waveSpawner;
 
     public float EffectDelay
     {
         get { return effectDelay; }
         set { effectDelay = value; }
     }
+
+ 
+
 
     void Start()
     {
@@ -48,12 +52,13 @@ public class GoldTower : MonoBehaviour {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
         shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
+        waveSpawner = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
 
     }
 
     void gold()
     {
-        if (towerActive)
+        if (towerActive && !waveSpawner.BuildPhase)
         {
             
             gameState.GoldAmount += goldAmount;

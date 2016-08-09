@@ -108,6 +108,14 @@ public class WaveSpawn : MonoBehaviour
     private ShopCardCreator shopCardCreator;
     private Text goldAmountText;
     private GameState gameState;
+    private bool buildPhase = true;
+
+    public bool BuildPhase
+    {
+        get { return buildPhase; }
+        set { buildPhase = value; }
+    }
+
 
     public int EnemyCountPerSpawnPoint
     {
@@ -242,6 +250,7 @@ public class WaveSpawn : MonoBehaviour
                 gameState.GoldAmount += Waves[waveCounter-1].WaveGoldReward;
                 goldAmountText.text = gameState.GoldAmount.ToString();
                 buildMenu.SetActive(true);
+                buildPhase = true;
                 shopCardCreator.CanBuyBuilding();
                 yield return null;
             }
@@ -250,6 +259,7 @@ public class WaveSpawn : MonoBehaviour
     public void StartWaveAfterBuild()
     {
         buildMenu.SetActive(false);
+        buildPhase = false;
         StartCoroutine(spawnerDelay(Waves[waveCounter].DelayToLastWave));
     }
     private IEnumerator spawnerDelay(float delayTime)

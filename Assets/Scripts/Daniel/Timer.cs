@@ -35,6 +35,7 @@ public class Timer : MonoBehaviour
     [SerializeField]
     Tutorial tutorial;
 
+
     public float TimerTime
     {
         get { return timerTime; }
@@ -100,6 +101,7 @@ public class Timer : MonoBehaviour
                 }
             }
             buildMenu.SetActive(false);
+            spawner.BuildPhase = false;
             spawner.SpawnEnemy();
         }
         if (TimerTime <= 6)
