@@ -30,6 +30,7 @@ public class GoldTower : MonoBehaviour {
 
     [SerializeField]
     private float effectDelay;
+    private ShopCardCreator shopCardCreator;
 
     public float EffectDelay
     {
@@ -39,29 +40,28 @@ public class GoldTower : MonoBehaviour {
 
     void Start()
     {
-        StartCoroutine(effectTimer());
+        InvokeRepeating("gold", 0, effectDelay);
     }
 
     void Awake()
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
+        shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
+
     }
 
-    IEnumerator effectTimer()
+    void gold()
     {
-
         if (towerActive)
         {
             
             gameState.GoldAmount += goldAmount;
             goldAmountText.text = gameState.GoldAmount.ToString();
+            shopCardCreator.CanBuyBuilding();
+
             StartCoroutine(goldEffectTimer());
-            yield return new WaitForSeconds(effectDelay);
-            StartCoroutine(effectTimer());
         }
-        yield return new WaitForEndOfFrame();
-        StartCoroutine(effectTimer());
     }
 
     IEnumerator goldEffectTimer()
