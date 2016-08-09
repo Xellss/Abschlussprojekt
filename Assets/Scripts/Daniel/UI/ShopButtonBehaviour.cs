@@ -24,17 +24,17 @@ public class ShopButtonBehaviour : MonoBehaviour
     private GameState gameState;
     [SerializeField]
     private Text goldAmount;
-    private GameObject Ground;
+    //private GameObject Ground;
     private bool menuOpen;
     private bool menuOpening;
     [SerializeField]
     private GameObject newBuilding;
-    private RepairBuilding repairBuilding;
+    //private RepairBuilding repairBuilding;
     [SerializeField]
     private GameObject restartWindow;
     private MeshRenderer selectedShopCardRenderer;
-    private DestroyBuildedTower sellBuilding;
-    private GameObject shop;
+    //private DestroyBuildedTower sellBuilding;
+    //private GameObject shop;
     [SerializeField]
     private GameObject shopBuildButton;
     [SerializeField]
@@ -185,12 +185,12 @@ public class ShopButtonBehaviour : MonoBehaviour
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         gameObject.GetComponent<BuildingSpawn>();
-        shop = transform.FindChild("Shop").gameObject;
+        //shop = transform.FindChild("Shop").gameObject;
         cardCreator = GetComponent<ShopCardCreator>();
         buildingInformationText = cardCreator.BuildingInformation;
         goldAmount.text = gameState.GoldAmount.ToString();
-        Ground = GameObject.Find("Ground");
-        animator = shop.GetComponent<Animator>();
+        //Ground = GameObject.Find("Ground");
+        //animator = shop.GetComponent<Animator>();
     }
 
     private void Start()
