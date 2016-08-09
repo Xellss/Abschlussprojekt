@@ -62,7 +62,14 @@ public class TowerController : MonoBehaviour
                 GameObject newBomb = ObjectPool.Instance.GetPooledObject(BulletPrefab);
                 newBomb.transform.position = BulletSpawnpoint.position;
                 newBomb.GetComponent<LaserInfos>().Damage = damage;
-                newBomb.gameObject.tag = "TowerLaser";
+                if (gameObject.name == "Tower")
+                {
+                    newBomb.gameObject.tag = "TowerLaser";
+                }
+                else if (gameObject.name == "SlowTower")
+                {
+                    newBomb.gameObject.tag = "TowerLaserSlow";
+                }
                 Rigidbody laserBody = newBomb.GetComponent<Rigidbody>();
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
                 laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.deltaTime, ForceMode.Impulse);
