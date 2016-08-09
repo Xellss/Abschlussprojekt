@@ -121,11 +121,26 @@ public class EnemyKi : MonoBehaviour
             other.gameObject.SetActive(false);
         }
 
+        if (other.gameObject.tag == "TowerLaserSlow")
+        {
+            LaserInfos laserinfo = other.GetComponent<LaserInfos>();
+            enemyHP.Decrease(laserinfo.Damage);
+
+            flySpeed /= 2;
+            if (flySpeed < 0)
+                flySpeed = 0;
+
+            myRigid.velocity = Vector3.zero;
+            myRigid.AddForce(transform.forward * flySpeed * Time.fixedDeltaTime, ForceMode.Impulse);
+            other.gameObject.SetActive(false);
+        }
+
         if (other.gameObject.tag == "ShootRadius")
         {
             shootRadius = other.GetComponent<shootRadius>();
             shootRadius.EnemyList.Add(transform);
         }
+
     }
 
     void OnTriggerExit(Collider other)
@@ -198,7 +213,7 @@ public class EnemyKi : MonoBehaviour
         direction.y = 0;
         transform.rotation = Quaternion.LookRotation(direction);
 
-        myRigid.AddForce(transform.forward * flySpeed * Time.deltaTime, ForceMode.Impulse);
+        myRigid.AddForce(transform.forward * flySpeed * Time.fixedDeltaTime, ForceMode.Impulse);
 
     }
 

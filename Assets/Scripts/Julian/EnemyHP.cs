@@ -101,13 +101,6 @@ public class EnemyHP : MonoBehaviour
             Decrease(bullet.DamagePoints);
             other.gameObject.SetActive(false);
         }
-        if (other.gameObject.tag == "TowerLaserSlow")
-        {
-            BulletController bullet = other.gameObject.GetComponent<BulletController>();
-            Decrease(bullet.DamagePoints);
-            enemyKi.FlySpeed -= 15;
-            other.gameObject.SetActive(false);
-        }
     }
 
     private void Awake()

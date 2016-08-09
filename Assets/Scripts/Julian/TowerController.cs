@@ -72,7 +72,7 @@ public class TowerController : MonoBehaviour
                 }
                 Rigidbody laserBody = newBomb.GetComponent<Rigidbody>();
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
-                laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.deltaTime, ForceMode.Impulse);
+                laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.fixedDeltaTime, ForceMode.Impulse);
 
             }
             shootRadius.CheckList();

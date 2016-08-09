@@ -89,7 +89,7 @@ public class BombTower : MonoBehaviour {
                 //newBomb.gameObject.tag = "TowerLaser";
                 Rigidbody laserBody = newBomb.GetComponent<Rigidbody>();
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
-                laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.deltaTime, ForceMode.Impulse);
+                laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.fixedDeltaTime, ForceMode.Impulse);
                 StartCoroutine(destoyBomb(newBomb));
                 shootRadius.CheckList();
 
