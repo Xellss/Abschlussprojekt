@@ -63,6 +63,7 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
             {
                 newBuilding = (GameObject)Instantiate(buildingInfo.BuildingPrefab, new Vector3(hit.point.x, 0, hit.point.z), Quaternion.identity);
                 newBuilding.transform.SetParent(newBuildingContainer.transform);
+               
             }
             newBuilding.name = buildingInfo.BuildingName;
         }
@@ -105,16 +106,18 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
                             //sellBuilding = collider.gameObject.transform.GetComponent<DestroyBuildedTower>();
                             //sellBuilding.BuildingInformation = buildingInfo;
                             //sellBuilding.enabled = true;
-                            newBuilding.GetComponent<BuildingHealth>().DestroyBuilding = sellBuilding;
+                            //newBuilding.GetComponent<BuildingHealth>().DestroyBuilding = sellBuilding;
                             //newBuilding.GetComponent<RepairBuilding>().DestroyBuilding = sellBuilding;
 
                             var direction = starBase.transform.position - newBuilding.transform.position;
                             direction.y = 0;
                             newBuilding.transform.rotation = Quaternion.LookRotation(-direction);
+
+                            if (newBuilding.GetComponent<GoldTower>() != null)
+                                newBuilding.GetComponent<GoldTower>().TowerActive = true;
+
                             if (tutorial != null)
-                            {
                                 tutorial.BuildTutClear = true;
-                            }
                             return;
                         }
                     }

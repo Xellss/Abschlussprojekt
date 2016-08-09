@@ -22,7 +22,7 @@ using UnityEngine.EventSystems;
 public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler
 {
     private float delta;
-    private GameObject ground;
+    //private GameObject ground;
     private float rotation;
     [SerializeField]
     private float RotationSpeed = 45;
@@ -41,7 +41,7 @@ public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDra
         {
             return;
         }
-        ground.layer = LayerMask.NameToLayer("Default");
+        //ground.layer = LayerMask.NameToLayer("Default");
         Vector2 position = eventData.position;
         Vector2 oldPosition = position - eventData.delta;
         Vector2 center = Camera.main.WorldToScreenPoint(Vector3.zero);
@@ -57,7 +57,7 @@ public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDra
 
     public void OnDrop(PointerEventData eventData)
     {
-        ground.layer = LayerMask.NameToLayer("Ground");
+        //ground.layer = LayerMask.NameToLayer("Ground");
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -71,7 +71,7 @@ public class BaseRotation : MonoBehaviour, IDragHandler, IDropHandler, IBeginDra
 
     private void Awake()
     {
-        ground = GameObject.Find("Ground");
+        //ground = GameObject.Find("Ground");
     }
 
     private IEnumerator endinertia()
