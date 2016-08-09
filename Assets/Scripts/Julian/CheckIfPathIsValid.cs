@@ -1,4 +1,14 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///           Changes by: Julian Hopp         ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+
+
+using UnityEngine;
 using System.Collections;
 
 public class CheckIfPathIsValid : MonoBehaviour {
