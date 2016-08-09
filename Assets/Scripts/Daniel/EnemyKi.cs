@@ -31,15 +31,14 @@ public class EnemyKi : MonoBehaviour
     [SerializeField]
     private EnemyTypes enemyType;
 
-    [SerializeField, Tooltip("lower = faster")]
+    [SerializeField]
     private int flySpeed = 0;
 
-    public int FlySpeed
-    {
-        get { return FlySpeed; }
-        set { FlySpeed = value; }
-    }
-
+    //public int FlySpeed
+    //{
+    //    get { return FlySpeed; }
+    //    set { FlySpeed = value; }
+    //}
 
     private RaycastHit hit;
 
@@ -118,6 +117,20 @@ public class EnemyKi : MonoBehaviour
         {
             LaserInfos laserinfo = other.GetComponent<LaserInfos>();
             enemyHP.Decrease(laserinfo.Damage);
+            other.gameObject.SetActive(false);
+        }
+
+        if (other.gameObject.tag == "TowerLaserSlow")
+        {
+            LaserInfos laserinfo = other.GetComponent<LaserInfos>();
+            enemyHP.Decrease(laserinfo.Damage);
+
+            flySpeed -= 100;
+            if (flySpeed < 0)
+                flySpeed = 0;
+
+            myRigid.velocity = Vector3.zero;
+            myRigid.AddForce(transform.forward * flySpeed * Time.deltaTime, ForceMode.Impulse);
             other.gameObject.SetActive(false);
         }
 
