@@ -2,7 +2,7 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///           Changes by: Julian Hopp         ///
+///           Author: Julian Hopp             ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
