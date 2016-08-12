@@ -21,7 +21,7 @@ public enum EnemyTypes
 
 public class EnemyKi : MonoBehaviour
 {
-
+    EnemyInfo enemyInfo = new EnemyInfo();
 
     [SerializeField]
     private bool canShot;
@@ -116,7 +116,7 @@ public class EnemyKi : MonoBehaviour
 
     [SerializeField]
     float invisibleDelay;
-    private bool radarTowerDetect =false;
+    private bool radarTowerDetect = false;
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -173,23 +173,23 @@ public class EnemyKi : MonoBehaviour
         if (other.gameObject.tag == "ShootRadius")
         {
             shootRadius = other.GetComponent<shootRadius>();
-            shootRadius.EnemyList.Add(transform);
+            shootRadius.EnemyList.Add(enemyInfo);
         }
         if (other.gameObject.tag == "EMP")
         {
             shootRadius = other.GetComponent<shootRadius>();
-            shootRadius.EnemyList.Add(transform);
+            shootRadius.EnemyList.Add(enemyInfo);
         }
         if (other.gameObject.tag == "Radar")
         {
             radarTowerDetect = true;
             if (enemyType == EnemyTypes.invisible)
             {
-            invisibleModel.SetActive(false);
-            visibleModel.SetActive(true);
-            gameObject.tag = "Enemy";
-            gameObject.layer = LayerMask.NameToLayer("Enemy");
-            StartCoroutine(invisibleEnemyDelay());
+                invisibleModel.SetActive(false);
+                visibleModel.SetActive(true);
+                gameObject.tag = "Enemy";
+                gameObject.layer = LayerMask.NameToLayer("Enemy");
+                StartCoroutine(invisibleEnemyDelay());
             }
         }
     }
@@ -199,7 +199,7 @@ public class EnemyKi : MonoBehaviour
         if (other.gameObject.tag == "ShootRadius")
         {
             shootRadius = other.GetComponent<shootRadius>();
-            shootRadius.EnemyList.Remove(transform);
+            shootRadius.EnemyList.Remove(enemyInfo);
         }
         if (other.gameObject.tag == "Radar")
         {
@@ -211,6 +211,7 @@ public class EnemyKi : MonoBehaviour
     {
         //waypointArray = GameObject.Find(wayPointContainerName).transform;
         //waypointObjects = waypointArray.Cast<Transform>().ToArray();
+
     }
 
 
@@ -245,6 +246,8 @@ public class EnemyKi : MonoBehaviour
         myRigid = GetComponent<Rigidbody>();
         setPath();
         laserSpeed = laserSpeed * 1000;
+
+        enemyInfo = new EnemyInfo() { transform = this.transform, enemyhp = this.enemyHP };
 
         if (enemyType == EnemyTypes.invisible)
             StartCoroutine(invisibleDurationTime());

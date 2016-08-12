@@ -36,8 +36,8 @@ public class EMPButtonBehaviour : MonoBehaviour
 
         for (int i = 0; i < shootRadius.EnemyList.Count; i++)
         {
-            shootRadius.EnemyList[i].GetComponent<EnemyKi>().CanFly = false;
-            enemysInRange.Add(shootRadius.EnemyList[i].GetComponent<EnemyKi>());
+            shootRadius.EnemyList[i].transform.GetComponent<EnemyKi>().CanFly = false;
+            enemysInRange.Add(shootRadius.EnemyList[i].transform.GetComponent<EnemyKi>());
         }
 
         empButton.SetActive(false);

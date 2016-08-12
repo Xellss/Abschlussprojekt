@@ -12,9 +12,9 @@ using UnityEngine;
 public class shootRadius : MonoBehaviour
 {
     [SerializeField]
-    private List<Transform> enemyList;
+    private List<EnemyInfo> enemyList;
 
-    public List<Transform> EnemyList
+    public List<EnemyInfo> EnemyList
     {
         get { return enemyList; }
         set { enemyList = value; }
@@ -22,7 +22,7 @@ public class shootRadius : MonoBehaviour
 
     private void Awake()
     {
-        enemyList = new List<Transform>();
+        enemyList = new List<EnemyInfo>();
     }
 
     public void CheckList()
@@ -34,7 +34,7 @@ public class shootRadius : MonoBehaviour
         }
         else
         {
-            enemyList.RemoveAll(enemy => !enemy.gameObject.activeInHierarchy);
+            enemyList.RemoveAll(enemy => !enemy.transform.gameObject.activeInHierarchy);
         }
     }
 

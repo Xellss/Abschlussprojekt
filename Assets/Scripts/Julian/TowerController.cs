@@ -25,14 +25,16 @@ public class TowerController : MonoBehaviour
     [SerializeField]
     private float shootSpeed = 0;
     private int lastEnemyID;
+    private int currentDMG;
 
     [SerializeField]
     private int damage;
 
+
     public int Damage
     {
-        get { return damage; }
-        set { damage = value; }
+        get { return currentDMG; }
+        set { currentDMG = value; }
     }
 
     private bool canShoot = true;
@@ -50,6 +52,7 @@ public class TowerController : MonoBehaviour
     {
         myTransform = GetComponent<Transform>();
         myRenderer = GetComponentInChildren<Renderer>();
+        currentDMG = damage;
     }
 
     private void CheckRangeForEnemies()
@@ -72,29 +75,40 @@ public class TowerController : MonoBehaviour
                 {
                     newBomb.gameObject.tag = "TowerLaserSlow";
                     //Debug.Log(shootRadius.EnemyList[0].GetInstanceID());
-                    if (lastEnemyID == shootRadius.EnemyList[0].GetInstanceID())
-                        damage++;
+                    if (lastEnemyID == shootRadius.EnemyList[0].transform.GetInstanceID())
+                        currentDMG++;
                     else
-                        damage = 1;
+                        currentDMG = damage;
 
-                    Debug.Log(damage);
+
                 }
                 else if (gameObject.name == "TeslaTower")
                 {
                     newBomb.gameObject.tag = "TowerTesla";
-                    if (lastEnemyID == shootRadius.EnemyList[0].GetInstanceID())
-                        damage++;
+                    if (lastEnemyID == shootRadius.EnemyList[0].transform.GetInstanceID())
+                        currentDMG++;
                     else
-                        damage = 1;
+                        currentDMG = damage;
 
-                    Debug.Log(damage);
                 }
-                newBomb.GetComponent<LaserInfos>().Damage = damage;
+
+                if (shootRadius.EnemyList[0].enemyhp == null)
+                {
+                    currentDMG = damage;
+                }
+                else if (shootRadius.EnemyList[0].enemyhp.CurrentHealth <= 0)
+                {
+                    currentDMG = damage;
+                }
+
+                Debug.Log(currentDMG);
+
+                newBomb.GetComponent<LaserInfos>().Damage = currentDMG;
                 Rigidbody laserBody = newBomb.GetComponent<Rigidbody>();
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
                 laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.fixedDeltaTime, ForceMode.Impulse);
 
-                lastEnemyID = shootRadius.EnemyList[0].GetInstanceID();
+                lastEnemyID = shootRadius.EnemyList[0].transform.GetInstanceID();
             }
             shootRadius.CheckList();
         }
