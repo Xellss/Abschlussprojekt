@@ -100,9 +100,8 @@ public class BuildingHealth : MonoBehaviour
     private void Awake()
     {
         globalScripts = GameObject.Find("GlobalScripts").GetComponent<GameState>();
-        if (hpCanvas == null)
+        if (hpCanvas == null )
         {
-
         hpCanvas = transform.FindChild("HP").gameObject;
         }
         canvasRect = hpCanvas.GetComponent<RectTransform>();

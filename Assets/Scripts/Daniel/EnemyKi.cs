@@ -16,6 +16,7 @@ public enum EnemyTypes
     Normal,
     Tank,
     Carrier,
+    invisible,
 }
 
 public class EnemyKi : MonoBehaviour
@@ -104,6 +105,19 @@ public class EnemyKi : MonoBehaviour
 
     bool fly = false;
 
+    [SerializeField]
+    GameObject visibleModel;
+
+    [SerializeField]
+    GameObject invisibleModel;
+
+    [SerializeField]
+    float invisibleDuration;
+
+    [SerializeField]
+    float invisibleDelay;
+    private bool radarTowerDetect =false;
+
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "BaseShield")
@@ -113,6 +127,14 @@ public class EnemyKi : MonoBehaviour
         }
     }
 
+    public void OnTriggerStay(Collider other)
+    {
+        //if (other.gameObject.tag == "ShootRadius")
+        //{
+        //    shootRadius = other.GetComponent<shootRadius>();
+        //    shootRadius.EnemyList.Add(transform);
+        //}
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -153,7 +175,23 @@ public class EnemyKi : MonoBehaviour
             shootRadius = other.GetComponent<shootRadius>();
             shootRadius.EnemyList.Add(transform);
         }
-
+        if (other.gameObject.tag == "EMP")
+        {
+            shootRadius = other.GetComponent<shootRadius>();
+            shootRadius.EnemyList.Add(transform);
+        }
+        if (other.gameObject.tag == "Radar")
+        {
+            radarTowerDetect = true;
+            if (enemyType == EnemyTypes.invisible)
+            {
+            invisibleModel.SetActive(false);
+            visibleModel.SetActive(true);
+            gameObject.tag = "Enemy";
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
+            StartCoroutine(invisibleEnemyDelay());
+            }
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -163,6 +201,10 @@ public class EnemyKi : MonoBehaviour
             shootRadius = other.GetComponent<shootRadius>();
             shootRadius.EnemyList.Remove(transform);
         }
+        if (other.gameObject.tag == "Radar")
+        {
+            radarTowerDetect = false;
+        }
     }
 
     private void Awake()
@@ -170,6 +212,121 @@ public class EnemyKi : MonoBehaviour
         //waypointArray = GameObject.Find(wayPointContainerName).transform;
         //waypointObjects = waypointArray.Cast<Transform>().ToArray();
     }
+
+
+    private void setPath()
+    {
+        //waypoints = new Vector3[waypointObjects.Length];
+        //for (int i = 0; i < waypointObjects.Length; i++)
+        //{
+        //    waypoints[i] = waypointObjects[i].position;
+        //}
+        //t = transform.DOPath(waypoints, flySpeed, pathType)
+        //   .SetOptions(false)
+        //   .SetAutoKill(false)
+        //   .SetEase(Ease.Linear).SetLoops(0)
+        //   .SetLookAt(0.001f);
+
+
+        sun = GameObject.Find("Sun");
+        var direction = sun.transform.position - transform.position;
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
+
+        myRigid.AddForce(transform.forward * flySpeed * Time.fixedDeltaTime, ForceMode.Impulse);
+        fly = true;
+        particleFlyEffect.SetActive(true);
+
+    }
+
+    private void Start()
+    {
+        enemyHP = GetComponent<EnemyHP>();
+        myRigid = GetComponent<Rigidbody>();
+        setPath();
+        laserSpeed = laserSpeed * 1000;
+
+        if (enemyType == EnemyTypes.invisible)
+            StartCoroutine(invisibleDurationTime());
+    }
+
+    void Update()
+    {
+        if (!canFly)
+        {
+            myRigid.velocity = Vector3.zero;
+            particleFlyEffect.SetActive(false);
+            fly = false;
+        }
+        else
+        {
+            if (!fly)
+                setPath();
+        }
+    }
+
+    IEnumerator invisibleDurationTime()
+    {
+        if (!radarTowerDetect)
+        {
+
+            if (enemyHP.CurrentHealth > 0)
+            {
+                visibleModel.SetActive(false);
+                invisibleModel.SetActive(true);
+                gameObject.tag = "InvisibleEnemy";
+                gameObject.layer = LayerMask.NameToLayer("InvisibleEnemy");
+                yield return new WaitForSeconds(invisibleDuration);
+            }
+
+            if (enemyHP.CurrentHealth > 0)
+            {
+
+                invisibleModel.SetActive(false);
+                visibleModel.SetActive(true);
+                gameObject.tag = "Enemy";
+                gameObject.layer = LayerMask.NameToLayer("Enemy");
+                StartCoroutine(invisibleEnemyDelay());
+            }
+        }
+        else
+            StartCoroutine(invisibleEnemyDelay());
+    }
+
+    IEnumerator invisibleEnemyDelay()
+    {
+        yield return new WaitForSeconds(invisibleDelay);
+        StartCoroutine(invisibleDurationTime());
+    }
+    //private IEnumerator tankShotWithDelay()
+    //{
+    //    if (canShot)
+    //    {
+    //        if (target != null && target.gameObject.tag == "Building")
+    //        {
+    //            newLaser = ObjectPool.Instance.GetPooledObject(laserBullet);
+    //            newLaser.GetComponent<LaserInfos>().Damage = damage;
+    //            newLaser.transform.position = laserSpawnPosition.transform.position;
+    //            Rigidbody laserBody = newLaser.GetComponent<Rigidbody>();
+    //            laserBody.transform.LookAt(target);
+    //            laserBody.AddForce(laserBody.transform.forward * laserSpeed * Time.deltaTime, ForceMode.Impulse);
+    //            yield return new WaitForSeconds(shotDelay);
+    //        }
+    //        else
+    //        {
+    //            Collider[] collider = Physics.OverlapSphere(transform.position, tankRange);
+    //            foreach (var coll in collider)
+    //            {
+    //                if (coll.gameObject.tag == "Building")
+    //                {
+    //                    target = coll.transform;
+    //                }
+    //            }
+    //            yield return null;
+    //        }
+    //        StartCoroutine(tankShotWithDelay());
+    //    }
+    //}
 
     //private IEnumerator carrierShotWithDelay()
     //{
@@ -208,82 +365,6 @@ public class EnemyKi : MonoBehaviour
     //    }
     //}
 
-    private void setPath()
-    {
-        //waypoints = new Vector3[waypointObjects.Length];
-        //for (int i = 0; i < waypointObjects.Length; i++)
-        //{
-        //    waypoints[i] = waypointObjects[i].position;
-        //}
-        //t = transform.DOPath(waypoints, flySpeed, pathType)
-        //   .SetOptions(false)
-        //   .SetAutoKill(false)
-        //   .SetEase(Ease.Linear).SetLoops(0)
-        //   .SetLookAt(0.001f);
-
-
-        sun = GameObject.Find("Sun");
-        var direction = sun.transform.position - transform.position;
-        direction.y = 0;
-        transform.rotation = Quaternion.LookRotation(direction);
-
-        myRigid.AddForce(transform.forward * flySpeed * Time.fixedDeltaTime, ForceMode.Impulse);
-        fly = true;
-        particleFlyEffect.SetActive(true);
-
-    }
-
-    private void Start()
-    {
-        enemyHP = GetComponent<EnemyHP>();
-        myRigid = GetComponent<Rigidbody>();
-        setPath();
-        laserSpeed = laserSpeed * 1000;
-    }
-
-    void Update()
-    {
-        if (!canFly)
-        {
-            myRigid.velocity = Vector3.zero;
-            particleFlyEffect.SetActive(false);
-            fly = false;
-        }
-        else
-        {
-            if (!fly)
-                setPath();
-        }
-    }
-    //private IEnumerator tankShotWithDelay()
-    //{
-    //    if (canShot)
-    //    {
-    //        if (target != null && target.gameObject.tag == "Building")
-    //        {
-    //            newLaser = ObjectPool.Instance.GetPooledObject(laserBullet);
-    //            newLaser.GetComponent<LaserInfos>().Damage = damage;
-    //            newLaser.transform.position = laserSpawnPosition.transform.position;
-    //            Rigidbody laserBody = newLaser.GetComponent<Rigidbody>();
-    //            laserBody.transform.LookAt(target);
-    //            laserBody.AddForce(laserBody.transform.forward * laserSpeed * Time.deltaTime, ForceMode.Impulse);
-    //            yield return new WaitForSeconds(shotDelay);
-    //        }
-    //        else
-    //        {
-    //            Collider[] collider = Physics.OverlapSphere(transform.position, tankRange);
-    //            foreach (var coll in collider)
-    //            {
-    //                if (coll.gameObject.tag == "Building")
-    //                {
-    //                    target = coll.transform;
-    //                }
-    //            }
-    //            yield return null;
-    //        }
-    //        StartCoroutine(tankShotWithDelay());
-    //    }
-    //}
 
     //private void Update()
     //{

@@ -26,8 +26,11 @@ public class EnemyHP : MonoBehaviour
     [SerializeField]
     GameObject explosionEffect;
     [SerializeField]
-    GameObject enemyModel;
+    GameObject visibleModel;
     EnemyKi enemyKi;
+
+    [SerializeField]
+    GameObject invisibleModel;
 
     private WaveSpawn waveSpawner;
 
@@ -68,11 +71,15 @@ public class EnemyHP : MonoBehaviour
     IEnumerator enemyExplosion()
     {
         explosionEffect.SetActive(true);
-        enemyModel.SetActive(false);
+        visibleModel.SetActive(false);
+        if (invisibleModel != null)
+            invisibleModel.SetActive(false);
         myCollider.enabled = false;
         yield return new WaitForSeconds(1);
         explosionEffect.SetActive(false);
-        enemyModel.SetActive(true);
+        visibleModel.SetActive(true);
+        if (invisibleModel != null)
+            invisibleModel.SetActive(true);
         waveSpawner.WaveEnemyCount--;
         waveSpawner.TotalEnemyCount--;
         if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
