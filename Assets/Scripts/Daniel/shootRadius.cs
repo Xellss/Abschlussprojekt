@@ -29,7 +29,7 @@ public class shootRadius : MonoBehaviour
     {
         if (enemyList.Count == 0)
         {
-            Debug.Log("List Empty");
+            //Debug.Log("List Empty");
             return;
         }
         else

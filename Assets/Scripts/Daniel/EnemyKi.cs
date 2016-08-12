@@ -73,6 +73,8 @@ public class EnemyKi : MonoBehaviour
     [SerializeField]
     private Transform target;
 
+    [SerializeField]
+    GameObject particleFlyEffect;
     shootRadius shootRadius;
     private Transform waypointArray;
 
@@ -90,6 +92,17 @@ public class EnemyKi : MonoBehaviour
     }
 
     Rigidbody myRigid;
+
+    private bool canFly = true;
+
+    public bool CanFly
+    {
+        get { return canFly; }
+        set { canFly = value; }
+    }
+
+
+    bool fly = false;
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -208,12 +221,15 @@ public class EnemyKi : MonoBehaviour
         //   .SetEase(Ease.Linear).SetLoops(0)
         //   .SetLookAt(0.001f);
 
+
         sun = GameObject.Find("Sun");
         var direction = sun.transform.position - transform.position;
         direction.y = 0;
         transform.rotation = Quaternion.LookRotation(direction);
 
         myRigid.AddForce(transform.forward * flySpeed * Time.fixedDeltaTime, ForceMode.Impulse);
+        fly = true;
+        particleFlyEffect.SetActive(true);
 
     }
 
@@ -225,6 +241,20 @@ public class EnemyKi : MonoBehaviour
         laserSpeed = laserSpeed * 1000;
     }
 
+    void Update()
+    {
+        if (!canFly)
+        {
+            myRigid.velocity = Vector3.zero;
+            particleFlyEffect.SetActive(false);
+            fly = false;
+        }
+        else
+        {
+            if (!fly)
+                setPath();
+        }
+    }
     //private IEnumerator tankShotWithDelay()
     //{
     //    if (canShot)
