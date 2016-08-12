@@ -49,10 +49,10 @@ public class EnemyHP : MonoBehaviour
     public void Decrease(int damage)
     {
         currentHealth = currentHealth - damage;
-        if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
-        {
-            transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
-        }
+        //if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
+        //{
+        //    transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+        //}
 
         if (currentHealth <= 0)
         {

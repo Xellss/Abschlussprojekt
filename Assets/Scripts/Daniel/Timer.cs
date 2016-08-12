@@ -2,7 +2,7 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///           Author: Daniel Lause            ///
+///     Author: Daniel Lause & Julian Hopp    ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
@@ -35,11 +35,36 @@ public class Timer : MonoBehaviour
     [SerializeField]
     Tutorial tutorial;
 
-
     public float TimerTime
     {
         get { return timerTime; }
         set { timerTime = value; }
+    }
+
+    public void OnClick_timer()
+    {
+        timerTime = 0;
+
+        runTimer = false;
+        timerText.text = ((int)timerTime).ToString();
+        StopAllCoroutines();
+        timerPanel.SetActive(false);
+        nextWaveButton.SetActive(true);
+        if (tutorial != null)
+        {
+            tutorial.TimerTuTClear = true;
+        }
+
+        if (newBuildingContainer.transform.childCount > 0)
+        {
+            for (int i = 0; i < newBuildingContainer.transform.childCount; i++)
+            {
+                GameObject.Destroy(newBuildingContainer.transform.GetChild(i).gameObject);
+            }
+        }
+        buildMenu.SetActive(false);
+        spawner.BuildPhase = false;
+        spawner.SpawnEnemy();
     }
 
     private void Start()
@@ -54,6 +79,7 @@ public class Timer : MonoBehaviour
         }
     }
     bool startTimer = false;
+
     public void StartTimer()
     {
         startTimer = true;
@@ -88,9 +114,9 @@ public class Timer : MonoBehaviour
             StopAllCoroutines();
             timerPanel.SetActive(false);
             nextWaveButton.SetActive(true);
-            if (tutorial !=null)
+            if (tutorial != null)
             {
-            tutorial.TimerTuTClear = true;
+                tutorial.TimerTuTClear = true;
             }
 
             if (newBuildingContainer.transform.childCount > 0)
