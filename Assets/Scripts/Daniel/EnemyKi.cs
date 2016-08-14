@@ -116,7 +116,7 @@ public class EnemyKi : MonoBehaviour
 
     [SerializeField]
     float invisibleDelay;
-    private bool radarTowerDetect = false;
+    public bool radarTowerDetect = false;
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -197,7 +197,6 @@ public class EnemyKi : MonoBehaviour
                 visibleModel.SetActive(true);
                 gameObject.tag = "Enemy";
                 gameObject.layer = LayerMask.NameToLayer("Enemy");
-                StartCoroutine(invisibleEnemyDelay());
             }
         }
     }
@@ -212,6 +211,10 @@ public class EnemyKi : MonoBehaviour
         if (other.gameObject.tag == "Radar")
         {
             radarTowerDetect = false;
+            if (enemyType == EnemyTypes.invisible)
+            {
+                StartCoroutine(invisibleEnemyDelay());
+            }
         }
     }
 
@@ -280,25 +283,19 @@ public class EnemyKi : MonoBehaviour
     {
         if (!radarTowerDetect)
         {
-
-            if (enemyHP.CurrentHealth > 0)
-            {
+            //if (enemyHP.CurrentHealth > 0)
+            //{
                 visibleModel.SetActive(false);
                 invisibleModel.SetActive(true);
                 gameObject.tag = "InvisibleEnemy";
                 gameObject.layer = LayerMask.NameToLayer("InvisibleEnemy");
                 yield return new WaitForSeconds(invisibleDuration);
-            }
-
-            if (enemyHP.CurrentHealth > 0)
-            {
-
                 invisibleModel.SetActive(false);
                 visibleModel.SetActive(true);
                 gameObject.tag = "Enemy";
                 gameObject.layer = LayerMask.NameToLayer("Enemy");
                 StartCoroutine(invisibleEnemyDelay());
-            }
+            //}
         }
         else
             StartCoroutine(invisibleEnemyDelay());
