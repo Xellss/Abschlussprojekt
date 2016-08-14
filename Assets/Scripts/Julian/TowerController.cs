@@ -24,8 +24,9 @@ public class TowerController : MonoBehaviour
     private Transform myTransform;
     [SerializeField]
     private float shootSpeed = 0;
-    private int lastEnemyID;
     private int currentDMG;
+
+    Transform lastEnemy;
 
     [SerializeField]
     private int damage;
@@ -75,20 +76,26 @@ public class TowerController : MonoBehaviour
                 {
                     newBomb.gameObject.tag = "TowerLaserSlow";
                     //Debug.Log(shootRadius.EnemyList[0].GetInstanceID());
-                    if (lastEnemyID == shootRadius.EnemyList[0].transform.GetInstanceID())
-                        currentDMG++;
-                    else
-                        currentDMG = damage;
+                    //if (lastEnemyID == shootRadius.EnemyList[0].transform.GetInstanceID())
+                    //    currentDMG++;
+                    //else
+                    //    currentDMG = damage;
 
 
                 }
                 else if (gameObject.name == "TeslaTower")
                 {
                     newBomb.gameObject.tag = "TowerTesla";
-                    if (lastEnemyID == shootRadius.EnemyList[0].transform.GetInstanceID())
-                        currentDMG++;
-                    else
+
+                    if (lastEnemy != shootRadius.EnemyList[0].transform)
+                    {
+                        lastEnemy = shootRadius.EnemyList[0].transform;
                         currentDMG = damage;
+                    }
+                    else
+                    {
+                        currentDMG++;
+                    }
 
                 }
 
@@ -101,14 +108,12 @@ public class TowerController : MonoBehaviour
                     currentDMG = damage;
                 }
 
-                Debug.Log(currentDMG);
 
                 newBomb.GetComponent<LaserInfos>().Damage = currentDMG;
                 Rigidbody laserBody = newBomb.GetComponent<Rigidbody>();
                 laserBody.transform.LookAt(shootRadius.EnemyList[0].transform);
                 laserBody.AddForce(laserBody.transform.forward * shootSpeed * Time.fixedDeltaTime, ForceMode.Impulse);
 
-                lastEnemyID = shootRadius.EnemyList[0].transform.GetInstanceID();
             }
             shootRadius.CheckList();
         }

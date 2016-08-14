@@ -155,6 +155,12 @@ public class EnemyKi : MonoBehaviour
             enemyHP.Decrease(laserinfo.Damage);
             other.gameObject.SetActive(false);
         }
+        if (other.gameObject.tag == "TowerTesla")
+        {
+            LaserInfos laserinfo = other.GetComponent<LaserInfos>();
+            enemyHP.Decrease(laserinfo.Damage);
+            other.gameObject.SetActive(false);
+        }
 
         if (other.gameObject.tag == "TowerLaserSlow")
         {
@@ -162,8 +168,10 @@ public class EnemyKi : MonoBehaviour
             enemyHP.Decrease(laserinfo.Damage);
 
             flySpeed /= 2;
-            if (flySpeed < 0)
-                flySpeed = 0;
+            if (flySpeed < 100)
+            {
+                flySpeed = 100;
+            }
 
             myRigid.velocity = Vector3.zero;
             myRigid.AddForce(transform.forward * flySpeed * Time.fixedDeltaTime, ForceMode.Impulse);

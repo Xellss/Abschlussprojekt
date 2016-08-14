@@ -115,6 +115,8 @@ public class ShopCardCreator : MonoBehaviour
             shopCards.Add(shopCard, buildingInfo);
             shopCard.GetComponent<DragAndDropBuilding>().BuildingInfo = buildingInfo;
         }
+
+        CanBuyBuilding();
     }
 
     private void editShopCard(GameObject currentShopCard, BuildingInformation cardInformation)
