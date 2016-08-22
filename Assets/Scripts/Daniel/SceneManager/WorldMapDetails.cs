@@ -126,6 +126,7 @@ public class WorldMapDetails : MonoBehaviour
             {
                 worldLevel[i].ClearLevel = true;
                 currentEditor.ClearLevel = true;
+                currentEditor.GetComponent<Button>().interactable = true;
             }
             //currentEditor.Button.onClick.AddListener(delegate {mybehavour.OnClickWorldButton("Level" + currentEditor.LevelNumber); });
             currentEditor.SetButton();
