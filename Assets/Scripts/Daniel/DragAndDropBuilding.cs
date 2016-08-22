@@ -48,10 +48,13 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
     }
 
 
+
     public void OnDrag(PointerEventData eventData)
     {
+        shopCardCreator.CanBuyBuilding();
         if (!click && gameState.GoldAmount >= buildingInfo.BuildingGoldCost)
         {
+            print(gameState.GoldAmount + "    " + buildingInfo.BuildingGoldCost);
             if (tutorial != null)
             {
             tutorial.BuildInProgress = true;
@@ -123,8 +126,9 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
                     }
                 }
             }
-            click = false;
+            if (click)
             GameObject.Destroy(newBuilding);
+            click = false;
             if (tutorial != null)
             {
             tutorial.BuildInProgress = false;
