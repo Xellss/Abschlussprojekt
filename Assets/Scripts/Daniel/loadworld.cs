@@ -2,8 +2,10 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class loadworld : MonoBehaviour {
-
+public class loadworld : MonoBehaviour
+{
+    [SerializeField]
+    private float imageShowTime;
 
     [SerializeField]
     GameObject worldMapDetailsPrefab;
@@ -13,10 +15,21 @@ public class loadworld : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void OnClickStart()
+    private IEnumerator imageTime()
     {
+        yield return new WaitForSeconds(imageShowTime);
         StartCoroutine(load("WorldMap"));
     }
+
+    void Start()
+    {
+        StartCoroutine(imageTime());
+    }
+
+    //public void OnClickStart()
+    //{
+    //    StartCoroutine(load("WorldMap"));
+    //}
 
     private IEnumerator load(string levelName)
     {
