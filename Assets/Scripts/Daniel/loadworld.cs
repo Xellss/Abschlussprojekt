@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
+[Serializable]
 public class loadworld : MonoBehaviour
 {
     [SerializeField]

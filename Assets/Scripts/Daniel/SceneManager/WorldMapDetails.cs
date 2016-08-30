@@ -6,11 +6,12 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
-
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
 public class WorldMapDetails : MonoBehaviour
 {
     private WorldMapLevelEditor currentEditor;
@@ -34,12 +35,21 @@ public class WorldMapDetails : MonoBehaviour
     private Transform[] levelAray;
     [SerializeField]
     private WorldMapLevel[] oldLevelArray;
+
+    public WorldMapLevel[] OldLevelArray
+    {
+        get { return oldLevelArray; }
+        set { oldLevelArray = value; }
+    }
+
     private Transform levelContainer;
     private WorldMapLevelEditor oldEditor;
     [SerializeField]
     private int starCount;
     [SerializeField]
     private WorldMapLevel[] worldLevel;
+
+    private SaveGameManager saveGameManager;
 
     public string CurrentLevel
     {
@@ -139,6 +149,8 @@ public class WorldMapDetails : MonoBehaviour
             }
         }
         RefreshStars();
+
+        oldLevelArray = worldLevel;
     }
 
     private void setStars(GameObject levelObject, int starsOnClear)
@@ -157,6 +169,8 @@ public class WorldMapDetails : MonoBehaviour
 
     private void Start()
     {
+        saveGameManager = GetComponent<SaveGameManager>();
+        saveGameManager.LoadGameData();
         FillWorldMap();
     }
 

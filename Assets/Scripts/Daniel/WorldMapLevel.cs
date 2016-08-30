@@ -8,13 +8,15 @@
 /////////////////////////////////////////////////
 using System;
 using UnityEngine;
+using System.Xml.Serialization;
+using System.Xml;
 
 [Serializable]
 public class WorldMapLevel
 {
-    [SerializeField]
+    //[SerializeField]
     private bool clearLevel = false;
-    [SerializeField]
+    [XmlIgnore]
     private GameObject levelButton;
 
     [SerializeField]
@@ -25,7 +27,7 @@ public class WorldMapLevel
         get { return clearLevel; }
         set { clearLevel = value; }
     }
-
+    [XmlIgnore]
     public GameObject LevelButton
     {
         get { return levelButton; }
@@ -36,5 +38,9 @@ public class WorldMapLevel
     {
         get { return starsOnClear; }
         set { starsOnClear = value; }
+    }
+    public WorldMapLevel()
+    {
+
     }
 }
