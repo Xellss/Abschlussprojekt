@@ -2,7 +2,7 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///           Author: Daniel Lause            ///
+///     Author: Daniel Lause & Julian Hopp    ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////

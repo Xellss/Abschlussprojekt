@@ -129,6 +129,8 @@ public class Timer : MonoBehaviour
             buildMenu.SetActive(false);
             spawner.BuildPhase = false;
             spawner.SpawnEnemy();
+
+            
         }
         if (TimerTime <= 6)
         {

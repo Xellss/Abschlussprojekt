@@ -2,7 +2,7 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///           Author: Daniel Lause            ///
+///     Author: Daniel Lause & Julian Hopp    ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
@@ -50,7 +50,7 @@ public class ShopButtonBehaviour : MonoBehaviour
 
     public void OnClickLevelManager()
     {
-        restartWindow.SetActive(true);
+        restartWindow.SetActive(!restartWindow.active);
     }
 
     public void OnClickShopCard(BuildingSpawn buildingSpawn, BuildingInformation cardInformation, GameObject buildButton, Text buildingInformation, Button shopCardBuildButton)
