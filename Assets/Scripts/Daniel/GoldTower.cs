@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class GoldTower : MonoBehaviour {
 
     GameState gameState;
-    Text goldAmountText;
 
     [SerializeField]
     GameObject goldEffect;
@@ -50,7 +49,6 @@ public class GoldTower : MonoBehaviour {
     void Awake()
     {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
-        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
         shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         waveSpawner = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
 
@@ -62,7 +60,6 @@ public class GoldTower : MonoBehaviour {
         {
             
             gameState.GoldAmount += goldAmount;
-            goldAmountText.text = gameState.GoldAmount.ToString();
             shopCardCreator.CanBuyBuilding();
 
             StartCoroutine(goldEffectTimer());

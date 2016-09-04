@@ -22,7 +22,6 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
     }
 
     private GameState gamestate;
-    private Text goldAmount;
     private BuildingHealth health;
     private Renderer[] renderer;
     private bool repair = false;
@@ -53,7 +52,6 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         {
             repair = true;
             gamestate.GoldAmount -= buildingInfo.RepairAmount;
-            goldAmount.text = gamestate.GoldAmount.ToString();
             shopCardCreator.CanBuyBuilding();
             destroyBuilding.SellTowerButtonGameObject.SetActive(false);
 
@@ -111,7 +109,6 @@ public class RepairBuilding : MonoBehaviour, IPointerClickHandler
         destroyBuilding = GetComponentInParent<DestroyBuildedTower>();
         towerController = GetComponentInParent<TowerController>();
         bombTower = GetComponentInParent<BombTower>();
-        goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
         renderer = GetComponentsInChildren<Renderer>();
     }
 }

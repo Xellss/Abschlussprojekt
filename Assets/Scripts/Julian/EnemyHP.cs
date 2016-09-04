@@ -17,7 +17,6 @@ public class EnemyHP : MonoBehaviour
     [SerializeField]
     private int currentHealth = 100;
     private GameState gameState;
-    private Text gold;
     [SerializeField]
     private int GoldDropAmount = 5;
     private ItemDrop itemdrop;
@@ -57,7 +56,6 @@ public class EnemyHP : MonoBehaviour
         if (currentHealth <= 0)
         {
             gameState.GoldAmount += GoldDropAmount;
-            gold.text = gameState.GoldAmount.ToString();
             itemdrop.DropItemCheck();
             Reset();
         }
@@ -116,7 +114,6 @@ public class EnemyHP : MonoBehaviour
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         CurrentHealth = MaxHealth;
         itemdrop = GetComponent<ItemDrop>();
-        gold = GameObject.Find("GoldAmount").GetComponent<Text>();
         waveSpawner = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
         myCollider = GetComponent<BoxCollider>();
     }

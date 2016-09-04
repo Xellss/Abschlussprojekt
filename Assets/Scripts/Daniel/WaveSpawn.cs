@@ -106,7 +106,6 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private GameObject winLoseWindow;
     private ShopCardCreator shopCardCreator;
-    private Text goldAmountText;
     private GameState gameState;
     private bool buildPhase = true;
 
@@ -216,7 +215,6 @@ public class WaveSpawn : MonoBehaviour
         winLoseScript = winLoseWindow.GetComponent<WinLoseWindow>();
         shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         gameState = (GameState)FindObjectOfType(typeof(GameState));
-        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
 
         if (waveInfo != null)
         {
@@ -242,13 +240,11 @@ public class WaveSpawn : MonoBehaviour
             {
                 StartCoroutine(spawnerDelay(Waves[waveCounter].DelayToLastWave));
                 gameState.GoldAmount += Waves[waveCounter - 1].WaveGoldReward;
-                goldAmountText.text = gameState.GoldAmount.ToString();
                 shopCardCreator.CanBuyBuilding();
             }
             else
             {
                 gameState.GoldAmount += Waves[waveCounter-1].WaveGoldReward;
-                goldAmountText.text = gameState.GoldAmount.ToString();
                 buildMenu.SetActive(true);
                 buildPhase = true;
                 shopCardCreator.CanBuyBuilding();

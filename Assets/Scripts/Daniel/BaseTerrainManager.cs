@@ -22,7 +22,6 @@ public class BaseTerrainManager : MonoBehaviour
 {
     private BuyButton buyButton;
     private GameState gameState;
-    private Text goldAmount;
     private Renderer renderer;
     [SerializeField]
     private int terrainGoldCost = 500;
@@ -37,7 +36,6 @@ public class BaseTerrainManager : MonoBehaviour
             if (!unlock)
             {
                 gameState.GoldAmount -= terrainGoldCost;
-                goldAmount.text = gameState.GoldAmount.ToString();
             }
             towerSlot.enabled = true;
             gameObject.name = "UnlockedTerrain";
@@ -50,7 +48,6 @@ public class BaseTerrainManager : MonoBehaviour
 
     private void Awake()
     {
-        goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
         towerSlot = GetComponent<TowerSlot>();
         buyButton = transform.FindChild("BuyButton").GetComponent<BuyButton>();
         //renderer = gameObject.GetComponent<Renderer>();
