@@ -14,8 +14,6 @@ public class WinLoseWindow : MonoBehaviour
     [SerializeField]
     private GameState gamestate;
     [SerializeField]
-    private Text GoldAmount;
-    [SerializeField]
     private Text informationText;
     [SerializeField]
     private GameObject rewardGoldObject;

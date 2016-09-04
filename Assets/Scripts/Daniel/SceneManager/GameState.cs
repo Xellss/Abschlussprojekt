@@ -9,10 +9,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class GameState : MonoBehaviour
 {
+    Text goldAmountText = null;
+    Animator goldAnimator = null;
     [SerializeField]
     private List<BuildingModel> buildings;
     [SerializeField]
@@ -35,7 +38,16 @@ public class GameState : MonoBehaviour
     public int GoldAmount
     {
         get { return goldAmount; }
-        set { goldAmount = value; }
+        set
+        {
+            if (value != goldAmount)
+            {
+                goldAmount = value;
+                goldAmountText.text = goldAmount.ToString();
+                goldAnimator.SetTrigger("GoldEffect");
+            }
+
+        }
     }
 
     public GameObject LoseScreen
@@ -66,6 +78,8 @@ public class GameState : MonoBehaviour
     {
         buildings = new List<BuildingModel>();
         //loseScreen.SetActive(false);
+        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
+        goldAnimator = GameObject.Find("Unitys").GetComponent<Animator>();
         Time.timeScale = 1;
     }
 

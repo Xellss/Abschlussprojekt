@@ -12,8 +12,6 @@ using UnityEngine.UI;
 public class PlanetTerraforming : MonoBehaviour
 {
     private GameState gameState;
-    private Text goldAmount;
-    [SerializeField]
     //PoolPrefab[] planetPrefabs;
     private TerraformingPlanet terraformingPlanetScribtableObject;
     private bool unlockedFromBegin;
@@ -35,7 +33,6 @@ public class PlanetTerraforming : MonoBehaviour
     private void Awake()
     {
         gameState = GetComponent<GameState>();
-        goldAmount = GameObject.Find("GoldAmount").GetComponent<Text>();
     }
 
     private PoolPrefab chosePlanetPrefab()
@@ -49,7 +46,6 @@ public class PlanetTerraforming : MonoBehaviour
             {
                 print("Herzlichen Glückwunsch, du hast einen Gas-Planeten erschaffen. Du bekommst " + terraformingPlanetScribtableObject.GasPlanetGoldBonus + " Gold als Belohnung");
                 gameState.GoldAmount += terraformingPlanetScribtableObject.GasPlanetGoldBonus;
-                goldAmount.text = gameState.GoldAmount.ToString();
             }
             return terraformingPlanetScribtableObject.GasPlanetPrefabs[Random.Range(0, terraformingPlanetScribtableObject.GasPlanetPrefabs.Length)];
         }

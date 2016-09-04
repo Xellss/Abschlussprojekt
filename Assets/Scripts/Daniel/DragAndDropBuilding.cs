@@ -24,7 +24,6 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
 
     private bool follow;
     private GameState gameState;
-    private Text goldAmountText;
     private RaycastHit hit;
     private GameObject newBuilding;
     private GameObject newBuildingContainer;
@@ -74,7 +73,6 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
 
     public void OnEnable()
     {
-        goldAmountText.text = gameState.GoldAmount.ToString();
         shopCardCreator.CanBuyBuilding();
         click = false;
     }
@@ -100,7 +98,6 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
                             slotScript.BuildingOnSlot = true;
 
                             gameState.GoldAmount -= buildingInfo.BuildingGoldCost;
-                            goldAmountText.text = gameState.GoldAmount.ToString();
                             shopCardCreator.CanBuyBuilding();
                             newBuilding.layer = LayerMask.NameToLayer(buildingInfo.BuildingTypes.ToString());
                             newBuilding.tag = "Tower";
@@ -155,7 +152,6 @@ public class DragAndDropBuilding : MonoBehaviour, IDragHandler, IEndDragHandler,
         tutorial = gameState.gameObject.GetComponent<Tutorial>();
             timer = gameState.gameObject.GetComponent<Timer>();
         }
-        goldAmountText = GameObject.Find("GoldAmount").GetComponent<Text>();
         shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         newBuildingContainer = GameObject.Find("newBuildingContainer");
         starBase = GameObject.Find("SunSystem");
