@@ -6,6 +6,7 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,18 +51,16 @@ public class Timer : MonoBehaviour
         StopAllCoroutines();
         timerPanel.SetActive(false);
         nextWaveButton.SetActive(true);
+
         if (tutorial != null)
-        {
             tutorial.TimerTuTClear = true;
-        }
 
         if (newBuildingContainer.transform.childCount > 0)
         {
             for (int i = 0; i < newBuildingContainer.transform.childCount; i++)
-            {
                 GameObject.Destroy(newBuildingContainer.transform.GetChild(i).gameObject);
-            }
         }
+
         buildMenu.SetActive(false);
         spawner.BuildPhase = false;
         spawner.SpawnEnemy();
@@ -70,13 +69,9 @@ public class Timer : MonoBehaviour
     private void Start()
     {
         if (tutorial == null)
-        {
             StartTimer();
-        }
         else
-        {
             timerText.text = ((int)timerTime).ToString();
-        }
     }
     bool startTimer = false;
 
@@ -115,21 +110,16 @@ public class Timer : MonoBehaviour
             timerPanel.SetActive(false);
             nextWaveButton.SetActive(true);
             if (tutorial != null)
-            {
                 tutorial.TimerTuTClear = true;
-            }
 
             if (newBuildingContainer.transform.childCount > 0)
             {
                 for (int i = 0; i < newBuildingContainer.transform.childCount; i++)
-                {
                     GameObject.Destroy(newBuildingContainer.transform.GetChild(i).gameObject);
-                }
             }
             buildMenu.SetActive(false);
             spawner.BuildPhase = false;
             spawner.SpawnEnemy();
-
             
         }
         if (TimerTime <= 6)

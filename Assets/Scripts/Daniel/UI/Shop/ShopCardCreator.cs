@@ -2,10 +2,11 @@
 ///                                           ///
 ///      Source Code - Abschlussprojekt       ///
 ///                                           ///
-///           Author: Daniel Lause            ///
+///     Author: Daniel Lause & Julian Hopp    ///
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -57,8 +58,6 @@ public class ShopCardCreator : MonoBehaviour
         set { wallShopCards = value; }
     }
 
-
-
     private Dictionary<GameObject, BuildingInformation> shopCards;
 
     public Text BuildingInformation
@@ -80,6 +79,11 @@ public class ShopCardCreator : MonoBehaviour
                 shopCard.Key.GetComponent<Image>().color = Color.white;
             }
         }
+    }
+
+    private void Start()
+    {
+        createShopCards();
     }
 
     private void Awake()
@@ -130,10 +134,5 @@ public class ShopCardCreator : MonoBehaviour
         buildingImage.sprite = cardInformation.BuildingImage;
         buildingName.text = cardInformation.BuildingName;
         buildingGoldCost.text = cardInformation.BuildingGoldCost.ToString();
-    }
-
-    private void Start()
-    {
-        createShopCards();
     }
 }

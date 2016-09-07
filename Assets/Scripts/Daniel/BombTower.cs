@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///     Author: Daniel Lause & Julian Hopp    ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 
 public class BombTower : MonoBehaviour {

@@ -1,6 +1,14 @@
-﻿using UnityEngine;
+﻿/////////////////////////////////////////////////
+///                                           ///
+///      Source Code - Abschlussprojekt       ///
+///                                           ///
+///     Author: Daniel Lause                  ///
+///                                           ///
+///                                           ///
+/////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 public class GoldTower : MonoBehaviour {
 
@@ -38,9 +46,6 @@ public class GoldTower : MonoBehaviour {
         set { effectDelay = value; }
     }
 
- 
-
-
     void Start()
     {
         InvokeRepeating("gold", 0, effectDelay);
@@ -51,14 +56,12 @@ public class GoldTower : MonoBehaviour {
         gameState = (GameState)FindObjectOfType(typeof(GameState));
         shopCardCreator = GameObject.Find("Canvas").GetComponent<ShopCardCreator>();
         waveSpawner = GameObject.Find("SpawnPoints").GetComponent<WaveSpawn>();
-
     }
 
     void gold()
     {
         if (towerActive && !waveSpawner.BuildPhase)
         {
-            
             gameState.GoldAmount += goldAmount;
             shopCardCreator.CanBuyBuilding();
 

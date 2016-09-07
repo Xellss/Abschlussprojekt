@@ -2,64 +2,64 @@
 <GameData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
     <WorldMapLevel>
-      <ClearLevel>false</ClearLevel>
-      <StarsOnClear>0</StarsOnClear>
+      <ClearLevel>true</ClearLevel>
+      <StarsOnClear>3</StarsOnClear>
     </WorldMapLevel>
   </WorldMapLevel>
 </GameData>
