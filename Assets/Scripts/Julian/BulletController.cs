@@ -12,23 +12,11 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public int DamagePoints;
-
     public float Speed;
 
     private Renderer myRenderer;
-
     private Transform myTransform;
-
     public Transform Target { get; set; }
-
-    //public void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.tag == "Enemy")
-    //    {
-    //        other.GetComponent<EnemyHP>().Decrease(DamagePoints);
-    //        gameObject.SetActive(false);
-    //    }
-    //}
 
     public void SetColor(Color color)
     {

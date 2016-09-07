@@ -9,7 +9,6 @@
 
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyHP : MonoBehaviour
 {
@@ -47,7 +46,7 @@ public class EnemyHP : MonoBehaviour
 
     public void Decrease(int damage)
     {
-        currentHealth = currentHealth - damage;
+        currentHealth -= damage;
         //if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
         //{
         //    transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
@@ -72,24 +71,26 @@ public class EnemyHP : MonoBehaviour
         visibleModel.SetActive(false);
         if (invisibleModel != null)
             invisibleModel.SetActive(false);
+
         myCollider.enabled = false;
         yield return new WaitForSeconds(1);
         explosionEffect.SetActive(false);
         visibleModel.SetActive(true);
+
         if (invisibleModel != null)
             invisibleModel.SetActive(true);
         waveSpawner.WaveEnemyCount--;
         waveSpawner.TotalEnemyCount--;
+
         if (this.gameObject.tag == "Enemy" && enemyKi.EnemyType != EnemyTypes.Tank)
-        {
             transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-        }
+
         transform.position = new Vector3(0, 0, 40);
         CurrentHealth = MaxHealth;
         myCollider.enabled = true;
         gameObject.SetActive(false);
-
     }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Bomb")
