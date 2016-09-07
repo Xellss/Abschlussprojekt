@@ -6,6 +6,7 @@
 ///                                           ///
 ///                                           ///
 /////////////////////////////////////////////////
+
 using System.Collections;
 using UnityEngine;
 
@@ -43,26 +44,18 @@ public class MoveTo : MonoBehaviour
             {
                 if (GameObject.Find("Goal") != null)
                 {
-
                     goal = GameObject.Find("Goal").transform;
                     agent.SetDestination(goal.position);
                     setLevel = true;
                 }
             }
-            if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
-            {
-
-            }
         }
         else if (MainBaseLevel)
         {
-
             if (SearchNewBuilding)
             {
-
                 if (GameObject.FindGameObjectsWithTag("Building") != null)
                 {
-
                     mainBaseBuildings = GameObject.FindGameObjectsWithTag("Building");
                     distance = Mathf.Infinity;
                     foreach (var building in mainBaseBuildings)

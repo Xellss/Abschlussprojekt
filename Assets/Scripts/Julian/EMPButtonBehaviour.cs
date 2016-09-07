@@ -13,7 +13,6 @@ using System.Collections.Generic;
 
 public class EMPButtonBehaviour : MonoBehaviour
 {
-
     [SerializeField]
     shootRadius shootRadius;
 
@@ -33,7 +32,6 @@ public class EMPButtonBehaviour : MonoBehaviour
     {
         shootRadius.CheckList();
         
-
         for (int i = 0; i < shootRadius.EnemyList.Count; i++)
         {
             shootRadius.EnemyList[i].transform.GetComponent<EnemyKi>().CanFly = false;
